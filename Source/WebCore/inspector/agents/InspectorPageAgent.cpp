@@ -42,6 +42,7 @@
 #include "DocumentView.h"
 #include "Editor.h"
 #include "ElementInlines.h"
+#include "FocusController.h"
 #include "ForcedAccessibilityValue.h"
 #include "FrameInlines.h"
 #include "FrameLoadRequest.h"
