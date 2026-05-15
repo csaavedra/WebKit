@@ -46,7 +46,6 @@ from webkitpy.port.linux_container_sdk_utils import maybe_enter_webkit_container
 maybe_enter_webkit_container_sdk()
 
 import jhbuildutils
-import flatpakutils
 from binary_bundling.ldd import SharedObjectResolver
 from binary_bundling.bundle import BinaryBundler
 
@@ -901,7 +900,7 @@ class BundleCreator(object):
                 _log.info('Copy basic GTK icons.')
                 icons_target_dir = os.path.join(target_sys_share_dir, 'icons')
                 os.makedirs(icons_target_dir)
-                gtk_icon_basedir = '/run/host/share/icons' if flatpakutils.is_sandboxed() else '/usr/share/icons'
+                gtk_icon_basedir = '/usr/share/icons'
                 gtk_target_icon_dir = os.path.join(icons_target_dir, 'hicolor')
                 gtk_icon_dirs_copied = 0
                 for gtk_icon_theme in ['Adwaita', 'hicolor', 'gnome']:
@@ -980,9 +979,7 @@ def main():
     parser.add_argument('--builder-name', action='store', dest='builder_name')
     options = parser.parse_args()
 
-    flatpakutils.run_in_sandbox_if_available([sys.argv[0], '--flatpak-' + options.platform] + sys.argv[1:])
-    if not flatpakutils.is_sandboxed():
-        jhbuildutils.enter_jhbuild_environment_if_available(options.platform)
+    jhbuildutils.enter_jhbuild_environment_if_available(options.platform)
 
     configure_logging(options.log_level)
     bundle_creator = BundleCreator(options.configuration, options.platform, options.bundle_binary, options.syslibs, options.ldd,
