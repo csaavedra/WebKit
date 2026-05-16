@@ -34,8 +34,7 @@
 namespace WebKit {
 using namespace WebCore;
 
-PlaywrightFullScreenManagerProxyClient::PlaywrightFullScreenManagerProxyClient(WebPageProxy& page)
-    : m_pageProxy(page)
+PlaywrightFullScreenManagerProxyClient::PlaywrightFullScreenManagerProxyClient(WebPageProxy&)
 {
 }
 
