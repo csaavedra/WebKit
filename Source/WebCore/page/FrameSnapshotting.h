@@ -61,6 +61,7 @@ enum class SnapshotFlags : uint16_t {
     DraggableElement                        = 1 << 13,
     IncludeDocumentMarkers                  = 1 << 14,
     FastAndLowQualityFilters                = 1 << 15,
+    OmitDeviceScaleFactor                   = 1 << 16,
 };
 
 struct SnapshotOptions {
