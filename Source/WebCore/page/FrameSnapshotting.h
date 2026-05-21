@@ -44,7 +44,7 @@ class ImageBuffer;
 class LocalFrame;
 class Node;
 
-enum class SnapshotFlags : uint16_t {
+enum class SnapshotFlags : uint32_t {
     ExcludeSelectionHighlighting            = 1 << 0,
     PaintSelectionOnly                      = 1 << 1,
     InViewCoordinates                       = 1 << 2,
