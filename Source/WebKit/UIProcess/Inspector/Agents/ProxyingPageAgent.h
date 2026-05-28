@@ -104,9 +104,7 @@ public:
 #if ENABLE(WEB_ARCHIVE) && USE(CF)
     CommandResult<String> archive() final;
 #endif
-#if !PLATFORM(COCOA)
     CommandResult<void> setScreenSizeOverride(std::optional<int>&& width, std::optional<int>&& height) final;
-#endif
 
 private:
     // IPC::MessageReceiver

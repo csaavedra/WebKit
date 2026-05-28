@@ -381,11 +381,9 @@ CommandResult<String> ProxyingPageAgent::archive()
 }
 #endif
 
-#if !PLATFORM(COCOA)
 CommandResult<void> ProxyingPageAgent::setScreenSizeOverride(std::optional<int>&&, std::optional<int>&&)
 {
     return { };
 }
-#endif
 
 } // namespace Inspector
