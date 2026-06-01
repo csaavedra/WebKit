@@ -25,11 +25,12 @@
 
 #pragma once
 
-#include "WebPageProxy.h"
 #include <wtf/FastMalloc.h>
 #include <wtf/WeakPtr.h>
 
 namespace WebKit {
+
+class WebPageProxy;
 
 class TextExtractionAssertionScope {
     WTF_MAKE_TZONE_ALLOCATED(TextExtractionAssertionScope);
