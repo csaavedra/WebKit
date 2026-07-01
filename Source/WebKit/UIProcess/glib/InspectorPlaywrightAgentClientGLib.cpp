@@ -37,6 +37,7 @@
 #include "WebKitWebsiteDataManagerPrivate.h"
 #include "WebKitWebViewPrivate.h"
 #include "WebPageProxy.h"
+#include <wtf/glib/GSpanExtras.h>
 #include <wtf/HashMap.h>
 #include <wtf/RefPtr.h>
 #include <wtf/text/Base64.h>
@@ -53,7 +54,8 @@ static WebCore::SoupNetworkProxySettings parseRawProxySettings(const String& pro
 
     settings.mode = WebCore::SoupNetworkProxySettings::Mode::Custom;
     settings.defaultProxyURL = proxyServer.utf8();
-    settings.ignoreHosts.reset(g_strdupv(const_cast<char**>(ignoreHosts)));
+    for (auto* host : span(ignoreHosts))
+        settings.ignoreHosts.append(CString(host));
     return settings;
 }
 
