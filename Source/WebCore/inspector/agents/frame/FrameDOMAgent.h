@@ -169,7 +169,7 @@ private:
     RefPtr<Element> assertEditableElement(Inspector::Protocol::ErrorString&, Inspector::Protocol::DOM::NodeId);
 
     RefPtr<Node> nodeForObjectId(const Inspector::Protocol::Runtime::RemoteObjectId&);
-    RefPtr<Inspector::Protocol::Runtime::RemoteObject> resolveNodeInternal(Node*, const String& objectGroup);
+    RefPtr<Inspector::Protocol::Runtime::RemoteObject> resolveNodeInternal(Node*, const String& objectGroup, std::optional<int>&& contextId);
 
     Ref<Inspector::Protocol::DOM::AccessibilityProperties> buildObjectForAccessibilityProperties(Node&);
     void processAccessibilityChildren(AXCoreObject&, JSON::ArrayOf<Inspector::Protocol::DOM::NodeId>&);

@@ -136,14 +136,6 @@ Inspector::CommandResult<void> FrameDOMAgent::hideFlexOverlay(std::optional<int>
     return makeUnexpected("Not supported for frame targets"_s);
 }
 
-<<<<<<< HEAD
-=======
-Inspector::CommandResult<Ref<Inspector::Protocol::Runtime::RemoteObject>> FrameDOMAgent::resolveNode(std::optional<int>&&, const String&, const String&, std::optional<int>&&, const String&)
-{
-    return makeUnexpected("Not yet implemented for frame targets"_s);
-}
-
->>>>>>> 3bd8584965a7 (chore(webkit): bootstrap build #2322)
 Inspector::CommandResult<void> FrameDOMAgent::focus(int)
 {
     return makeUnexpected("Not supported for frame targets"_s);
