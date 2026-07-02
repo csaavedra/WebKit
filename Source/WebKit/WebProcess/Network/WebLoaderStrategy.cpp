@@ -571,11 +571,6 @@ bool WebLoaderStrategy::fillParametersForNetworkProcessLoad(ResourceLoader& reso
             return false;
     }
 
-<<<<<<< HEAD
-=======
-    loadParameters.shouldRestrictHTTPResponseAccess = true;
-
->>>>>>> 3bd8584965a7 (chore(webkit): bootstrap build #2322)
     loadParameters.isMainFrameNavigation = isMainFrameNavigation;
     if (loadParameters.isMainFrameNavigation && document) {
         // Fall back to use opener's cross-origin opener policy like in Document::initSecurityContext.
