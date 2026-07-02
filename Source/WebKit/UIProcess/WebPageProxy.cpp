@@ -4387,14 +4387,10 @@ void WebPageProxy::performDragOperation(DragData& dragData, const String& dragSt
     if (!hasRunningProcess())
         return;
 
-<<<<<<< HEAD
     for (auto& fileName : dragData.fileNames())
         protect(legacyMainFrameProcess())->addPreviouslyApprovedFileURL(URL::fileURLWithFileSystemPath(fileName));
 
-#if PLATFORM(GTK)
-=======
 #if PLATFORM(GTK) || PLATFORM(WPE)
->>>>>>> 3bd8584965a7 (chore(webkit): bootstrap build #2322)
     URL url { dragData.asURL() };
     if (url.protocolIsFile())
         protect(legacyMainFrameProcess())->assumeReadAccessToBaseURL(*this, url.string(), [] { });
