@@ -148,14 +148,10 @@ RefPtr<ImageBuffer> snapshotFrameRectWithClip(LocalFrame& frame, const IntRect& 
         buffer->context().clipPath(clipPath);
     }
 
-<<<<<<< HEAD
-    protect(frame.view())->paintContentsForSnapshot(buffer->context(), imageRect, nodeToDraw, shouldIncludeSelection, coordinateSpace);
-=======
     FloatRect fr = imageRect;
     if (coordinateSpace != LocalFrameView::ViewCoordinates)
         fr.scale(frame.page()->pageScaleFactor());
-    protect(frame.view())->paintContentsForSnapshot(buffer->context(), enclosingIntRect(fr), shouldIncludeSelection, coordinateSpace);
->>>>>>> 3bd8584965a7 (chore(webkit): bootstrap build #2322)
+    protect(frame.view())->paintContentsForSnapshot(buffer->context(), enclosingIntRect(fr), nodeToDraw, shouldIncludeSelection, coordinateSpace);
     return buffer;
 }
 
