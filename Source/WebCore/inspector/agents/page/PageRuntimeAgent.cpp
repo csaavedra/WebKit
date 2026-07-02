@@ -102,17 +102,9 @@ Inspector::Protocol::ErrorStringOr<void> PageRuntimeAgent::disable()
 
 void PageRuntimeAgent::frameNavigated(LocalFrame& frame)
 {
-<<<<<<< HEAD
     SetForScope ignoreDidClearWindowObject(m_ignoreDidClearWindowObject, true);
-=======
-    auto* pageAgent = Ref { m_instrumentingAgents.get() }->enabledPageAgent();
-    if (pageAgent)
-        pageAgent->setIgnoreDidClearWindowObject(true);
->>>>>>> 3bd8584965a7 (chore(webkit): bootstrap build #2322)
     // Ensure execution context is created for the frame even if it doesn't have scripts.
     mainWorldGlobalObject(frame);
-    if (pageAgent)
-        pageAgent->setIgnoreDidClearWindowObject(false);
 }
 
 static JSC_DECLARE_HOST_FUNCTION(bindingCallback);
@@ -175,27 +167,17 @@ void PageRuntimeAgent::didClearWindowObjectInWorld(LocalFrame& frame, DOMWrapper
     if (frameId.isEmpty())
         return;
 
-<<<<<<< HEAD
     if (m_ignoreDidClearWindowObject)
         return;
 
     SetForScope ignoreDidClearWindowObject(m_ignoreDidClearWindowObject, true);
-=======
-    auto* pageAgent = Ref { m_instrumentingAgents.get() }->enabledPageAgent();
-    if (pageAgent && pageAgent->ignoreDidClearWindowObject())
-        return;
 
     if (world.isNormal()) {
         for (const auto& name : m_bindingNames)
             addBindingToFrame(frame, name);
     }
 
-    if (pageAgent)
-        pageAgent->setIgnoreDidClearWindowObject(true);
->>>>>>> 3bd8584965a7 (chore(webkit): bootstrap build #2322)
     notifyContextCreated(frameId, frame.script().globalObject(world), world);
-    if (pageAgent)
-        pageAgent->setIgnoreDidClearWindowObject(false);
 }
 
 void PageRuntimeAgent::didReceiveMainResourceError(LocalFrame& frame)

@@ -84,12 +84,10 @@ private:
     WeakRef<InstrumentingAgents> m_instrumentingAgents;
 
     WeakRef<Page> m_inspectedPage;
-<<<<<<< HEAD
 
     bool m_ignoreDidClearWindowObject { false };
-=======
+
     HashSet<String> m_bindingNames;
->>>>>>> 3bd8584965a7 (chore(webkit): bootstrap build #2322)
 };
 
 } // namespace WebCore
