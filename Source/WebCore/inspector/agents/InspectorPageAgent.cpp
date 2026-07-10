@@ -93,6 +93,7 @@
 #include <wtf/NeverDestroyed.h>
 #include <wtf/Stopwatch.h>
 #include <wtf/TZoneMallocInlines.h>
+#include <wtf/TimeZone.h>
 #include <wtf/text/Base64.h>
 #include <wtf/text/MakeString.h>
 #include <wtf/text/StringBuilder.h>
@@ -1212,12 +1213,10 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::setTimeZone(const S
     if (!success)
         return makeUnexpected(makeString("Invalid time zone "_s, timeZone));
 
-#if PLATFORM(COCOA)
-    // JSC caches time zone information process-wide using lastTimeZoneID as the cache
-    // key. The cache is normally invalidated only by the system time zone change
-    // notification, so bump the counter explicitly to force re-reading the override.
-    ++JSC::lastTimeZoneID;
-#endif
+    // JSC caches time zone information process-wide, keyed on WTF::lastTimeZoneID().
+    // The cache is normally invalidated only by a system time zone change notification,
+    // so signal the change explicitly to force re-reading the override.
+    WTF::timeZoneDidChange();
     return { };
 }
 
