@@ -12170,20 +12170,6 @@ void WebPageProxy::requestDOMPasteAccess(IPC::Connection& connection, DOMPasteAc
         }
     }
 
-<<<<<<< HEAD
-    auto rootFrameID = frame->rootFrame()->frameID();
-    convertRectToMainFrameCoordinates(elementRect, rootFrameID, [weakThis = WeakPtr { *this }, pasteAccessCategory, requiresInteraction, frameID, originIdentifier, completionHandler = WTF::move(completionHandler)](std::optional<FloatRect> convertedRect) mutable {
-        RefPtr protectedThis = weakThis.get();
-        if (!protectedThis || !convertedRect) {
-            completionHandler(DOMPasteAccessResponse::DeniedForGesture);
-            return;
-        }
-
-        protect(protectedThis->pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, IntRect(*convertedRect), originIdentifier, WTF::move(completionHandler));
-    });
-||||||| parent of 794426ef4672 (chore(webkit): bootstrap build #2328)
-    protect(pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, elementRect, originIdentifier, WTF::move(completionHandler));
-=======
     if (isControlledByAutomation()) {
         DOMPasteAccessResponse response = DOMPasteAccessResponse::DeniedForGesture;
         if (permissionForAutomation(originIdentifier, "clipboard-read"_s).value_or(false)) {
@@ -12195,8 +12181,16 @@ void WebPageProxy::requestDOMPasteAccess(IPC::Connection& connection, DOMPasteAc
         return;
     }
 
-    protect(pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, elementRect, originIdentifier, WTF::move(completionHandler));
->>>>>>> 794426ef4672 (chore(webkit): bootstrap build #2328)
+    auto rootFrameID = frame->rootFrame()->frameID();
+    convertRectToMainFrameCoordinates(elementRect, rootFrameID, [weakThis = WeakPtr { *this }, pasteAccessCategory, requiresInteraction, frameID, originIdentifier, completionHandler = WTF::move(completionHandler)](std::optional<FloatRect> convertedRect) mutable {
+        RefPtr protectedThis = weakThis.get();
+        if (!protectedThis || !convertedRect) {
+            completionHandler(DOMPasteAccessResponse::DeniedForGesture);
+            return;
+        }
+
+        protect(protectedThis->pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, IntRect(*convertedRect), originIdentifier, WTF::move(completionHandler));
+    });
 }
 
 // BackForwardList
