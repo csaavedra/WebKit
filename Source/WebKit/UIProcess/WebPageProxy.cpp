@@ -1717,14 +1717,8 @@ void WebPageProxy::didAttachToRunningProcess()
 
 #if ENABLE(FULLSCREEN_API)
     ASSERT(!m_fullScreenManager);
-<<<<<<< HEAD
     if (RefPtr pageClient = this->pageClient())
-        m_fullScreenManager = WebFullScreenManagerProxy::create(*this, protect(pageClient->fullScreenManagerProxyClient()).get());
-||||||| parent of 794426ef4672 (chore(webkit): bootstrap build #2328)
-    m_fullScreenManager = WebFullScreenManagerProxy::create(*this, protect(protect(pageClient())->fullScreenManagerProxyClient()).get());
-=======
-    m_fullScreenManager = WebFullScreenManagerProxy::create(*this, m_fullScreenManagerClientOverride ? *m_fullScreenManagerClientOverride : protect(protect(pageClient())->fullScreenManagerProxyClient()).get());
->>>>>>> 794426ef4672 (chore(webkit): bootstrap build #2328)
+        m_fullScreenManager = WebFullScreenManagerProxy::create(*this, m_fullScreenManagerClientOverride ? *m_fullScreenManagerClientOverride : protect(pageClient->fullScreenManagerProxyClient()).get());
 #endif
 #if ENABLE(VIDEO_PRESENTATION_MODE)
     ASSERT(!m_playbackSessionManager);
