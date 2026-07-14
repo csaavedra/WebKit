@@ -35,11 +35,7 @@
 #include "WebPageProxy.h"
 #include "WebPageProxyIdentifier.h"
 #include "WebPageProxyMessageReceiverRegistration.h"
-<<<<<<< HEAD
-=======
 #include "WebsiteDataStore.h"
-#include <WebCore/DiagnosticLoggingClient.h>
->>>>>>> 17da8fafe4ac (chore(webkit): bootstrap build #2330)
 #include <WebCore/FrameIdentifier.h>
 #include <WebCore/FrameLoaderClient.h>
 #include <WebCore/NavigationIdentifier.h>
