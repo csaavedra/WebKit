@@ -183,17 +183,15 @@ private:
     String m_bootstrapScript;
     bool m_isFirstLayoutAfterOnLoad { false };
     bool m_showPaintRects { false };
-<<<<<<< HEAD
 
     std::optional<bool> m_fullScreenEnabledBeforeOverride;
     std::optional<bool> m_notificationsEnabledBeforeOverride;
     std::optional<bool> m_pointerLockEnabledBeforeOverride;
     std::optional<bool> m_pushAPIEnabledBeforeOverride;
-=======
+
     bool m_interceptFileChooserDialog { false };
     bool m_bypassCSP { false };
     bool m_ignoreDidClearWindowObject { false };
->>>>>>> 17da8fafe4ac (chore(webkit): bootstrap build #2330)
 };
 
 } // namespace WebCore

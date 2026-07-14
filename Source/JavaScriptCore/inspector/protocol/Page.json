@@ -29,14 +29,7 @@
                 "ShowRepaintCounter",
                 "WebSecurityEnabled",
                 "DeviceOrientationEventEnabled",
-                "SpeechRecognitionEnabled",
-                "PointerLockEnabled",
-                "NotificationsEnabled",
-                "FullScreenEnabled",
-                "InputTypeMonthEnabled",
-                "InputTypeWeekEnabled",
-                "FixedBackgroundsPaintRelativeToDocument",
-                "PushAPIEnabled"
+                "SpeechRecognitionEnabled"
             ]
         },
         {

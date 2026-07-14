@@ -267,7 +267,6 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideUserAgent(c
     return { };
 }
 
-<<<<<<< HEAD
 void InspectorPageAgent::overrideSettingByModifyingValue(std::optional<bool>& savedValue, std::optional<bool> value, bool (Settings::*getter)() const, void (Settings::*setter)(bool))
 {
     Ref inspectedPageSettings = m_inspectedPage->settings();
@@ -279,13 +278,13 @@ void InspectorPageAgent::overrideSettingByModifyingValue(std::optional<bool>& sa
         (inspectedPageSettings.get().*setter)(*savedValue);
         savedValue = std::nullopt;
     }
-=======
+}
+
 Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overridePlatform(const String& value)
 {
     m_platformOverride = value;
 
     return { };
->>>>>>> 17da8fafe4ac (chore(webkit): bootstrap build #2330)
 }
 
 Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Inspector::Protocol::Page::Setting setting, std::optional<bool>&& value)
@@ -301,7 +300,12 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Ins
         inspectedPageSettings.setAuthorAndUserStylesEnabledInspectorOverride(value);
         return { };
 
-<<<<<<< HEAD
+#if ENABLE(DEVICE_ORIENTATION)
+    case Inspector::Protocol::Page::Setting::DeviceOrientationEventEnabled:
+        inspectedPageSettings.setDeviceOrientationEventEnabled(value.value_or(false));
+        return { };
+#endif
+
     case Inspector::Protocol::Page::Setting::FixedBackgroundsPaintRelativeToDocument:
         inspectedPageSettings.setFixedBackgroundsPaintRelativeToDocumentInspectorOverride(value);
         return { };
@@ -310,16 +314,6 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Ins
 #if ENABLE(FULLSCREEN_API)
         overrideSettingByModifyingValue(m_fullScreenEnabledBeforeOverride, value, &Settings::fullScreenEnabled, &Settings::setFullScreenEnabled);
 #endif
-=======
-#if ENABLE(DEVICE_ORIENTATION)
-    case Inspector::Protocol::Page::Setting::DeviceOrientationEventEnabled:
-        inspectedPageSettings.setDeviceOrientationEventEnabled(value.value_or(false));
-        return { };
-#endif
-
-    case Inspector::Protocol::Page::Setting::PushAPIEnabled:
-        inspectedPageSettings.setPushAPIEnabled(value.value_or(false));
->>>>>>> 17da8fafe4ac (chore(webkit): bootstrap build #2330)
         return { };
 
     case Inspector::Protocol::Page::Setting::ICECandidateFilteringEnabled:
@@ -356,7 +350,6 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Ins
         m_client->setDeveloperPreferenceOverride(InspectorBackendClient::DeveloperPreference::NeedsSiteSpecificQuirks, value);
         return { };
 
-<<<<<<< HEAD
     case Inspector::Protocol::Page::Setting::NotificationsEnabled:
 #if ENABLE(NOTIFICATIONS)
         overrideSettingByModifyingValue(m_notificationsEnabledBeforeOverride, value, &Settings::notificationsEnabled, &Settings::setNotificationsEnabled);
@@ -372,40 +365,6 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Ins
     case Inspector::Protocol::Page::Setting::PushAPIEnabled:
         overrideSettingByModifyingValue(m_pushAPIEnabledBeforeOverride, value, &Settings::pushAPIEnabled, &Settings::setPushAPIEnabled);
         return { };
-=======
-#if ENABLE(NOTIFICATIONS)
-    case Inspector::Protocol::Page::Setting::NotificationsEnabled:
-        inspectedPageSettings.setNotificationsEnabled(value.value_or(false));
-        return { };
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-    case Inspector::Protocol::Page::Setting::FullScreenEnabled:
-        inspectedPageSettings.setFullScreenEnabled(value.value_or(false));
-        return { };
-#endif
-
-    case Inspector::Protocol::Page::Setting::InputTypeMonthEnabled:
-        inspectedPageSettings.setInputTypeMonthEnabled(value.value_or(false));
-        return { };
-
-    case Inspector::Protocol::Page::Setting::InputTypeWeekEnabled:
-        inspectedPageSettings.setInputTypeWeekEnabled(value.value_or(false));
-        return { };
-
-    case Inspector::Protocol::Page::Setting::FixedBackgroundsPaintRelativeToDocument:
-        // Enable this setting similar to iOS to ensure scrolling works with
-        // `background-attachment: fixed`.
-        // See https://github.com/microsoft/playwright/issues/31551.
-        inspectedPageSettings.setFixedBackgroundsPaintRelativeToDocument(value.value_or(false));
-        return { };
-
-#if ENABLE(POINTER_LOCK)
-    case Inspector::Protocol::Page::Setting::PointerLockEnabled:
-        inspectedPageSettings.setPointerLockEnabled(value.value_or(false));
-        return { };
-#endif
->>>>>>> 17da8fafe4ac (chore(webkit): bootstrap build #2330)
 
     case Inspector::Protocol::Page::Setting::ScriptEnabled:
         inspectedPageSettings.setScriptEnabledInspectorOverride(value);
