@@ -5164,15 +5164,11 @@ void WebPageProxy::wheelEventHandlingCompleted(bool wasHandled)
 
     if (RefPtr automationSession = m_configuration->processPool().automationSession())
         automationSession->wheelEventsFlushedForPage(*this);
-<<<<<<< HEAD
 #if ENABLE(TOUCH_EVENTS) && !ENABLE(IOS_TOUCH_EVENTS)
     didFinishProcessingAllPendingWheelEvents();
 #endif
-||||||| parent of 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
-=======
 
     m_inspectorController->didProcessAllPendingWheelEvents();
->>>>>>> 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
 }
 
 void WebPageProxy::cacheWheelEventScrollingAccelerationCurve(const NativeWebWheelEvent& nativeWheelEvent)
