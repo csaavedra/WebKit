@@ -32,13 +32,9 @@
 #include "FrameInspectorTarget.h"
 #include "FrameInspectorTargetProxy.h"
 #include "InspectorBrowserAgent.h"
-<<<<<<< HEAD
-#include "InspectorStorageAgent.h"
-||||||| parent of 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
-=======
 #include "InspectorDialogAgent.h"
 #include "InspectorScreencastAgent.h"
->>>>>>> 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
+#include "InspectorStorageAgent.h"
 #include "PageInspectorTarget.h"
 #include "PageInspectorTargetProxy.h"
 #include "ProvisionalFrameProxy.h"
