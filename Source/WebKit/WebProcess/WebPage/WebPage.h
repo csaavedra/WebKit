@@ -1427,13 +1427,7 @@ public:
     void clearSelection();
     void restoreSelectionInFocusedEditableElement();
 
-<<<<<<< HEAD
 #if ENABLE(DRAG_SUPPORT) && (PLATFORM(GTK) || PLATFORM(WPE))
-||||||| parent of 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
-#if ENABLE(DRAG_SUPPORT) && PLATFORM(GTK)
-=======
-#if ENABLE(DRAG_SUPPORT) && (PLATFORM(GTK) || PLATFORM(WPE)) 
->>>>>>> 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
     void performDragControllerAction(DragControllerAction, const WebCore::IntPoint& clientPosition, const WebCore::IntPoint& globalPosition, OptionSet<WebCore::DragOperation> draggingSourceOperationMask, WebCore::SelectionData&&, OptionSet<WebCore::DragApplicationFlags>, CompletionHandler<void(std::optional<WebCore::DragOperation>, WebCore::DragHandlingMethod, bool, unsigned, WebCore::IntRect, WebCore::IntRect, std::optional<WebCore::RemoteUserInputEventData>)>&&);
 #endif
 
