@@ -17083,13 +17083,9 @@
 				D7EB04E62372A73B00F744CE /* InspectorPlaywrightAgentClientMac.mm */,
 				0FCB4E5818BBE3D9000FCFC9 /* PageClientImplMac.h */,
 				0FCB4E5918BBE3D9000FCFC9 /* PageClientImplMac.mm */,
-<<<<<<< HEAD
+				D79902AF236E9404005D6F7E /* PageInspectorTargetProxyMac.mm */,
 				33F1A0112FEFB66B00BD5D70 /* PositionInformationManager.cpp */,
 				33F1A0102FEFB66B00BD5D70 /* PositionInformationManager.h */,
-||||||| parent of 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
-=======
-				D79902AF236E9404005D6F7E /* PageInspectorTargetProxyMac.mm */,
->>>>>>> 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
 				E18E6909169B563F009B6670 /* SecItemShimProxy.cpp */,
 				E18E690A169B563F009B6670 /* SecItemShimProxy.h */,
 				E18E690D169B57DF009B6670 /* SecItemShimProxy.messages.in */,
