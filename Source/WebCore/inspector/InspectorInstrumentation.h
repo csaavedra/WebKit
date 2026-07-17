@@ -45,13 +45,9 @@
 #include "LocalFrame.h"
 #include "NodeDocument.h"
 #include "Page.h"
-<<<<<<< HEAD
 #include "RenderElement.h"
 #include "RenderObjectDocument.h"
-||||||| parent of 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
-=======
 #include "ResourceError.h"
->>>>>>> 09b0b7012ad8 (chore(webkit): bootstrap build #2332)
 #include "ResourceLoader.h"
 #include "ResourceLoaderIdentifier.h"
 #include "ScriptExecutionContext.h"
