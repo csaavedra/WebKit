@@ -15334,14 +15334,10 @@
 			children = (
 				9197940423DBC4BB00257892 /* InspectorBrowserAgent.cpp */,
 				9197940323DBC4BB00257892 /* InspectorBrowserAgent.h */,
-<<<<<<< HEAD
 				AA1057000000000000000001 /* InspectorStorageAgent.cpp */,
 				AA1057000000000000000002 /* InspectorStorageAgent.h */,
-||||||| parent of 18d422ff5c10 (chore(webkit): bootstrap build #2347)
-=======
 				F3867F0324607D2B008F0F31 /* InspectorScreencastAgent.cpp */,
 				F3867F0424607D2B008F0F31 /* InspectorScreencastAgent.h */,
->>>>>>> 18d422ff5c10 (chore(webkit): bootstrap build #2347)
 				D2CB01DAB4428B76CDA8AECC /* ProxyingNetworkAgent.cpp */,
 				EB43329193327F9D842EE004 /* ProxyingNetworkAgent.h */,
 				35541583DC2A3C24CD8C2D87 /* ProxyingNetworkAgent.messages.in */,
@@ -18527,22 +18523,14 @@
 				BC14DF77120B5B7900826C0C /* InjectedBundleScriptWorld.h in Headers */,
 				CE550E152283752200D28791 /* InsertTextOptions.h in Headers */,
 				9197940523DBC4BB00257892 /* InspectorBrowserAgent.h in Headers */,
-<<<<<<< HEAD
 				AA1057000000000000000006 /* InspectorCookieStoreHelpers.h in Headers */,
-||||||| parent of 18d422ff5c10 (chore(webkit): bootstrap build #2347)
-=======
 				D76D6888238DBD81008D314B /* InspectorDialogAgent.h in Headers */,
->>>>>>> 18d422ff5c10 (chore(webkit): bootstrap build #2347)
 				996B2B9D25E257FF00719379 /* InspectorExtensionDelegate.h in Headers */,
 				01840EDDFCFA4B829AA44670 /* InspectorPassthroughChannel.h in Headers */,
-<<<<<<< HEAD
 				AA1057000000000000000005 /* InspectorStorageAgent.h in Headers */,
-||||||| parent of 18d422ff5c10 (chore(webkit): bootstrap build #2347)
-=======
 				D71A94342370E07A002C4D9E /* InspectorPlaywrightAgentClient.h in Headers */,
 				D71A94322370E025002C4D9E /* InspectorPlaywrightAgentClientMac.h in Headers */,
 				F3867F0A24607D4E008F0F31 /* InspectorScreencastAgent.h in Headers */,
->>>>>>> 18d422ff5c10 (chore(webkit): bootstrap build #2347)
 				A5E391FD2183C1F800C8FB31 /* InspectorTargetProxy.h in Headers */,
 				07AE8FBD2F3BC4F300A4C0CA /* InteractionInformationAtPosition.h in Headers */,
 				07AE8FC22F3BC58200A4C0CA /* InteractionInformationRequest.h in Headers */,
