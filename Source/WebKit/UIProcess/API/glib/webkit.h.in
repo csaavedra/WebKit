@@ -45,13 +45,7 @@
 #include <@API_INCLUDE_PREFIX@/WebKitAutomationSession.h>
 #include <@API_INCLUDE_PREFIX@/WebKitBackForwardList.h>
 #include <@API_INCLUDE_PREFIX@/WebKitBackForwardListItem.h>
-<<<<<<< HEAD
-||||||| parent of 18d422ff5c10 (chore(webkit): bootstrap build #2347)
-#if PLATFORM(GTK)
-=======
 #include <@API_INCLUDE_PREFIX@/WebKitBrowserInspector.h>
-#if PLATFORM(GTK)
->>>>>>> 18d422ff5c10 (chore(webkit): bootstrap build #2347)
 #include <@API_INCLUDE_PREFIX@/WebKitClipboardPermissionRequest.h>
 #include <@API_INCLUDE_PREFIX@/WebKitColorChooserRequest.h>
 #include <@API_INCLUDE_PREFIX@/WebKitContextMenu.h>
