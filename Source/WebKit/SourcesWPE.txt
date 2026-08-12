@@ -297,7 +297,6 @@ UIProcess/wpe/PageInspectorTargetProxyWPE.cpp
 UIProcess/wpe/ScreenManagerWPE.cpp
 UIProcess/wpe/SystemSettingsManagerProxyWPE.cpp
 UIProcess/wpe/WPEUtilities.cpp
-UIProcess/wpe/WebColorPickerWPE.cpp
 UIProcess/wpe/WebDataListSuggestionsDropdownWPE.cpp
 UIProcess/wpe/WebDateTimePickerWPE.cpp
 UIProcess/wpe/WebPageInspectorEmulationAgentWPE.cpp

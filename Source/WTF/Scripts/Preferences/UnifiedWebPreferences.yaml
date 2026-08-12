@@ -4363,14 +4363,8 @@ InputTypeColorEnabled:
     WebKitLegacy:
       default: false
     WebKit:
-<<<<<<< HEAD
       "PLATFORM(COCOA) && !PLATFORM(WATCHOS)": true
       "PLATFORM(GTK) || PLATFORM(WPE)": true
-||||||| parent of 18d422ff5c10 (chore(webkit): bootstrap build #2347)
-      "PLATFORM(COCOA) && !PLATFORM(WATCHOS) || PLATFORM(GTK)": true
-=======
-      "PLATFORM(COCOA) && !PLATFORM(WATCHOS) || PLATFORM(GTK) || PLATFORM(WPE)": true
->>>>>>> 18d422ff5c10 (chore(webkit): bootstrap build #2347)
       default: false
     WebCore:
       default: false

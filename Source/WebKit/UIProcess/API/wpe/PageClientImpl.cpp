@@ -36,7 +36,6 @@
 #include "WPEWebViewLegacy.h"
 #include "WPEWebViewPlatform.h"
 #include "WebColorPicker.h"
-#include "WebColorPickerWPE.h"
 #include "WebDateTimePickerWPE.h"
 #include "WebContextMenuProxy.h"
 #include "WebContextMenuProxyWPE.h"
@@ -337,23 +336,11 @@ Ref<WebContextMenuProxy> PageClientImpl::createContextMenuProxy(WebPageProxy& pa
 }
 #endif
 
-<<<<<<< HEAD
 RefPtr<WebColorPicker> PageClientImpl::createColorPicker(WebPageProxy& page, const WebCore::Color&, const WebCore::IntRect&, ColorControlSupportsAlpha, Vector<WebCore::Color>&&, std::optional<WebCore::FrameIdentifier> frameID)
-||||||| parent of 18d422ff5c10 (chore(webkit): bootstrap build #2347)
-RefPtr<WebColorPicker> PageClientImpl::createColorPicker(WebPageProxy&, const WebCore::Color& intialColor, const WebCore::IntRect&, ColorControlSupportsAlpha supportsAlpha, Vector<WebCore::Color>&&, std::optional<WebCore::FrameIdentifier>)
-=======
-RefPtr<WebColorPicker> PageClientImpl::createColorPicker(WebPageProxy& page, const WebCore::Color& intialColor, const WebCore::IntRect& rect, ColorControlSupportsAlpha supportsAlpha, Vector<WebCore::Color>&&, std::optional<WebCore::FrameIdentifier> frameID)
->>>>>>> 18d422ff5c10 (chore(webkit): bootstrap build #2347)
 {
-<<<<<<< HEAD
     if (!m_view.client().isGLibBasedAPI())
         return nullptr;
     return WebKitColorChooser::create(m_view, page, frameID);
-||||||| parent of 18d422ff5c10 (chore(webkit): bootstrap build #2347)
-    return nullptr;
-=======
-    return WebColorPickerWPE::create(page, intialColor, rect, frameID);
->>>>>>> 18d422ff5c10 (chore(webkit): bootstrap build #2347)
 }
 
 RefPtr<WebKit::WebDataListSuggestionsDropdown> PageClientImpl::createDataListSuggestionsDropdown(WebKit::WebPageProxy& page)
