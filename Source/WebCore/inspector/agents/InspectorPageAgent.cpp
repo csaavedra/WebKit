@@ -88,12 +88,8 @@
 #include <JavaScriptCore/InjectedScriptManager.h>
 #include <JavaScriptCore/JSDateMath.h>
 #include <JavaScriptCore/RegularExpression.h>
-<<<<<<< HEAD
-#include <wtf/HashSet.h>
-||||||| parent of 24ce8e2feb21 (chore(webkit): bootstrap build #2348)
-=======
 #include <wtf/DateMath.h>
->>>>>>> 24ce8e2feb21 (chore(webkit): bootstrap build #2348)
+#include <wtf/HashSet.h>
 #include <wtf/ListHashSet.h>
 #include <wtf/NeverDestroyed.h>
 #include <wtf/Stopwatch.h>
