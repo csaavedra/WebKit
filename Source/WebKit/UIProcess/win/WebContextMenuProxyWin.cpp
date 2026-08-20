@@ -117,9 +117,16 @@ WebContextMenuProxyWin::~WebContextMenuProxyWin()
         ::DestroyMenu(m_menu);
 }
 
+<<<<<<< HEAD
 void WebContextMenuProxyWin::cancelTracking()
 {
     if (m_tracking)
+||||||| parent of 9a81c6fc2def (chore(webkit): bootstrap build #2354)
+=======
+void WebContextMenuProxyWin::hide()
+{
+    if (m_menu)
+>>>>>>> 9a81c6fc2def (chore(webkit): bootstrap build #2354)
         ::EndMenu();
 }
 
