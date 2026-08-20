@@ -544,17 +544,9 @@ RetainPtr<NSMenuItem> WebContextMenuProxyMac::createShareMenuItem(ShareMenuItemT
 }
 #endif
 
-<<<<<<< HEAD
 void WebContextMenuProxyMac::cancelTracking()
 {
     [protect(m_menu) cancelTracking];
-||||||| parent of 9a81c6fc2def (chore(webkit): bootstrap build #2354)
-=======
-void WebContextMenuProxyMac::hide()
-{
-    if (m_menu)
-        [m_menu cancelTracking];
->>>>>>> 9a81c6fc2def (chore(webkit): bootstrap build #2354)
 }
 
 void WebContextMenuProxyMac::show()

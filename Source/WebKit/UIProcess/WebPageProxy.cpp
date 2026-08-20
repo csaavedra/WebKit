@@ -11365,8 +11365,8 @@ void WebPageProxy::closePage()
         return;
 
 #if ENABLE(CONTEXT_MENUS)
-    if (m_activeContextMenu)
-        m_activeContextMenu->hide();
+    if (RefPtr activeContextMenu = m_activeContextMenu)
+        activeContextMenu->cancelTracking();
 #endif
     WEBPAGEPROXY_RELEASE_LOG(Process, "closePage:");
     if (RefPtr pageClient = this->pageClient())

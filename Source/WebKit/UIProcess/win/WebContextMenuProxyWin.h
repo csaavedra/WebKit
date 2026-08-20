@@ -47,12 +47,7 @@ public:
 private:
     WebContextMenuProxyWin(WebPageProxy&, FrameInfoData&&, ContextMenuContextData&&, const UserData&);
     void showContextMenuWithItems(Vector<Ref<WebContextMenuItem>>&&) override;
-<<<<<<< HEAD
     void cancelTracking() override;
-||||||| parent of 9a81c6fc2def (chore(webkit): bootstrap build #2354)
-=======
-    void hide() override;
->>>>>>> 9a81c6fc2def (chore(webkit): bootstrap build #2354)
 
     HMENU m_menu;
     bool m_tracking { false };

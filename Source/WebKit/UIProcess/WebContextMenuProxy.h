@@ -51,12 +51,7 @@ public:
     void deref() const final { RefCounted::deref(); }
 
     virtual void show();
-<<<<<<< HEAD
     virtual void cancelTracking() { }
-||||||| parent of 9a81c6fc2def (chore(webkit): bootstrap build #2354)
-=======
-    virtual void hide() {}
->>>>>>> 9a81c6fc2def (chore(webkit): bootstrap build #2354)
 
     WebPageProxy* page() const { return m_page.get(); }
     const FrameInfoData& frameInfo() const LIFETIME_BOUND { return m_frameInfo; }
