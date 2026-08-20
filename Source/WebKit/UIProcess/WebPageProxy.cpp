@@ -2400,15 +2400,6 @@ void WebPageProxy::loadRequestWithNavigationShared(Ref<WebProcessProxy>&& proces
             protectedThis->preconnectTo(ResourceRequest { loadParameters.request });
 
         navigation->setIsLoadedWithNavigationShared(true);
-<<<<<<< HEAD
-        if (!protectedProcess->isLaunching() || !url.protocolIsFile())
-            protectedProcess->send(Messages::WebPage::LoadRequest(WTF::move(loadParameters)), webPageID);
-||||||| parent of 9a81c6fc2def (chore(webkit): bootstrap build #2354)
-        protectedProcess->markProcessAsRecentlyUsed();
-        if (!protectedProcess->isLaunching() || !url.protocolIsFile())
-            protectedProcess->send(Messages::WebPage::LoadRequest(WTF::move(loadParameters)), webPageID);
-=======
-        protectedProcess->markProcessAsRecentlyUsed();
 
         // Pause loading for new window navigation.
         Function<void()> continuation = [
@@ -2430,7 +2421,6 @@ void WebPageProxy::loadRequestWithNavigationShared(Ref<WebProcessProxy>&& proces
         };
         if (protectedThis->m_inspectorController->shouldPauseLoadRequest())
             protectedThis->m_inspectorController->setContinueLoadingCallback(WTF::move(continuation));
->>>>>>> 9a81c6fc2def (chore(webkit): bootstrap build #2354)
         else
             continuation();
     });
