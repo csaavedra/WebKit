@@ -2436,18 +2436,11 @@ void WebPageProxy::loadRequestWithNavigationShared(Ref<WebProcessProxy>&& proces
             protectedThis->preconnectTo(ResourceRequest { loadParameters.request });
 
         navigation->setIsLoadedWithNavigationShared(true);
-<<<<<<< HEAD
-        if (!process->isLaunching() || !url.protocolIsFile())
-            process->send(Messages::WebPage::LoadRequest(WTF::move(loadParameters)), webPageID);
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-        if (!protectedProcess->isLaunching() || !url.protocolIsFile())
-            protectedProcess->send(Messages::WebPage::LoadRequest(WTF::move(loadParameters)), webPageID);
-=======
 
         // Pause loading for new window navigation.
         Function<void()> continuation = [
             weakThis = WeakPtr { protectedThis },
-            weakProcess = WeakPtr { protectedProcess },
+            weakProcess = WeakPtr { process },
             loadParameters = WTF::move(loadParameters),
             webPageID,
             url
@@ -2459,22 +2452,13 @@ void WebPageProxy::loadRequestWithNavigationShared(Ref<WebProcessProxy>&& proces
             if (!innerProtectedProcess->isLaunching() || !url.protocolIsFile())
                 innerProtectedProcess->send(Messages::WebPage::LoadRequest(WTF::move(loadParameters)), webPageID);
             else
-                innerProtectedProcess->send(Messages::WebPage::LoadRequestWaitingForProcessLaunch(WTF::move(loadParameters), innerProtectedThis->internals().pageLoadState.resourceDirectoryURL(), innerProtectedThis->identifier(), true), webPageID);
+                innerProtectedProcess->send(Messages::WebPage::LoadRequestWaitingForProcessLaunch(WTF::move(loadParameters), innerProtectedThis->pageLoadState().resourceDirectoryURL(), innerProtectedThis->identifier(), true), webPageID);
             innerProtectedProcess->startResponsivenessTimer();
         };
         if (protectedThis->m_inspectorController->shouldPauseLoadRequest())
             protectedThis->m_inspectorController->setContinueLoadingCallback(WTF::move(continuation));
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
         else
-<<<<<<< HEAD
-            process->send(Messages::WebPage::LoadRequestWaitingForProcessLaunch(WTF::move(loadParameters), protectedThis->pageLoadState().resourceDirectoryURL(), protectedThis->identifier(), true), webPageID);
-        process->startResponsivenessTimer();
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-            protectedProcess->send(Messages::WebPage::LoadRequestWaitingForProcessLaunch(WTF::move(loadParameters), protectedThis->pageLoadState().resourceDirectoryURL(), protectedThis->identifier(), true), webPageID);
-        protectedProcess->startResponsivenessTimer();
-=======
             continuation();
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
     });
 }
 
