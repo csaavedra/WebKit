@@ -287,7 +287,7 @@ void WebPageInspectorInputAgent::dispatchMouseEvent(const String& type, int x, i
     UNUSED_VARIABLE(eventClickCount);
     platformDispatchMouseEvent(type, x, y, WTF::move(modifiers), button, WTF::move(clickCount), eventButtons, timestamp);
 #elif PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(WIN)
-    NativeWebMouseEvent event(
+    m_page.handleMouseEvent(NativeWebMouseEvent::create(
         eventType,
         eventButton,
         eventButtons,
@@ -298,8 +298,7 @@ void WebPageInspectorInputAgent::dispatchMouseEvent(const String& type, int x, i
         0,
         eventClickCount,
         eventModifiers,
-        timestamp);
-    m_page.handleMouseEvent(event);
+        timestamp));
 #endif
 }
 
