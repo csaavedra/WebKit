@@ -390,9 +390,14 @@ void WebPageInspectorInputAgent::dispatchWheelEvent(int x, int y, std::optional<
     WebCore::FloatSize delta = {-eventDeltaX, -eventDeltaY};
     WebCore::FloatSize wheelTicks = delta;
     wheelTicks.scale(1.0f / WebCore::Scrollbar::pixelsPerLineStep());
-    WebWheelEvent webEvent({WebEventType::Wheel, eventModifiers, timestamp}, {x, y}, {x, y}, delta, wheelTicks, WebWheelEvent::Granularity::ScrollByPixelWheelEvent);
-    NativeWebWheelEvent event(webEvent);
-    m_page.handleNativeWheelEvent(event);
+    WebWheelEventData wheelData;
+    wheelData.position = {x, y};
+    wheelData.globalPosition = {x, y};
+    wheelData.delta = delta;
+    wheelData.wheelTicks = wheelTicks;
+    wheelData.granularity = WebWheelEvent::Granularity::ScrollByPixelWheelEvent;
+    Ref webEvent = WebWheelEvent::create({WebEventType::Wheel, eventModifiers, timestamp}, WTF::move(wheelData));
+    m_page.handleNativeWheelEvent(NativeWebWheelEvent::create(webEvent));
 }
 
 } // namespace WebKit

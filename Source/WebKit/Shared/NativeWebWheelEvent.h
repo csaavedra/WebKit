@@ -81,8 +81,17 @@ public:
 #endif
 
 #if !USE(APPKIT)
-    NativeWebWheelEvent(const WebWheelEvent & webWheelEvent)
-        : WebWheelEvent(webWheelEvent) { }
+    static Ref<NativeWebWheelEvent> create(const WebWheelEvent& wheelEvent)
+    {
+        WebWheelEventInit init { wheelEvent.eventData(), wheelEvent.wheelData() };
+#if PLATFORM(GTK)
+        return adoptRef(*new NativeWebWheelEvent(WTF::move(init), nullptr));
+#elif PLATFORM(WIN)
+        return adoptRef(*new NativeWebWheelEvent(WTF::move(init), MSG { }));
+#else
+        return adoptRef(*new NativeWebWheelEvent(WTF::move(init)));
+#endif
+    }
 #endif
 
 #if USE(APPKIT)
