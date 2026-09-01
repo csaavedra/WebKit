@@ -91,35 +91,17 @@ void DownloadProxy::cancel(CompletionHandler<void(API::Data*)>&& completionHandl
 {
     m_downloadIsCancelled = true;
     if (m_dataStore) {
-<<<<<<< HEAD
-        protect(protect(m_dataStore)->networkProcess())->sendWithAsyncReply(Messages::NetworkProcess::CancelDownload(m_downloadID), [weakThis = WeakPtr { *this }, completionHandler = WTF::move(completionHandler)] (std::span<const uint8_t> resumeData) mutable {
-            RefPtr protectedThis = weakThis;
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-        protect(protect(m_dataStore)->networkProcess())->sendWithAsyncReply(Messages::NetworkProcess::CancelDownload(m_downloadID), [weakThis = WeakPtr { *this }, completionHandler = WTF::move(completionHandler)] (std::span<const uint8_t> resumeData) mutable {
-            RefPtr protectedThis = weakThis.get();
-=======
         auto* instrumentation = m_dataStore->downloadInstrumentation();
         protect(protect(m_dataStore)->networkProcess())->sendWithAsyncReply(Messages::NetworkProcess::CancelDownload(m_downloadID), [weakThis = WeakPtr { *this }, completionHandler = WTF::move(completionHandler), instrumentation] (std::span<const uint8_t> resumeData) mutable {
-            RefPtr protectedThis = weakThis.get();
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+            RefPtr protectedThis = weakThis;
             if (!protectedThis)
                 return completionHandler(nullptr);
-<<<<<<< HEAD
             RefPtr legacyResumeData = createData(resumeData);
             protectedThis->m_legacyResumeData = legacyResumeData;
             completionHandler(legacyResumeData);
-            if (RefPtr downloadProxyMap = protectedThis->m_downloadProxyMap)
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-            protectedThis->m_legacyResumeData = createData(resumeData);
-            completionHandler(protectedThis->m_legacyResumeData.get());
-            if (RefPtr downloadProxyMap = protectedThis->m_downloadProxyMap.get())
-=======
-            protectedThis->m_legacyResumeData = createData(resumeData);
-            completionHandler(protectedThis->m_legacyResumeData.get());
             if (instrumentation)
                 instrumentation->downloadFinished(protectedThis->m_uuid, "canceled"_s);
-            if (RefPtr downloadProxyMap = protectedThis->m_downloadProxyMap.get())
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+            if (RefPtr downloadProxyMap = protectedThis->m_downloadProxyMap)
                 downloadProxyMap->downloadFinished(*protectedThis);
         });
     } else
@@ -318,15 +300,9 @@ void DownloadProxy::didFail(const ResourceError& error, std::span<const uint8_t>
     RefPtr legacyResumeData = createData(resumeData);
     m_legacyResumeData = legacyResumeData;
 
-<<<<<<< HEAD
     protect(client())->didFail(*this, error, legacyResumeData);
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-    protect(client())->didFail(*this, error, m_legacyResumeData.get());
-=======
-    protect(client())->didFail(*this, error, m_legacyResumeData.get());
     if (auto* instrumentation = m_dataStore->downloadInstrumentation())
       instrumentation->downloadFinished(m_uuid, error.localizedDescription());
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
 
     // This can cause the DownloadProxy object to be deleted.
     if (RefPtr downloadProxyMap = m_downloadProxyMap)
