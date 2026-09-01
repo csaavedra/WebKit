@@ -460,16 +460,10 @@ ALLOW_DEPRECATED_DECLARATIONS_END
 #endif
 
 #if PLATFORM(MAC)
-<<<<<<< HEAD
     parameters.screenProperties = cachedScreenProperties();
-    parameters.useOverlayScrollbars = ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
+    parameters.useOverlayScrollbars = m_configuration->forceOverlayScrollbars() || ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
 #else
     parameters.screenProperties = WebCore::collectScreenProperties();
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-    parameters.useOverlayScrollbars = ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
-=======
-    parameters.useOverlayScrollbars = m_configuration->forceOverlayScrollbars() || ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
 #endif
 
 #if PLATFORM(VISION)
