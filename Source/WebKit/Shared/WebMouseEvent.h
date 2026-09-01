@@ -136,7 +136,58 @@ public:
     WebCore::PointerID pointerId() const { return m_data.pointerId; }
     const String& pointerType() const LIFETIME_BOUND { return m_data.pointerType; }
 #endif
+<<<<<<< HEAD
     GestureWasCancelled gestureWasCancelled() const { return m_data.gestureWasCancelled; }
+||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
+
+    WebMouseEventButton button() const { return m_button; }
+    unsigned short buttons() const { return m_buttons; }
+    const WebCore::DoublePoint& position() const { return m_position; } // Relative to the view.
+    void setPosition(const WebCore::DoublePoint& position) { m_position = position; }
+    const WebCore::DoublePoint& globalPosition() const LIFETIME_BOUND { return m_globalPosition; }
+    float deltaX() const { return m_deltaX; }
+    float deltaY() const { return m_deltaY; }
+    float deltaZ() const { return m_deltaZ; }
+    int32_t clickCount() const { return m_clickCount; }
+#if PLATFORM(MAC)
+    int32_t eventNumber() const { return m_eventNumber; }
+    int32_t menuTypeForEvent() const { return m_menuTypeForEvent; }
+#elif PLATFORM(GTK)
+    WebCore::PlatformMouseEvent::IsTouch isTouchEvent() const { return m_isTouchEvent; }
+#endif
+    double force() const { return m_force; }
+    WebEventInputSource inputSource() const { return m_inputSource; }
+    WebCore::PlatformMouseEvent::CanInitiateDrag canInitiateDrag() const { return m_canInitiateDrag; }
+    WebMouseEventSyntheticClickType syntheticClickType() const { return m_syntheticClickType; }
+    WebCore::PointerID pointerId() const { return m_pointerId; }
+    const String& pointerType() const LIFETIME_BOUND { return m_pointerType; }
+    GestureWasCancelled gestureWasCancelled() const { return m_gestureWasCancelled; }
+=======
+
+    WebMouseEventButton button() const { return m_button; }
+    unsigned short buttons() const { return m_buttons; }
+    void playwrightSetButtons(unsigned short buttons) { m_buttons = buttons; }
+    const WebCore::DoublePoint& position() const { return m_position; } // Relative to the view.
+    void setPosition(const WebCore::DoublePoint& position) { m_position = position; }
+    const WebCore::DoublePoint& globalPosition() const LIFETIME_BOUND { return m_globalPosition; }
+    float deltaX() const { return m_deltaX; }
+    float deltaY() const { return m_deltaY; }
+    float deltaZ() const { return m_deltaZ; }
+    int32_t clickCount() const { return m_clickCount; }
+#if PLATFORM(MAC)
+    int32_t eventNumber() const { return m_eventNumber; }
+    int32_t menuTypeForEvent() const { return m_menuTypeForEvent; }
+#elif PLATFORM(GTK)
+    WebCore::PlatformMouseEvent::IsTouch isTouchEvent() const { return m_isTouchEvent; }
+#endif
+    double force() const { return m_force; }
+    WebEventInputSource inputSource() const { return m_inputSource; }
+    WebCore::PlatformMouseEvent::CanInitiateDrag canInitiateDrag() const { return m_canInitiateDrag; }
+    WebMouseEventSyntheticClickType syntheticClickType() const { return m_syntheticClickType; }
+    WebCore::PointerID pointerId() const { return m_pointerId; }
+    const String& pointerType() const LIFETIME_BOUND { return m_pointerType; }
+    GestureWasCancelled gestureWasCancelled() const { return m_gestureWasCancelled; }
+>>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
     // Unaccelerated pointer movement
     const WebCore::DoublePoint& unadjustedMovementDelta() const LIFETIME_BOUND { return m_data.unadjustedMovementDelta; }
 

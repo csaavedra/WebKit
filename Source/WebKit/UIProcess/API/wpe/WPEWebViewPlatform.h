@@ -63,7 +63,13 @@ public:
     static WebKit::WebPageProxy* platformWebPageProxyForGamepadInput();
 #endif
 
+<<<<<<< HEAD
     std::expected<Ref<WebKit::ViewSnapshot>, String> takeViewSnapshot(std::optional<WebCore::IntRect>&&);
+||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
+    Expected<Ref<WebKit::ViewSnapshot>, String> takeViewSnapshot(std::optional<WebCore::IntRect>&&);
+=======
+    Expected<Ref<WebKit::ViewSnapshot>, String> takeViewSnapshot(std::optional<WebCore::IntRect>&&, bool nominalResolution);
+>>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
 
     void updateAcceleratedSurface(uint64_t);
     WebKit::RendererBufferDescription renderBufferDescription() const;
