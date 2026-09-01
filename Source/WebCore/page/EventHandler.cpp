@@ -5468,14 +5468,8 @@ static HitTestResult hitTestResultInFrame(LocalFrame* frame, const LayoutPoint& 
     return result;
 }
 
-<<<<<<< HEAD
-std::expected<bool, RemoteFrameGeometryTransformer> EventHandler::handleTouchEvent(const PlatformTouchEvent& event)
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-Expected<bool, RemoteFrameGeometryTransformer> EventHandler::handleTouchEvent(const PlatformTouchEvent& event)
-=======
 WTF_ALLOW_UNSAFE_BUFFER_USAGE_BEGIN
-Expected<bool, RemoteFrameGeometryTransformer> EventHandler::handleTouchEvent(const PlatformTouchEvent& event)
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+std::expected<bool, RemoteFrameGeometryTransformer> EventHandler::handleTouchEvent(const PlatformTouchEvent& event)
 {
     Ref frame = m_frame.get();
 

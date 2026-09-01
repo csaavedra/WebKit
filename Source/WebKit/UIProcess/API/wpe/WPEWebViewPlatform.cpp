@@ -692,13 +692,7 @@ void ViewPlatform::callAfterNextPresentationUpdate(CompletionHandler<void()>&& c
     }
 }
 
-<<<<<<< HEAD
-std::expected<Ref<ViewSnapshot>, String> ViewPlatform::takeViewSnapshot(std::optional<WebCore::IntRect>&& clipRect)
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-Expected<Ref<ViewSnapshot>, String> ViewPlatform::takeViewSnapshot(std::optional<WebCore::IntRect>&& clipRect)
-=======
-Expected<Ref<ViewSnapshot>, String> ViewPlatform::takeViewSnapshot(std::optional<WebCore::IntRect>&& clipRect, bool nominalResolution)
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+std::expected<Ref<ViewSnapshot>, String> ViewPlatform::takeViewSnapshot(std::optional<WebCore::IntRect>&& clipRect, bool nominalResolution)
 {
     return m_backingStore->takeSnapshot(WTF::move(clipRect), nominalResolution);
 }

@@ -73,13 +73,7 @@ public:
 
     void updateSurfaceID(uint64_t);
 
-<<<<<<< HEAD
-    std::expected<Ref<ViewSnapshot>, String> takeSnapshot(std::optional<WebCore::IntRect>&&);
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-    Expected<Ref<ViewSnapshot>, String> takeSnapshot(std::optional<WebCore::IntRect>&&);
-=======
-    Expected<Ref<ViewSnapshot>, String> takeSnapshot(std::optional<WebCore::IntRect>&&, bool nominalResolution);
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+    std::expected<Ref<ViewSnapshot>, String> takeSnapshot(std::optional<WebCore::IntRect>&&, bool nominalResolution);
 
     RendererBufferDescription bufferDescription() const;
 

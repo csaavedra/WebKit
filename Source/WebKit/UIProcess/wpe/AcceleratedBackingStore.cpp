@@ -232,13 +232,7 @@ static std::expected<SkImageInfo, String> getImageInfoFromBuffer(const  GRefPtr<
     return makeUnexpected("Failed to extract snapshot pixel information"_s);
 }
 
-<<<<<<< HEAD
-static std::expected<Ref<ViewSnapshot>, String> saveBufferSnapshot(const GRefPtr<WPEBuffer>& buffer, std::optional<WebCore::IntRect>&& clipRect)
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-static Expected<Ref<ViewSnapshot>, String> saveBufferSnapshot(const GRefPtr<WPEBuffer>& buffer, std::optional<WebCore::IntRect>&& clipRect)
-=======
-static Expected<Ref<ViewSnapshot>, String> saveBufferSnapshot(const GRefPtr<WPEBuffer>& buffer, std::optional<WebCore::IntRect>&& clipRect, bool nominalResolution, WebPageProxy& page)
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+static std::expected<Ref<ViewSnapshot>, String> saveBufferSnapshot(const GRefPtr<WPEBuffer>& buffer, std::optional<WebCore::IntRect>&& clipRect, bool nominalResolution, WebPageProxy& page)
 {
     GUniqueOutPtr<GError> error;
     GBytes* pixels = wpe_buffer_import_to_pixels(buffer.get(), &error.outPtr());
@@ -291,13 +285,7 @@ static Expected<Ref<ViewSnapshot>, String> saveBufferSnapshot(const GRefPtr<WPEB
     return { ViewSnapshot::create(bitmap.asImage()) };
 }
 
-<<<<<<< HEAD
-std::expected<Ref<ViewSnapshot>, String> AcceleratedBackingStore::takeSnapshot(std::optional<WebCore::IntRect>&& clipRect)
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-Expected<Ref<ViewSnapshot>, String> AcceleratedBackingStore::takeSnapshot(std::optional<WebCore::IntRect>&& clipRect)
-=======
-Expected<Ref<ViewSnapshot>, String> AcceleratedBackingStore::takeSnapshot(std::optional<WebCore::IntRect>&& clipRect, bool nominalResolution)
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+std::expected<Ref<ViewSnapshot>, String> AcceleratedBackingStore::takeSnapshot(std::optional<WebCore::IntRect>&& clipRect, bool nominalResolution)
 {
     if (!m_committedBuffer && !m_pendingBuffer) [[unlikely]]
         return makeUnexpected("No buffer to create snapshot from"_s);
