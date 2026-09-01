@@ -4648,7 +4648,8 @@ void WebPage::fakeTouchTap(const WebCore::IntPoint& position, uint8_t modifiers,
         WebPlatformTouchPoint::State state = WebPlatformTouchPoint::State::Pressed;
         touchPoints.append(WebPlatformTouchPoint(id, state, screenPosition, position, radius, rotationAngle, force));
 
-        WebTouchEvent touchEvent({WebEventType::TouchStart, eventModifiers, MonotonicTime::now()}, WTF::move(touchPoints), {}, {});
+        Ref touchEventRef = WebTouchEvent::create({WebEventType::TouchStart, eventModifiers, MonotonicTime::now()}, { WTF::move(touchPoints), { }, { } });
+        const auto& touchEvent = touchEventRef.get();
 
         CurrentEvent currentEvent(touchEvent);
         handled = handleTouchEvent(m_page->mainFrame().frameID(), touchEvent, m_page.get()).value_or(false);
@@ -4658,7 +4659,8 @@ void WebPage::fakeTouchTap(const WebCore::IntPoint& position, uint8_t modifiers,
         WebPlatformTouchPoint::State state = WebPlatformTouchPoint::State::Released;
         touchPoints.append(WebPlatformTouchPoint(id, state, screenPosition, position, radius, rotationAngle, force));
 
-        WebTouchEvent touchEvent({WebEventType::TouchEnd, eventModifiers, MonotonicTime::now()}, WTF::move(touchPoints), {}, {});
+        Ref touchEventRef = WebTouchEvent::create({WebEventType::TouchEnd, eventModifiers, MonotonicTime::now()}, { WTF::move(touchPoints), { }, { } });
+        const auto& touchEvent = touchEventRef.get();
 
         CurrentEvent currentEvent(touchEvent);
         handled = handleTouchEvent(m_page->mainFrame().frameID(), touchEvent, m_page.get()).value_or(false) || handled;
