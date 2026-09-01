@@ -2427,14 +2427,8 @@ private:
     void didBeginTouchPoint(WebCore::FloatPoint locationInRootView);
     void updatePotentialTapSecurityOrigin(const WebTouchEvent&, bool wasHandled);
 #elif ENABLE(TOUCH_EVENTS)
-<<<<<<< HEAD
     void touchEvent(Ref<WebTouchEvent>&&, CompletionHandler<void(std::optional<WebEventType>, bool)>&&);
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-    void touchEvent(const WebTouchEvent&, CompletionHandler<void(std::optional<WebEventType>, bool)>&&);
-=======
-    void touchEvent(const WebTouchEvent&, CompletionHandler<void(std::optional<WebEventType>, bool)>&&);
     void fakeTouchTap(const WebCore::IntPoint& position, uint8_t modifiers, CompletionHandler<void()>&& completionHandler);
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
 #endif
 
     void cancelPointer(WebCore::PointerID, const WebCore::IntPoint&);

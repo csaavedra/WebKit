@@ -123,7 +123,7 @@ void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, con
     if (!macCommands.isEmpty())
         if (auto replyID = m_page.grantAccessToCurrentPasteboardData(NSPasteboardNameGeneral, [] () { }))
             protect(m_page.websiteDataStore().networkProcess())->connection().waitForAsyncReplyAndDispatchImmediately<Messages::NetworkProcess::AllowFilesAccessFromWebProcess>(*replyID, 100_ms);
-    NativeWebKeyboardEvent event(
+    m_page.handleKeyboardEvent(NativeWebKeyboardEvent::create(
         type,
         text,
         unmodifiedText,
@@ -137,8 +137,7 @@ void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, con
         isSystemKey,
         modifiers,
         timestamp,
-        WTF::move(macCommands));
-    m_page.handleKeyboardEvent(event);
+        WTF::move(macCommands)));
 }
 
 } // namespace WebKit

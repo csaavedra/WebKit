@@ -35,7 +35,7 @@ namespace WebKit {
 
 void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, const String& text, const String& unmodifiedText, const String& key, const String& code, const String& keyIdentifier, int windowsVirtualKeyCode, int nativeVirtualKeyCode, bool isAutoRepeat, bool isKeypad, bool isSystemKey, OptionSet<WebEventModifier> modifiers, Vector<String>& macCommands, MonotonicTime timestamp)
 {
-    NativeWebKeyboardEvent event(
+    m_page.handleKeyboardEvent(NativeWebKeyboardEvent::create(
         type,
         text,
         unmodifiedText,
@@ -48,8 +48,7 @@ void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, con
         isKeypad,
         isSystemKey,
         modifiers,
-        timestamp);
-    m_page.handleKeyboardEvent(event);
+        timestamp));
 }
 
 } // namespace WebKit

@@ -55,7 +55,7 @@ void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, con
         unsigned state = modifiersToEventState(modifiers);
         commands = KeyBindingTranslator().commandsForKeyval(keyVal, state);
     }
-    NativeWebKeyboardEvent event(
+    m_page.handleKeyboardEvent(NativeWebKeyboardEvent::create(
         type,
         text,
         unmodifiedText,
@@ -69,8 +69,7 @@ void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, con
         isSystemKey,
         modifiers,
         timestamp,
-        WTF::move(commands));
-    m_page.handleKeyboardEvent(event);
+        WTF::move(commands)));
 }
 
 } // namespace WebKit

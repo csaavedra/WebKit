@@ -4914,29 +4914,16 @@ void WebPageProxy::processNextQueuedMouseEvent()
             sandboxExtensions = SandboxExtension::createHandlesForMachLookup({ "com.apple.iconservices"_s, "com.apple.iconservices.store"_s }, process->auditToken(), SandboxExtension::MachBootstrapOptions::EnableMachBootstrap);
 #endif
 
-<<<<<<< HEAD
-    if (event->type() == WebEventType::MouseMove) {
-        // A copy, not the event itself: the event is about to own this vector, and a Ref to itself
-        // would be a reference cycle.
-        internals().coalescedMouseEvents.append(event->copy());
-        event->setCoalescedEvents(internals().coalescedMouseEvents);
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-    auto eventWithCoalescedEvents = event;
-
-    if (event->type() == WebEventType::MouseMove) {
-        internals().coalescedMouseEvents.append(event);
-        eventWithCoalescedEvents->setCoalescedEvents(internals().coalescedMouseEvents);
-=======
-        auto eventWithCoalescedEvents = event;
-
         if (event->type() == WebEventType::MouseMove) {
-            internals().coalescedMouseEvents.append(event);
-            eventWithCoalescedEvents->setCoalescedEvents(internals().coalescedMouseEvents);
+            // A copy, not the event itself: the event is about to own this vector, and a Ref to itself
+            // would be a reference cycle.
+            internals().coalescedMouseEvents.append(event->copy());
+            event->setCoalescedEvents(internals().coalescedMouseEvents);
         }
 
         LOG_WITH_STREAM(MouseHandling, stream << "UIProcess: sent mouse event " << eventType << " (queue size " << internals().mouseEventQueue.size() << ", coalesced events size " << internals().coalescedMouseEvents.size() << ")");
 
-        sendMouseEvent(m_mainFrame->frameID(), eventWithCoalescedEvents, WTF::move(sandboxExtensions));
+        sendMouseEvent(targetFrame->frameID(), event.copyRef(), WTF::move(sandboxExtensions));
 
         internals().coalescedMouseEvents.clear();
     } else {
@@ -4957,24 +4944,7 @@ void WebPageProxy::processNextQueuedMouseEvent()
             dragEnded(roundedIntPoint(event->position()), roundedIntPoint(event->globalPosition()), m_dragSourceOperationMask);
         }
         mouseEventHandlingCompleted(true, std::nullopt);
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
     }
-<<<<<<< HEAD
-
-    LOG_WITH_STREAM(MouseHandling, stream << "UIProcess: sent mouse event " << eventType << " (queue size " << internals().mouseEventQueue.size() << ", coalesced events size " << internals().coalescedMouseEvents.size() << ")");
-
-    sendMouseEvent(targetFrame->frameID(), event.copyRef(), WTF::move(sandboxExtensions));
-
-    internals().coalescedMouseEvents.clear();
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-
-    LOG_WITH_STREAM(MouseHandling, stream << "UIProcess: sent mouse event " << eventType << " (queue size " << internals().mouseEventQueue.size() << ", coalesced events size " << internals().coalescedMouseEvents.size() << ")");
-
-    sendMouseEvent(targetFrame->frameID(), eventWithCoalescedEvents, WTF::move(sandboxExtensions));
-
-    internals().coalescedMouseEvents.clear();
-=======
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
 }
 
 #if ENABLE(MAC_GESTURE_EVENTS)

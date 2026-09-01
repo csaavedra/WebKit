@@ -68,15 +68,7 @@ Ref<NativeWebKeyboardEvent> NativeWebKeyboardEvent::create(const String& text, s
     }, nullptr));
 }
 
-<<<<<<< HEAD
-Ref<NativeWebKeyboardEvent> NativeWebKeyboardEvent::create(WebEventType type, const String& text, const String& key, const String& code, const String& keyIdentifier, int windowsVirtualKeyCode, int nativeVirtualKeyCode, Vector<String>&& commands, bool isAutoRepeat, bool isKeypad, OptionSet<WebEventModifier> modifiers)
-||||||| parent of f1f7042acc6c (chore(webkit): bootstrap build #2358)
-NativeWebKeyboardEvent::NativeWebKeyboardEvent(WebEventType type, const String& text, const String& key, const String& code, const String& keyIdentifier, int windowsVirtualKeyCode, int nativeVirtualKeyCode, Vector<String>&& commands, bool isAutoRepeat, bool isKeypad, OptionSet<WebEventModifier> modifiers)
-    : WebKeyboardEvent(WebEvent(type, modifiers, MonotonicTime::now()), text, key, code, keyIdentifier, windowsVirtualKeyCode, nativeVirtualKeyCode, false, std::nullopt, std::nullopt, WTF::move(commands), isAutoRepeat, isKeypad)
-=======
-NativeWebKeyboardEvent::NativeWebKeyboardEvent(WebEventType type, const String& text, const String& key, const String& code, const String& keyIdentifier, int windowsVirtualKeyCode, int nativeVirtualKeyCode, Vector<String>&& commands, bool isAutoRepeat, bool isKeypad, OptionSet<WebEventModifier> modifiers)
-    : WebKeyboardEvent(WebEvent(type, modifiers, MonotonicTime::now()), text, key, code, keyIdentifier, windowsVirtualKeyCode, nativeVirtualKeyCode, false, std::nullopt, std::nullopt, WTF::move(commands), false, isKeypad)
->>>>>>> f1f7042acc6c (chore(webkit): bootstrap build #2358)
+Ref<NativeWebKeyboardEvent> NativeWebKeyboardEvent::create(WebEventType type, const String& text, const String& key, const String& code, const String& keyIdentifier, int windowsVirtualKeyCode, int nativeVirtualKeyCode, Vector<String>&& commands, bool, bool isKeypad, OptionSet<WebEventModifier> modifiers)
 {
     return adoptRef(*new NativeWebKeyboardEvent(WebKeyboardEventInit {
         { type, modifiers, MonotonicTime::now() },
@@ -91,7 +83,8 @@ NativeWebKeyboardEvent::NativeWebKeyboardEvent(WebEventType type, const String& 
             .preeditUnderlines = std::nullopt,
             .preeditSelectionRange = std::nullopt,
             .commands = WTF::move(commands),
-            .isAutoRepeat = isAutoRepeat,
+            // Downstream: synthesized key events are never auto-repeats.
+            .isAutoRepeat = false,
             .isKeypad = isKeypad,
         }
     }, nullptr));
