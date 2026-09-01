@@ -106,9 +106,9 @@ void WebPageInspectorInputAgent::platformDispatchMouseEvent(const String& type, 
         event = [NSEvent eventWithCGEvent:cgEvent];
     }
 
-    NativeWebMouseEvent nativeEvent(event, nil, [window contentView], WebKit::WebEventInputSource::UserDriven);
-    nativeEvent.playwrightSetButtons(buttons);
-    m_page.handleMouseEvent(nativeEvent);
+    Ref nativeEvent = NativeWebMouseEvent::create(event, nil, [window contentView], WebKit::WebEventInputSource::UserDriven);
+    nativeEvent->playwrightSetButtons(buttons);
+    m_page.handleMouseEvent(WTF::move(nativeEvent));
 }
 
 void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, const String& text, const String& unmodifiedText, const String& key, const String& code, const String& keyIdentifier, int windowsVirtualKeyCode, int nativeVirtualKeyCode, bool isAutoRepeat, bool isKeypad, bool isSystemKey, OptionSet<WebEventModifier> modifiers, Vector<String>& commands, MonotonicTime timestamp)
