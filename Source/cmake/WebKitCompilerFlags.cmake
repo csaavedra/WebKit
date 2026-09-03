@@ -163,7 +163,15 @@ option(ENABLE_UNSAFE_BUFFER_USAGE_WARNING "Build with -Wunsafe-buffer-usage" OFF
 
 option(ENABLE_THREAD_SAFETY_WARNING "Build with -Wthread-safety" OFF)
 
+<<<<<<< HEAD
 option(DEVELOPER_MODE_FATAL_WARNINGS "Build with warnings as errors if DEVELOPER_MODE is also enabled" ON)
+||||||| parent of 46bab349c520 (chore(webkit): bootstrap build #2359)
+option(DEVELOPER_MODE_FATAL_WARNINGS "Build with warnings as errors if DEVELOPER_MODE is also enabled" ON)
+set(DEVELOPER_MODE_CXX_FLAGS)
+=======
+option(DEVELOPER_MODE_FATAL_WARNINGS "Build with warnings as errors if DEVELOPER_MODE is also enabled" OFF)
+set(DEVELOPER_MODE_CXX_FLAGS)
+>>>>>>> 46bab349c520 (chore(webkit): bootstrap build #2359)
 if (DEVELOPER_MODE AND DEVELOPER_MODE_FATAL_WARNINGS)
     if (MSVC)
         WEBKIT_PREPEND_GLOBAL_COMPILER_FLAGS(/WX)
