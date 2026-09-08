@@ -1159,16 +1159,10 @@ Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotNode(Insp
 
 Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem coordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Inspector::Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality)
 {
-<<<<<<< HEAD
-    SnapshotOptions options { { }, PixelFormat::BGRA8, ColorSpace::SRGB() };
-||||||| parent of f11a49200ec0 (chore(webkit): bootstrap build #2360)
-    SnapshotOptions options { { }, PixelFormat::BGRA8, DestinationColorSpace::SRGB() };
-=======
     if (quality && (*quality < 0 || *quality > 100))
         return makeUnexpected("Quality must be between 0 and 100"_s);
 
-    SnapshotOptions options { { }, PixelFormat::BGRA8, DestinationColorSpace::SRGB() };
->>>>>>> f11a49200ec0 (chore(webkit): bootstrap build #2360)
+    SnapshotOptions options { { }, PixelFormat::BGRA8, ColorSpace::SRGB() };
     if (coordinateSystem == Inspector::Protocol::Page::CoordinateSystem::Viewport)
         options.flags.add(SnapshotFlags::InViewCoordinates);
     if (omitDeviceScaleFactor.has_value() && *omitDeviceScaleFactor)
