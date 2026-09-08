@@ -12838,7 +12838,10 @@ void WebPageProxy::requestDOMPasteAccess(IPC::Connection& connection, DOMPasteAc
     // Independently validate transient activation in the UIProcess so that a compromised
     // WebContent process cannot bypass the WebCore-side check by calling this IPC directly.
     // See https://w3c.github.io/clipboard-apis/.
-    if (!frame->hasTransientActivation()) {
+    // Under automation the user gesture is emulated in the WebProcess (Runtime.evaluate with
+    // emulateUserGesture), so the UIProcess never sees the activation; access is decided by the
+    // permissions granted through Emulation.grantPermissions below instead.
+    if (!frame->hasTransientActivation() && !isControlledByAutomation()) {
         completionHandler(DOMPasteAccessResponse::DeniedForGesture);
         return;
     }
