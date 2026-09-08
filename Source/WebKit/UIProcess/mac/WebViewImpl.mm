@@ -2854,7 +2854,7 @@ WebCore::ColorSpace WebViewImpl::colorSpace()
     // Playwright begin
     // window.colorSpace is sometimes null on popup windows in headless mode
     if (!m_colorSpace)
-        return WebCore::DestinationColorSpace::SRGB();
+        return WebCore::ColorSpace::SRGB();
     // Playwright end
 
     ASSERT(m_colorSpace);
