@@ -41,6 +41,7 @@
 #if USE(SKIA)
 #include "DrawingAreaProxyCoordinatedGraphics.h"
 #include "DrawingAreaProxy.h"
+WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_BEGIN
 #include <skia/core/SkBitmap.h>
 #include <skia/core/SkCanvas.h>
 #include <skia/core/SkImage.h>
@@ -48,6 +49,7 @@
 #include <skia/core/SkData.h>
 #include <skia/core/SkStream.h>
 #include <skia/encode/SkJpegEncoder.h>
+WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_END
 #endif
 
 #if PLATFORM(MAC)

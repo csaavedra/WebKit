@@ -47,9 +47,11 @@
 #include "WebKitWebViewBasePrivate.h"
 #include <WebCore/NativeImage.h>
 #include <cairo.h>
+WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_BEGIN
 #include <skia/core/SkImage.h>
 #include <skia/core/SkSurface.h>
 #include <skia/core/SkCanvas.h>
+WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_END
 #endif
 
 #if USE(GLIB_EVENT_LOOP)
