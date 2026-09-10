@@ -142,7 +142,9 @@ void initializeBrowserInspectorWebSocket(unsigned port, std::unique_ptr<Inspecto
     GUniqueOutPtr<GError> error;
     const SoupServerListenOptions options = static_cast<SoupServerListenOptions>(0);
     if (!soup_server_listen_local(soupServer.get(), port, options, &error.outPtr())) {
+WTF_ALLOW_UNSAFE_BUFFER_USAGE_BEGIN
         fprintf(stderr, "Failed to start WebSocket server at port %u: %s\n", port, error->message);
+WTF_ALLOW_UNSAFE_BUFFER_USAGE_END
         return;
     }
 
