@@ -31,17 +31,9 @@
 #include "Pasteboard.h"
 #include <wpe/wpe.h>
 #include <wtf/Assertions.h>
-#include <wtf/HashMap.h>
-#include <wtf/NeverDestroyed.h>
 #include <wtf/text/WTFString.h>
 
 namespace WebCore {
-
-static UncheckedKeyHashMap<String, String>& sharedPasteboard()
-{
-    static NeverDestroyed<UncheckedKeyHashMap<String, String>> pasteboard;
-    return pasteboard.get();
-}
 
 PlatformPasteboard::PlatformPasteboard(const String&)
     : m_pasteboard(wpe_pasteboard_get_singleton())
@@ -67,13 +59,18 @@ int64_t PlatformPasteboard::changeCount() const
 
 void PlatformPasteboard::getTypes(Vector<String>& types) const
 {
-    for (const auto& type : sharedPasteboard().keys())
-        types.append(type);
+    struct wpe_pasteboard_string_vector pasteboardTypes = { nullptr, 0 };
+    wpe_pasteboard_get_types(m_pasteboard, &pasteboardTypes);
+    for (auto& typeString : unsafeMakeSpan(pasteboardTypes.strings, pasteboardTypes.length)) {
+        const auto length = std::min(static_cast<size_t>(typeString.length), std::numeric_limits<size_t>::max());
+        types.append(String(unsafeMakeSpan(typeString.data, length)));
+    }
+
+    wpe_pasteboard_string_vector_free(&pasteboardTypes);
 }
 
 String PlatformPasteboard::readString(size_t, const String& type) const
 {
-<<<<<<< HEAD
     struct wpe_pasteboard_string string = { nullptr, 0 };
     wpe_pasteboard_get_string(m_pasteboard, type.utf8().legacyCStringPointer(), &string);
     if (!string.length)
@@ -84,33 +81,54 @@ String PlatformPasteboard::readString(size_t, const String& type) const
 
     wpe_pasteboard_string_free(&string);
     return returnValue;
-||||||| parent of e95d502fd79f (chore(webkit): bootstrap build #2361)
-    struct wpe_pasteboard_string string = { nullptr, 0 };
-    wpe_pasteboard_get_string(m_pasteboard, type.utf8().data(), &string);
-    if (!string.length)
-        return String();
-
-    const auto length = std::min(static_cast<size_t>(string.length), std::numeric_limits<size_t>::max());
-    String returnValue(unsafeMakeSpan(string.data, length));
-
-    wpe_pasteboard_string_free(&string);
-    return returnValue;
-=======
-    return sharedPasteboard().get(type);
->>>>>>> e95d502fd79f (chore(webkit): bootstrap build #2361)
 }
 
 void PlatformPasteboard::write(const PasteboardWebContent& content)
 {
-    String plainText = "text/plain;charset=utf-8"_s;
-    String htmlText = "text/html;charset=utf-8"_s;
-    sharedPasteboard().set(plainText, content.text);
-    sharedPasteboard().set(htmlText, content.markup);
+    static constexpr auto plainText = "text/plain;charset=utf-8"_s;
+    static constexpr auto htmlText = "text/html"_s;
+
+    CString textString = content.text.utf8();
+    CString markupString = content.markup.utf8();
+
+    IGNORE_CLANG_WARNINGS_BEGIN("unsafe-buffer-usage-in-libc-call")
+    std::array<struct wpe_pasteboard_string_pair, 2> pairs = { {
+        { { nullptr, 0 }, { nullptr, 0 } },
+        { { nullptr, 0 }, { nullptr, 0 } },
+    } };
+    wpe_pasteboard_string_initialize(&pairs[0].type, plainText, strlen(plainText));
+    wpe_pasteboard_string_initialize(&pairs[0].string, textString.data(), textString.length());
+    wpe_pasteboard_string_initialize(&pairs[1].type, htmlText, strlen(htmlText));
+    wpe_pasteboard_string_initialize(&pairs[1].string, markupString.data(), markupString.length());
+    struct wpe_pasteboard_string_map map = { pairs.data(), pairs.size() };
+    IGNORE_CLANG_WARNINGS_END
+
+    wpe_pasteboard_write(m_pasteboard, &map);
+    m_changeCount++;
+
+    wpe_pasteboard_string_free(&pairs[0].type);
+    wpe_pasteboard_string_free(&pairs[0].string);
+    wpe_pasteboard_string_free(&pairs[1].type);
+    wpe_pasteboard_string_free(&pairs[1].string);
 }
 
 void PlatformPasteboard::write(const String& type, const String& string)
 {
-    sharedPasteboard().set(type, string);
+    struct wpe_pasteboard_string_pair pairs[] = {
+        { { nullptr, 0 }, { nullptr, 0 } },
+    };
+
+    auto typeUTF8 = type.utf8();
+    auto stringUTF8 = string.utf8();
+    wpe_pasteboard_string_initialize(&pairs[0].type, typeUTF8.data(), typeUTF8.length());
+    wpe_pasteboard_string_initialize(&pairs[0].string, stringUTF8.data(), stringUTF8.length());
+    struct wpe_pasteboard_string_map map = { pairs, 1 };
+
+    wpe_pasteboard_write(m_pasteboard, &map);
+    m_changeCount++;
+
+    wpe_pasteboard_string_free(&pairs[0].type);
+    wpe_pasteboard_string_free(&pairs[0].string);
 }
 
 Vector<String> PlatformPasteboard::typesSafeForDOMToReadAndWrite(const String&) const
