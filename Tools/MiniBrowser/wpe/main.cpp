@@ -398,16 +398,10 @@ static WebKitWebView* createWebViewImpl(WebKitWebView* webView, WebKitWebContext
     WebKitWebView* newWebView;
     if (webView) {
         newWebView = WEBKIT_WEB_VIEW(g_object_new(WEBKIT_TYPE_WEB_VIEW,
-#if defined(USE_LIBWPE) && USE_LIBWPE
-            "backend", viewBackend,
-#endif
             "related-view", webView,
             nullptr));
     } else {
         newWebView = WEBKIT_WEB_VIEW(g_object_new(WEBKIT_TYPE_WEB_VIEW,
-#if defined(USE_LIBWPE) && USE_LIBWPE
-            "backend", viewBackend,
-#endif
 #if ENABLE_WPE_PLATFORM
             // Playwright: never fall back to the default native display.
             "display", browserDisplay,
@@ -582,12 +576,8 @@ static gboolean webViewDecidePolicy(WebKitWebView *webView, WebKitPolicyDecision
         return FALSE;
 
     guint modifiers = webkit_navigation_action_get_modifiers(navigationAction);
-    // The modifier values depend on the API in use, see toPlatformModifiers() in WebKitPrivate.cpp.
-#if ENABLE_WPE_PLATFORM
+    // See toPlatformModifiers() in WebKitPrivate.cpp.
     const guint ctrlShiftMask = WPE_MODIFIER_KEYBOARD_CONTROL | WPE_MODIFIER_KEYBOARD_SHIFT;
-#else
-    const guint ctrlShiftMask = wpe_input_keyboard_modifier_control | wpe_input_keyboard_modifier_shift;
-#endif
     if (webkit_navigation_action_get_mouse_button(navigationAction) != 2 /* GDK_BUTTON_MIDDLE */ &&
         (webkit_navigation_action_get_mouse_button(navigationAction) != 1 /* GDK_BUTTON_PRIMARY */ || (modifiers & ctrlShiftMask) == 0))
         return FALSE;
@@ -1008,12 +998,7 @@ int main(int argc, char *argv[])
 
 #if ENABLE_WPE_PLATFORM_HEADLESS
 // Playwright begin
-#if defined(USE_LIBWPE) && USE_LIBWPE
-    const bool useHeadlessMode = headlessMode && !useLegacyAPI;
-#else
-    const bool useHeadlessMode = headlessMode;
-#endif
-    if (useHeadlessMode) {
+    if (headlessMode) {
         // Shared headless display passed explicitly to every view; a view without a display would
         // fall back to wpe_display_get_default() and open a real window on the native display.
         browserDisplay = wpe_display_headless_new();
