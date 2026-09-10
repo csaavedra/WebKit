@@ -35,6 +35,7 @@
 #include <libsoup/soup-websocket-connection.h>
 #include <libsoup/soup.h>
 #include <wtf/glib/GRefPtr.h>
+#include <wtf/glib/GSpanExtras.h>
 #include <wtf/NeverDestroyed.h>
 
 namespace WebKit {
@@ -110,10 +111,7 @@ private:
             return;
         }
 
-        gsize messageSize;
-        gconstpointer messageData = g_bytes_get_data(message, &messageSize);
-        String messageString = String::fromUTF8(std::span<const char8_t>(static_cast<const char8_t*>(messageData), messageSize));
-        m_playwrightAgent.dispatchMessageFromFrontend(messageString);
+        m_playwrightAgent.dispatchMessageFromFrontend(String::fromUTF8(span(message)));
     }
 
     bool handleWebSocketConnection(SoupWebsocketConnection* connection)
