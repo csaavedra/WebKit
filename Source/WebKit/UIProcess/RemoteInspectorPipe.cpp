@@ -30,10 +30,11 @@
 
 #include "InspectorPlaywrightAgent.h"
 #include <JavaScriptCore/InspectorFrontendChannel.h>
+#include <array>
 #include <wtf/Compiler.h>
 #include <wtf/MainThread.h>
 #include <wtf/RunLoop.h>
-#include <wtf/UniqueArray.h>
+#include <wtf/StdLibExtras.h>
 #include <wtf/Vector.h>
 #include <wtf/WorkQueue.h>
 
@@ -46,8 +47,6 @@
 #include <io.h>
 #endif
 
-WTF_ALLOW_UNSAFE_BUFFER_USAGE_BEGIN
-
 namespace WebKit {
 
 namespace {
@@ -55,57 +54,47 @@ namespace {
 const int readFD = 3;
 const int writeFD = 4;
 
-const size_t kWritePacketSize = 1 << 16;
+constexpr size_t writePacketSize = 1 << 16;
+constexpr std::array<char, 1> messageTerminator { '\0' };
 
 #if PLATFORM(WIN)
 HANDLE readHandle;
 HANDLE writeHandle;
 #endif
 
-size_t ReadBytes(void* buffer, size_t size, bool exact_size)
+size_t readBytes(std::span<char> buffer)
 {
-    size_t bytesRead = 0;
-    while (bytesRead < size) {
 #if PLATFORM(WIN)
-        DWORD sizeRead = 0;
-        bool hadError = !ReadFile(readHandle, static_cast<char*>(buffer) + bytesRead,
-            size - bytesRead, &sizeRead, nullptr);
+    DWORD sizeRead = 0;
+    if (!ReadFile(readHandle, buffer.data(), static_cast<DWORD>(buffer.size()), &sizeRead, nullptr))
+        return 0;
+    return sizeRead;
 #else
-        int sizeRead = read(readFD, static_cast<char*>(buffer) + bytesRead,
-            size - bytesRead);
+    while (true) {
+        int sizeRead = read(readFD, buffer.data(), buffer.size());
         if (sizeRead < 0 && errno == EINTR)
             continue;
-        bool hadError = sizeRead <= 0;
-#endif
-        if (hadError) {
-            return 0;
-        }
-        bytesRead += sizeRead;
-        if (!exact_size)
-            break;
+        return sizeRead > 0 ? static_cast<size_t>(sizeRead) : 0;
     }
-    return bytesRead;
+#endif
 }
 
-void WriteBytes(const char* bytes, size_t size)
+void writeBytes(std::span<const char> bytes)
 {
-    size_t totalWritten = 0;
-    while (totalWritten < size) {
-        size_t length = size - totalWritten;
-        if (length > kWritePacketSize)
-            length = kWritePacketSize;
+    while (!bytes.empty()) {
+        auto chunk = bytes.first(std::min(bytes.size(), writePacketSize));
 #if PLATFORM(WIN)
         DWORD bytesWritten = 0;
-        bool hadError = !WriteFile(writeHandle, bytes + totalWritten, static_cast<DWORD>(length), &bytesWritten, nullptr);
+        if (!WriteFile(writeHandle, chunk.data(), static_cast<DWORD>(chunk.size()), &bytesWritten, nullptr))
+            return;
 #else
-        int bytesWritten = write(writeFD, bytes + totalWritten, length);
+        int bytesWritten = write(writeFD, chunk.data(), chunk.size());
         if (bytesWritten < 0 && errno == EINTR)
             continue;
-        bool hadError = bytesWritten <= 0;
-#endif
-        if (hadError)
+        if (bytesWritten <= 0)
             return;
-        totalWritten += bytesWritten;
+#endif
+        bytes = bytes.subspan(bytesWritten);
     }
 }
 
@@ -130,8 +119,8 @@ public:
     {
         m_senderQueue->dispatch([message = message.isolatedCopy()]() {
             auto utf8 = message.utf8();
-            WriteBytes(utf8.legacyCStringPointer(), utf8.length());
-            WriteBytes("\0", 1);
+            writeBytes(byteCast<char>(utf8.span()));
+            writeBytes(messageTerminator);
         });
     }
 
@@ -183,11 +172,10 @@ void RemoteInspectorPipe::stop()
 
 void RemoteInspectorPipe::workerRun()
 {
-    const size_t bufSize = 256 * 1024;
-    auto buffer = makeUniqueArray<char>(bufSize);
+    Vector<char> buffer(256 * 1024);
     Vector<char> line;
     while (!m_terminated) {
-        size_t size = ReadBytes(buffer.get(), bufSize, false);
+        size_t size = readBytes(buffer.mutableSpan());
         if (!size) {
             RunLoop::mainSingleton().dispatch([this] {
                 if (!m_terminated)
@@ -197,7 +185,7 @@ void RemoteInspectorPipe::workerRun()
         }
         size_t start = 0;
         size_t end = line.size();
-        line.append(std::span { buffer.get(), size });
+        line.append(buffer.span().first(size));
         while (true) {
             for (; end < line.size(); ++end) {
                 if (line[end] == '\0')
@@ -207,7 +195,7 @@ void RemoteInspectorPipe::workerRun()
                 break;
 
             if (end > start) {
-                String message = String::fromUTF8({ line.mutableSpan().data() + start, end - start });
+                String message = String::fromUTF8(line.span().subspan(start, end - start));
                 RunLoop::mainSingleton().dispatch([this, message = WTF::move(message)] {
                     if (!m_terminated)
                         m_playwrightAgent.dispatchMessageFromFrontend(message);
@@ -217,7 +205,7 @@ void RemoteInspectorPipe::workerRun()
             start = end;
         }
         if (start != 0 && start < line.size())
-            memmove(line.mutableSpan().data(), line.mutableSpan().data() + start, line.size() - start);
+            memmoveSpan(line.mutableSpan(), line.mutableSpan().subspan(start));
         line.shrink(line.size() - start);
     }
 }
@@ -226,4 +214,3 @@ void RemoteInspectorPipe::workerRun()
 
 #endif // ENABLE(REMOTE_INSPECTOR)
 
-WTF_ALLOW_UNSAFE_BUFFER_USAGE_END

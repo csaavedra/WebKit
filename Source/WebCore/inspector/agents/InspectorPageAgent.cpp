@@ -99,6 +99,7 @@
 #include <wtf/text/Base64.h>
 #include <wtf/text/MakeString.h>
 #include <wtf/text/StringBuilder.h>
+#include <wtf/text/StringToIntegerConversion.h>
 
 #if ENABLE(APPLICATION_MANIFEST)
 #include "CachedApplicationManifest.h"
@@ -820,13 +821,11 @@ String InspectorPageAgent::serializeFrameID(FrameIdentifier frameID)
 
 std::optional<FrameIdentifier> InspectorPageAgent::parseFrameID(String frameID)
 {
-    if (!frameID.containsOnlyASCII())
+    auto frameIDNumber = parseInteger<uint64_t>(frameID);
+    if (!frameIDNumber)
         return std::nullopt;
 
-WTF_ALLOW_UNSAFE_BUFFER_USAGE_BEGIN
-    uint64_t frameIDNumber = strtoull(frameID.ascii().data(), 0, 10);
-WTF_ALLOW_UNSAFE_BUFFER_USAGE_END
-    return WebCore::FrameIdentifier(frameIDNumber);
+    return WebCore::FrameIdentifier(*frameIDNumber);
 }
 
 void InspectorPageAgent::frameDetached(LocalFrame& frame)

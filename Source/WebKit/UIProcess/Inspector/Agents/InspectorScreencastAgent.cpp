@@ -60,8 +60,6 @@ WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_END
 #include "DrawingAreaProxyWC.h"
 #endif
 
-WTF_ALLOW_UNSAFE_BUFFER_USAGE_BEGIN
-
 namespace WebKit {
 
 const int kMaxFramesInFlight = 1;
@@ -118,7 +116,7 @@ void InspectorScreencastAgent::didPaint(sk_sp<SkImage>&& surface)
         // Do not send the same frame over and over.
         size_t len = pixmap.computeByteSize();
         auto cryptoDigest = PAL::Crypto::CryptoDigest::create(PAL::Crypto::CryptoDigest::Algorithm::SHA_1);
-        cryptoDigest->addBytes(std::span(reinterpret_cast<const unsigned char*>(pixmap.addr()), len));
+        cryptoDigest->addBytes(unsafeMakeSpan(static_cast<const uint8_t*>(pixmap.addr()), len));
         auto digest = cryptoDigest->computeHash();
         if (m_lastFrameDigest == digest)
             return;
@@ -150,7 +148,7 @@ void InspectorScreencastAgent::didPaint(sk_sp<SkImage>&& surface)
         return;
     }
     sk_sp<SkData> jpegData = stream.detachAsData();
-    String result = base64EncodeToString(std::span(reinterpret_cast<const unsigned char*>(jpegData->data()), jpegData->size()));
+    String result = base64EncodeToString(unsafeMakeSpan(static_cast<const uint8_t*>(jpegData->data()), jpegData->size()));
     ++m_screencastFramesInFlight;
     m_frontendDispatcher->screencastFrame(result, timestamp.secondsSinceEpoch().value(), displaySize.width(), displaySize.height());
 }
@@ -255,7 +253,7 @@ void InspectorScreencastAgent::encodeFrame()
 
     // Do not send the same frame over and over.
     auto cryptoDigest = PAL::Crypto::CryptoDigest::create(PAL::Crypto::CryptoDigest::Algorithm::SHA_1);
-    cryptoDigest->addBytes(std::span(data.mutableSpan().data(), data.size()));
+    cryptoDigest->addBytes(data.span());
     auto digest = cryptoDigest->computeHash();
     if (m_lastFrameDigest != digest) {
         String base64Data = base64EncodeToString(data);
@@ -274,5 +272,3 @@ void InspectorScreencastAgent::encodeFrame()
 #endif
 
 } // namespace WebKit
-
-WTF_ALLOW_UNSAFE_BUFFER_USAGE_END
