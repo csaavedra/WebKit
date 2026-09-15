@@ -407,15 +407,9 @@ private:
 
     void clearPageSpecificData(WebCore::PageIdentifier);
 
-<<<<<<< HEAD
-    void removeStorageAccessForFrame(WebCore::FrameIdentifier, WebPageProxyIdentifier);
-||||||| parent of 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
-    void removeStorageAccessForFrame(WebCore::FrameIdentifier, WebCore::PageIdentifier);
-=======
     void setCookieFromResponse(const URL& firstParty, const WebCore::SameSiteInfo&, const URL& url, const String& setCookieValue);
 
-    void removeStorageAccessForFrame(WebCore::FrameIdentifier, WebCore::PageIdentifier);
->>>>>>> 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
+    void removeStorageAccessForFrame(WebCore::FrameIdentifier, WebPageProxyIdentifier);
 
     void logUserInteraction(RegistrableDomain&&);
     void resourceLoadStatisticsUpdated(Vector<WebCore::ResourceLoadStatistics>&&, CompletionHandler<void()>&&);

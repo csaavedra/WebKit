@@ -1335,11 +1335,6 @@ void NetworkConnectionToWebProcess::clearPageSpecificData(PageIdentifier pageID)
         protect(session->networkLoadScheduler())->clearPageData(pageID);
 }
 
-<<<<<<< HEAD
-void NetworkConnectionToWebProcess::removeStorageAccessForFrame(FrameIdentifier frameID, WebPageProxyIdentifier webPageProxyID)
-||||||| parent of 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
-void NetworkConnectionToWebProcess::removeStorageAccessForFrame(FrameIdentifier frameID, PageIdentifier pageID)
-=======
 void NetworkConnectionToWebProcess::setCookieFromResponse(const URL& firstParty, const SameSiteInfo& sameSiteInfo, const URL& url, const String& setCookieValue)
 {
     auto* networkStorageSession = storageSession();
@@ -1348,8 +1343,7 @@ void NetworkConnectionToWebProcess::setCookieFromResponse(const URL& firstParty,
     networkStorageSession->setCookiesFromResponse(firstParty, sameSiteInfo, url, setCookieValue);
 }
 
-void NetworkConnectionToWebProcess::removeStorageAccessForFrame(FrameIdentifier frameID, PageIdentifier pageID)
->>>>>>> 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
+void NetworkConnectionToWebProcess::removeStorageAccessForFrame(FrameIdentifier frameID, WebPageProxyIdentifier webPageProxyID)
 {
     if (CheckedPtr storageSession = m_networkProcess->storageSession(m_sessionID))
         storageSession->removeStorageAccessForFrame(frameID, webPageProxyID);
