@@ -2031,7 +2031,7 @@ Inspector::Protocol::ErrorStringOr<Ref<Inspector::Protocol::Runtime::RemoteObjec
         if (!pageAgent)
             return makeUnexpected("Page domain must be enabled"_s);
 
-        auto* frame = pageAgent->assertFrame(errorString, frameId);
+        RefPtr frame = pageAgent->assertFrame(errorString, frameId);
         if (!frame)
             return makeUnexpected(errorString);
 

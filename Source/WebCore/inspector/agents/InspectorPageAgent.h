@@ -149,15 +149,9 @@ public:
     Frame* frameForId(const Inspector::Protocol::Network::FrameId&);
     WEBCORE_EXPORT String frameId(Frame*);
     String loaderId(DocumentLoader*);
-<<<<<<< HEAD
     RefPtr<LocalFrame> assertFrame(Inspector::Protocol::ErrorString&, const Inspector::Protocol::Network::FrameId&);
-||||||| parent of 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
-    LocalFrame* assertFrame(Inspector::Protocol::ErrorString&, const Inspector::Protocol::Network::FrameId&);
-=======
-    LocalFrame* assertFrame(Inspector::Protocol::ErrorString&, const Inspector::Protocol::Network::FrameId&);
     void setIgnoreDidClearWindowObject(bool ignore) { m_ignoreDidClearWindowObject = ignore; }
     bool ignoreDidClearWindowObject() const { return m_ignoreDidClearWindowObject; }
->>>>>>> 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
 
 private:
     double timestamp();
