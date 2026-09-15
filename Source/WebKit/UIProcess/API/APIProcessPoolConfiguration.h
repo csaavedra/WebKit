@@ -49,7 +49,7 @@ public:
 
     explicit ProcessPoolConfiguration();
     virtual ~ProcessPoolConfiguration();
-
+    
     Ref<ProcessPoolConfiguration> copy();
 
     bool usesSingleWebProcess() const { return m_usesSingleWebProcess; }
@@ -93,10 +93,10 @@ public:
 
     bool attrStyleEnabled() const { return m_attrStyleEnabled; }
     void setAttrStyleEnabled(bool enabled) { m_attrStyleEnabled = enabled; }
-
+    
     bool shouldThrowExceptionForGlobalConstantRedeclaration() const { return m_shouldThrowExceptionForGlobalConstantRedeclaration; }
     void setShouldThrowExceptionForGlobalConstantRedeclaration(bool shouldThrow) { m_shouldThrowExceptionForGlobalConstantRedeclaration = shouldThrow; }
-
+    
 #if PLATFORM(MAC)
     bool forceOverlayScrollbars() const { return m_forceOverlayScrollbars; }
     void setForceOverlayScrollbars(bool forceOverlayScrollbars) { m_forceOverlayScrollbars = forceOverlayScrollbars; }

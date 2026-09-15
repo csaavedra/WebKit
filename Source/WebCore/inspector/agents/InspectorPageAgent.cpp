@@ -920,7 +920,7 @@ void InspectorPageAgent::didClearWindowObjectInWorld(LocalFrame& frame, DOMWrapp
         return;
 
     if (m_bootstrapScript.isEmpty())
-       return;
+        return;
 
     if (m_ignoreDidClearWindowObject)
         return;
@@ -1151,7 +1151,7 @@ Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotNode(Insp
     RefPtr node = domAgent->assertNode(errorString, nodeId);
     if (!node)
         return makeUnexpected(errorString);
-
+    
     RefPtr localMainFrame = m_inspectedPage->localMainFrame();
     if (!localMainFrame)
         return makeUnexpected("Main frame isn't local"_s);

@@ -98,7 +98,7 @@ ExceptionOr<History::ScrollRestoration> History::scrollRestoration() const
     RefPtr historyItem = frame->loader().history().currentItem();
     if (!historyItem)
         return ScrollRestoration::Auto;
-
+    
     return historyItem->shouldRestoreScrollPosition() ? ScrollRestoration::Auto : ScrollRestoration::Manual;
 }
 
