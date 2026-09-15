@@ -418,19 +418,9 @@ const String& ResourceResponseBase::httpVersion() const
 void ResourceResponseBase::setHTTPVersion(String&& versionText)
 {
     lazyInit(AllFields);
-<<<<<<< HEAD
     
     m_httpVersion = WTF::move(versionText);
     
-||||||| parent of 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
-    
-    m_httpVersion = versionText;
-    
-=======
-
-    m_httpVersion = versionText;
-
->>>>>>> 9bfadaf54c30 (chore(webkit): bootstrap build #2362)
     // FIXME: Should invalidate or update platform response if present.
 }
 
