@@ -547,7 +547,7 @@ void  NetworkStorageSession::setCookiesFromResponse(const URL& firstParty, const
         return;
 
     for (auto& cookieString : setCookieValue.split('\n')) {
-        GUniquePtr<SoupCookie> cookie(soup_cookie_parse(cookieString.utf8().data(), origin.get()));
+        GUniquePtr<SoupCookie> cookie(soup_cookie_parse(cookieString.utf8().legacyCStringPointer(), origin.get()));
 
         if (!cookie)
             continue;

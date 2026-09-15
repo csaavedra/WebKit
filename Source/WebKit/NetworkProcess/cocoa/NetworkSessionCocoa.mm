@@ -1696,7 +1696,7 @@ static bool proxyBypassPatternMatchesHost(NSString *entry, StringView host)
         return equalIgnoringASCIICase(host, prefix) || host.startsWithIgnoringASCIICase(makeString(prefix, '.'));
     }
     if (pattern.contains('*') || pattern.contains('?'))
-        return !fnmatch(pattern.utf8().data(), host.utf8().data(), FNM_CASEFOLD);
+        return !fnmatch(pattern.utf8().legacyCStringPointer(), host.utf8().legacyCStringPointer(), FNM_CASEFOLD);
     if (pattern.startsWith('.'))
         return host.endsWithIgnoringASCIICase(pattern);
     return equalIgnoringASCIICase(host, pattern) || host.endsWithIgnoringASCIICase(makeString('.', pattern));

@@ -60,7 +60,7 @@ private:
 
     void sendMessageToFrontend(const String& message) override
     {
-        soup_websocket_connection_send_text(m_connection.get(), message.utf8().data());
+        soup_websocket_connection_send_text(m_connection.get(), message.utf8().legacyCStringPointer());
     }
 
     GRefPtr<SoupWebsocketConnection> m_connection;

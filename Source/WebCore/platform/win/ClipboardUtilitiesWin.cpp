@@ -705,7 +705,7 @@ template<typename T> void getStringData(IDataObject* data, FORMATETC* format, Ve
         rawString = String::fromLatin1(characters);
     else
         rawString = String(characters);
-    dataStrings.append(String::fromUTF8(rawString.utf8().data()));
+    dataStrings.append(String::fromUTF8(rawString.utf8().legacyCStringPointer()));
     GlobalUnlock(store.hGlobal);
     ReleaseStgMedium(&store);
 }

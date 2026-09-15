@@ -130,7 +130,7 @@ public:
     {
         m_senderQueue->dispatch([message = message.isolatedCopy()]() {
             auto utf8 = message.utf8();
-            WriteBytes(utf8.data(), utf8.length());
+            WriteBytes(utf8.legacyCStringPointer(), utf8.length());
             WriteBytes("\0", 1);
         });
     }

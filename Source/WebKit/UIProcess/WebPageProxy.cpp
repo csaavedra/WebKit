@@ -3351,7 +3351,7 @@ void WebPageProxy::setActiveForAutomation(std::optional<bool> active) {
 void WebPageProxy::logToStderr(const String& str)
 {
 WTF_ALLOW_UNSAFE_BUFFER_USAGE_BEGIN
-    fprintf(stderr, "RENDERER: %s\n", str.utf8().data());
+    fprintf(stderr, "RENDERER: %s\n", str.utf8().legacyCStringPointer());
 WTF_ALLOW_UNSAFE_BUFFER_USAGE_END
 }
 
