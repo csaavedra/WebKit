@@ -129,7 +129,7 @@ private:
     std::unique_ptr<Inspector::PlaywrightFrontendDispatcher> m_frontendDispatcher;
     Ref<Inspector::PlaywrightBackendDispatcher> m_playwrightDispatcher;
     UncheckedKeyHashMap<String, std::unique_ptr<PageProxyChannel>> m_pageProxyChannels;
-    BrowserContext* m_defaultContext;
+    BrowserContext* m_defaultContext { nullptr };
     UncheckedKeyHashMap<String, RefPtr<DownloadProxy>> m_downloads;
     UncheckedKeyHashMap<String, std::unique_ptr<BrowserContext>> m_browserContexts;
     UncheckedKeyHashMap<String, std::unique_ptr<BrowserContextDeletion>> m_browserContextDeletions;
