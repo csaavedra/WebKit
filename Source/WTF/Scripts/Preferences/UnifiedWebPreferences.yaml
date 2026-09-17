@@ -1741,13 +1741,7 @@ DataListElementEnabled:
   humanReadableName: "DataList Element"
   humanReadableDescription: "Enable datalist elements"
   defaultValue:
-<<<<<<< HEAD
-    "(PLATFORM(COCOA) && !PLATFORM(WATCHOS)) || PLATFORM(GTK) || PLATFORM(WPE)": true
-||||||| parent of c7ac53835949 (chore(webkit): bootstrap build #2364)
-    "(PLATFORM(COCOA) && !PLATFORM(WATCHOS)) || PLATFORM(GTK)": true
-=======
     "(PLATFORM(COCOA) && !PLATFORM(WATCHOS)) || PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(WIN)": true
->>>>>>> c7ac53835949 (chore(webkit): bootstrap build #2364)
     default: false
     WebKitLegacy: false
   sharedPreferenceForWebProcess: true
