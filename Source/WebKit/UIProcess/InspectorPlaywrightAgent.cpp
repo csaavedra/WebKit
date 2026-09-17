@@ -332,7 +332,7 @@ InspectorPlaywrightAgent::InspectorPlaywrightAgent(std::unique_ptr<InspectorPlay
     : m_frontendChannel(nullptr)
     , m_frontendRouter(FrontendRouter::create())
     , m_backendDispatcher(BackendDispatcher::create(m_frontendRouter.copyRef()))
-    , m_client(std::move(client))
+    , m_client(WTF::move(client))
     , m_frontendDispatcher(makeUnique<PlaywrightFrontendDispatcher>(m_frontendRouter))
     , m_playwrightDispatcher(PlaywrightBackendDispatcher::create(m_backendDispatcher.get(), this))
 {

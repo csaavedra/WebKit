@@ -70,8 +70,8 @@ private:
 class BrowserInspectorWebSocketServer {
 public:
     BrowserInspectorWebSocketServer(std::unique_ptr<InspectorPlaywrightAgentClient> client, GRefPtr<SoupServer> soupServer)
-        : m_playwrightAgent(std::move(client))
-        , m_soupServer(std::move(soupServer))
+        : m_playwrightAgent(WTF::move(client))
+        , m_soupServer(WTF::move(soupServer))
     {
         soup_server_add_websocket_handler(m_soupServer.get(), nullptr, nullptr, nullptr, &BrowserInspectorWebSocketServer::handleWebSocketConnection, this, nullptr);
     }
@@ -160,7 +160,7 @@ void initializeBrowserInspectorWebSocket(unsigned port, std::unique_ptr<Inspecto
         return;
     }
 
-    static NeverDestroyed<BrowserInspectorWebSocketServer> server(std::move(client), std::move(soupServer));
+    static NeverDestroyed<BrowserInspectorWebSocketServer> server(WTF::move(client), WTF::move(soupServer));
 
     fprintf(stderr, "Playwright listening on ws://localhost:%d\n", actualPort);
 }

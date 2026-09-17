@@ -44,7 +44,7 @@ void initializeBrowserInspectorPipe(std::unique_ptr<InspectorPlaywrightAgentClie
     class BrowserInspectorPipe {
     public:
         BrowserInspectorPipe(std::unique_ptr<InspectorPlaywrightAgentClient> client)
-            : m_playwrightAgent(std::move(client))
+            : m_playwrightAgent(WTF::move(client))
             , m_remoteInspectorPipe(m_playwrightAgent)
         {
         }
@@ -53,7 +53,7 @@ void initializeBrowserInspectorPipe(std::unique_ptr<InspectorPlaywrightAgentClie
         RemoteInspectorPipe m_remoteInspectorPipe;
     };
 
-    static NeverDestroyed<BrowserInspectorPipe> pipe(std::move(client));
+    static NeverDestroyed<BrowserInspectorPipe> pipe(WTF::move(client));
 }
 
 } // namespace WebKit
