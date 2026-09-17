@@ -30,6 +30,7 @@
 #include "WebMouseEvent.h"
 #include <JavaScriptCore/InspectorAgentBase.h>
 #include <JavaScriptCore/InspectorBackendDispatchers.h>
+#include <wtf/CheckedPtr.h>
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
 
@@ -44,10 +45,13 @@ namespace WebKit {
 class NativeWebKeyboardEvent;
 class WebPageProxy;
 
-class WebPageInspectorInputAgent : public Inspector::InspectorAgentBase, public Inspector::InputBackendDispatcherHandler {
+class WebPageInspectorInputAgent : public Inspector::InspectorAgentBase, public Inspector::InputBackendDispatcherHandler, public CanMakeCheckedPtr<WebPageInspectorInputAgent> {
     WTF_MAKE_NONCOPYABLE(WebPageInspectorInputAgent);
     WTF_MAKE_TZONE_ALLOCATED(WebPageInspectorInputAgent);
+    WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(WebPageInspectorInputAgent);
 public:
+    OVERRIDE_ABSTRACT_CAN_MAKE_CHECKEDPTR(CanMakeCheckedPtr);
+
     WebPageInspectorInputAgent(Inspector::BackendDispatcher& backendDispatcher, WebPageProxy& page);
     ~WebPageInspectorInputAgent() override;
 

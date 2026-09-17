@@ -29,6 +29,7 @@
 #include <JavaScriptCore/InspectorBackendDispatchers.h>
 #include <JavaScriptCore/InspectorFrontendDispatchers.h>
 
+#include <wtf/CheckedPtr.h>
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/WeakPtr.h>
@@ -47,22 +48,16 @@ class ScreencastFrontendDispatcher;
 }
 
 namespace WebKit {
-class InspectorScreencastAgent;
-}
-
-namespace WTF {
-template<typename T> struct IsDeprecatedWeakRefSmartPointerException;
-template<> struct IsDeprecatedWeakRefSmartPointerException<WebKit::InspectorScreencastAgent> : std::true_type { };
-}
-
-namespace WebKit {
 
 class WebPageProxy;
 
-class InspectorScreencastAgent : public Inspector::InspectorAgentBase, public Inspector::ScreencastBackendDispatcherHandler, public CanMakeWeakPtr<InspectorScreencastAgent> {
+class InspectorScreencastAgent : public Inspector::InspectorAgentBase, public Inspector::ScreencastBackendDispatcherHandler, public CanMakeWeakPtr<InspectorScreencastAgent>, public CanMakeCheckedPtr<InspectorScreencastAgent> {
     WTF_MAKE_NONCOPYABLE(InspectorScreencastAgent);
     WTF_MAKE_TZONE_ALLOCATED(InspectorScreencastAgent);
+    WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(InspectorScreencastAgent);
 public:
+    OVERRIDE_ABSTRACT_CAN_MAKE_CHECKEDPTR(CanMakeCheckedPtr);
+
     InspectorScreencastAgent(Inspector::BackendDispatcher& backendDispatcher, Inspector::FrontendRouter& frontendRouter, WebPageProxy& page);
     ~InspectorScreencastAgent() override;
 

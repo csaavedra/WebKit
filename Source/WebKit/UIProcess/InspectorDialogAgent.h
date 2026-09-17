@@ -31,6 +31,7 @@
 #include <JavaScriptCore/InspectorBackendDispatchers.h>
 #include <JavaScriptCore/InspectorFrontendDispatchers.h>
 
+#include <wtf/CheckedPtr.h>
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
 
@@ -44,10 +45,13 @@ namespace WebKit {
 class NativeWebKeyboardEvent;
 class WebPageProxy;
 
-class InspectorDialogAgent : public Inspector::InspectorAgentBase, public Inspector::DialogBackendDispatcherHandler {
+class InspectorDialogAgent : public Inspector::InspectorAgentBase, public Inspector::DialogBackendDispatcherHandler, public CanMakeCheckedPtr<InspectorDialogAgent> {
     WTF_MAKE_NONCOPYABLE(InspectorDialogAgent);
     WTF_MAKE_TZONE_ALLOCATED(InspectorDialogAgent);
+    WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(InspectorDialogAgent);
 public:
+    OVERRIDE_ABSTRACT_CAN_MAKE_CHECKEDPTR(CanMakeCheckedPtr);
+
     InspectorDialogAgent(Inspector::BackendDispatcher& backendDispatcher, Inspector::FrontendRouter& frontendRouter, WebPageProxy& page);
     ~InspectorDialogAgent() override;
 

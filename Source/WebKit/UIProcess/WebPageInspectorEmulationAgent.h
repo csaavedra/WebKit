@@ -28,6 +28,7 @@
 #include <JavaScriptCore/InspectorAgentBase.h>
 #include <JavaScriptCore/InspectorBackendDispatchers.h>
 
+#include <wtf/CheckedPtr.h>
 #include <wtf/Forward.h>
 #include <wtf/Function.h>
 #include <wtf/Noncopyable.h>
@@ -43,10 +44,13 @@ namespace WebKit {
 
 class WebPageProxy;
 
-class WebPageInspectorEmulationAgent : public Inspector::InspectorAgentBase, public Inspector::EmulationBackendDispatcherHandler {
+class WebPageInspectorEmulationAgent : public Inspector::InspectorAgentBase, public Inspector::EmulationBackendDispatcherHandler, public CanMakeCheckedPtr<WebPageInspectorEmulationAgent> {
     WTF_MAKE_NONCOPYABLE(WebPageInspectorEmulationAgent);
     WTF_MAKE_TZONE_ALLOCATED(WebPageInspectorEmulationAgent);
+    WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(WebPageInspectorEmulationAgent);
 public:
+    OVERRIDE_ABSTRACT_CAN_MAKE_CHECKEDPTR(CanMakeCheckedPtr);
+
     WebPageInspectorEmulationAgent(Inspector::BackendDispatcher& backendDispatcher, WebPageProxy& page);
     ~WebPageInspectorEmulationAgent() override;
 
