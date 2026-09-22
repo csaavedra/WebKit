@@ -1306,18 +1306,10 @@ Inspector::Protocol::ErrorStringOr<void> InspectorNetworkAgent::interceptRequest
     HTTPHeaderMap explicitHeaders;
     String setCookieValue;
     for (auto& header : headers.get()) {
-<<<<<<< HEAD
         auto headerValue = protect(header.value)->asString();
-        if (!!headerValue)
-||||||| parent of 7b12174ad873 (chore(webkit): bootstrap build #2365)
-        auto headerValue = header.value->asString();
-        if (!!headerValue)
-=======
-        auto headerValue = header.value->asString();
         if (equalIgnoringASCIICase(header.key, "Set-Cookie"_s))
             setCookieValue = headerValue;
         else if (!!headerValue)
->>>>>>> 7b12174ad873 (chore(webkit): bootstrap build #2365)
             explicitHeaders.add(header.key, headerValue);
 
     }
