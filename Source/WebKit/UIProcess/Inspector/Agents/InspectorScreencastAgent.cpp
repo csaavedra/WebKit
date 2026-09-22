@@ -270,11 +270,11 @@ void InspectorScreencastAgent::encodeFrame()
         m_lastFrameDigest = digest;
     }
 #elif PLATFORM(GTK)
-    if (auto* drawingArea = m_page->drawingArea())
-        static_cast<DrawingAreaProxyCoordinatedGraphics*>(drawingArea)->captureFrame();
+    if (RefPtr drawingArea = dynamicDowncast<DrawingAreaProxyCoordinatedGraphics>(m_page->drawingArea()))
+        drawingArea->captureFrame();
 #elif PLATFORM(WIN)
-    if (auto* drawingArea = m_page->drawingArea())
-        static_cast<DrawingAreaProxyWC*>(drawingArea)->captureFrame();
+    if (RefPtr drawingArea = dynamicDowncast<DrawingAreaProxyWC>(m_page->drawingArea()))
+        drawingArea->captureFrame();
 #endif
 }
 #endif

@@ -119,7 +119,7 @@ private:
 
     BrowserContext* getExistingBrowserContext(const String& browserContextID);
     BrowserContext* lookupBrowserContext(Inspector::ErrorString&, const String& browserContextID);
-    WebFrameProxy* frameForID(const String& frameID, String& error);
+    RefPtr<WebFrameProxy> frameForID(const String& frameID, String& error);
     void closeImpl(Function<void(String)>&&);
 
     Inspector::FrontendChannel* m_frontendChannel { nullptr };

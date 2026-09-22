@@ -44,7 +44,7 @@ void WebPageInspectorEmulationAgent::platformSetSize(int width, int height, Func
     }
 
     auto waitForSizeUpdate = [this, callback = WTF::move(callback)]() mutable {
-        if (auto* drawingArea = static_cast<DrawingAreaProxyCoordinatedGraphics*>(m_page->drawingArea())) {
+        if (RefPtr drawingArea = dynamicDowncast<DrawingAreaProxyCoordinatedGraphics>(m_page->drawingArea())) {
             drawingArea->waitForSizeUpdate([callback = WTF::move(callback)](const DrawingAreaProxyCoordinatedGraphics&) mutable {
                 callback(String());
             });

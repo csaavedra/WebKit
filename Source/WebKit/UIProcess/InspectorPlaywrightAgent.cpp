@@ -164,7 +164,7 @@ namespace {
 void setGeolocationProvider(BrowserContext* browserContext) {
     auto provider = makeUnique<OverridenGeolocationProvider>();
     browserContext->geolocationProvider = *provider;
-    auto* geoManager = browserContext->processPool->supplement<WebGeolocationManagerProxy>();
+    RefPtr geoManager = browserContext->processPool->supplement<WebGeolocationManagerProxy>();
     geoManager->setProvider(WTF::move(provider));
 }
 
@@ -416,7 +416,7 @@ void InspectorPlaywrightAgent::didCreateInspectorController(WebPageProxy& page)
 
     String browserContextID = toBrowserContextIDProtocolString(page.sessionID());
     String pageProxyID = toPageProxyIDProtocolString(page);
-    auto* opener = page.configuration().openerPageForInspector();
+    RefPtr opener = page.configuration().openerPageForInspector();
     String openerId;
     if (opener)
         openerId = toPageProxyIDProtocolString(*opener);
@@ -483,8 +483,8 @@ void InspectorPlaywrightAgent::willCreateNewPage(WebPageProxy& page, const WebCo
         getEnabledWindowFeatures(features));
 }
 
-static WebsiteDataStore* findDefaultWebsiteDataStore() {
-    WebsiteDataStore* result = nullptr;
+static RefPtr<WebsiteDataStore> findDefaultWebsiteDataStore() {
+    RefPtr<WebsiteDataStore> result;
     WebsiteDataStore::forEachWebsiteDataStore([&result] (WebsiteDataStore& dataStore) {
         if (dataStore.isPersistent()) {
             RELEASE_ASSERT(result == nullptr);
@@ -501,7 +501,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::enable()
 
     m_isEnabled = true;
 
-    auto* defaultDataStore = findDefaultWebsiteDataStore();
+    RefPtr defaultDataStore = findDefaultWebsiteDataStore();
     if (!m_defaultContext && defaultDataStore) {
         auto context = std::make_unique<BrowserContext>();
         m_defaultContext = context.get();
@@ -664,7 +664,7 @@ Inspector::Protocol::ErrorStringOr<String /* pageProxyID */> InspectorPlaywright
     return toPageProxyIDProtocolString(*page);
 }
 
-WebFrameProxy* InspectorPlaywrightAgent::frameForID(const String& frameID, String& error)
+RefPtr<WebFrameProxy> InspectorPlaywrightAgent::frameForID(const String& frameID, String& error)
 {
     std::optional<WebCore::FrameIdentifier> frameIdentifier = WebCore::InspectorPageAgent::parseFrameID(frameID);
     if (!frameIdentifier) {
@@ -672,7 +672,7 @@ WebFrameProxy* InspectorPlaywrightAgent::frameForID(const String& frameID, Strin
         return nullptr;
     }
 
-    WebFrameProxy* frame = WebFrameProxy::webFrame(*frameIdentifier);
+    RefPtr frame = WebFrameProxy::webFrame(*frameIdentifier);
     if (!frame) {
         error = "Cannot find web frame for the frame id"_s;
         return nullptr;
@@ -699,7 +699,7 @@ void InspectorPlaywrightAgent::navigate(const String& url, const String& pagePro
         return;
     }
 
-    WebFrameProxy* frame = nullptr;
+    RefPtr<WebFrameProxy> frame;
     if (!!frameID) {
         String error;
         frame = frameForID(frameID, error);
@@ -714,7 +714,7 @@ void InspectorPlaywrightAgent::navigate(const String& url, const String& pagePro
         }
     }
 
-    pageProxyChannel->page().inspectorController().navigate(WTF::move(resourceRequest), frame, [callback = WTF::move(callback)](const String& error, Markable<WebCore::NavigationIdentifier> navigationID) {
+    pageProxyChannel->page().inspectorController().navigate(WTF::move(resourceRequest), frame.get(), [callback = WTF::move(callback)](const String& error, Markable<WebCore::NavigationIdentifier> navigationID) {
         if (!error.isEmpty()) {
             callback->sendFailure(error);
             return;
@@ -967,7 +967,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::setGeolocatio
     if (!errorString.isEmpty())
         return makeUnexpected(errorString);
 
-    auto* geoManager = browserContext->processPool->supplement<WebGeolocationManagerProxy>();
+    RefPtr geoManager = browserContext->processPool->supplement<WebGeolocationManagerProxy>();
     if (!geoManager)
         return makeUnexpected("Internal error: geolocation manager is not available."_s);
 

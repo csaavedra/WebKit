@@ -78,7 +78,7 @@ void WebPageInspectorEmulationAgent::platformSetSize(int width, int height, Func
     width += windowAllocation.width - viewAllocation.width;
     height += windowAllocation.height - viewAllocation.height;
 
-    if (auto* drawingArea = static_cast<DrawingAreaProxyCoordinatedGraphics*>(m_page->drawingArea())) {
+    if (RefPtr drawingArea = dynamicDowncast<DrawingAreaProxyCoordinatedGraphics>(m_page->drawingArea())) {
         bool didNotHaveInitialAllocation = (!windowAllocation.width && !windowAllocation.height) ||
             // Default size for new windows from browser_window_init in Tools/MiniBrowser/gtk/BrowserWindow.c.
             (windowAllocation.width == 1024 && windowAllocation.height == 768);
