@@ -55,7 +55,7 @@ static WebCore::SoupNetworkProxySettings parseRawProxySettings(const String& pro
     settings.mode = WebCore::SoupNetworkProxySettings::Mode::Custom;
     settings.defaultProxyURL = proxyServer.utf8();
     for (auto* host : span(ignoreHosts))
-        settings.ignoreHosts.append(CString(host));
+        settings.ignoreHosts.append(UTF8CString { byteCast<char8_t>(host) });
     return settings;
 }
 
