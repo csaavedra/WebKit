@@ -46,7 +46,7 @@
 
 namespace WebKit {
 
-static WebCore::SoupNetworkProxySettings parseRawProxySettings(const String& proxyServer, const char* const* ignoreHosts)
+static WebCore::SoupNetworkProxySettings makeProxySettings(const String& proxyServer, Vector<UTF8CString>&& ignoreHosts)
 {
     WebCore::SoupNetworkProxySettings settings;
     if (proxyServer.isEmpty())
@@ -54,25 +54,26 @@ static WebCore::SoupNetworkProxySettings parseRawProxySettings(const String& pro
 
     settings.mode = WebCore::SoupNetworkProxySettings::Mode::Custom;
     settings.defaultProxyURL = proxyServer.utf8();
-    for (auto* host : span(ignoreHosts))
-        settings.ignoreHosts.append(UTF8CString { byteCast<char8_t>(host) });
+    settings.ignoreHosts = WTF::move(ignoreHosts);
     return settings;
+}
+
+static WebCore::SoupNetworkProxySettings parseRawProxySettings(const String& proxyServer, const char* const* ignoreHosts)
+{
+    Vector<UTF8CString> hosts;
+    for (auto* host : span(ignoreHosts))
+        hosts.append(UTF8CString { byteCast<char8_t>(host) });
+    return makeProxySettings(proxyServer, WTF::move(hosts));
 }
 
 static WebCore::SoupNetworkProxySettings parseProxySettings(const String& proxyServer, const String& proxyBypassList)
 {
-    Vector<const char*> ignoreHosts;
+    Vector<UTF8CString> ignoreHosts;
     if (!proxyBypassList.isEmpty()) {
-        Vector<String> tokens = proxyBypassList.split(',');
-        Vector<CString> protectTokens;
-        for (String token : tokens) {
-            CString cstr = token.utf8();
-            ignoreHosts.append(cstr.data());
-            protectTokens.append(WTF::move(cstr));
-        }
+        for (auto& token : proxyBypassList.split(','))
+            ignoreHosts.append(token.utf8());
     }
-    ignoreHosts.append(nullptr);
-    return parseRawProxySettings(proxyServer, ignoreHosts.mutableSpan().data());
+    return makeProxySettings(proxyServer, WTF::move(ignoreHosts));
 }
 
 InspectorPlaywrightAgentClientGlib::InspectorPlaywrightAgentClientGlib(const WTF::String& proxyURI, const char* const* ignoreHosts)
