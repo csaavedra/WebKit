@@ -212,11 +212,6 @@ void WebCookieJar::allCookiesDeleted()
 
 void WebCookieJar::clearCache()
 {
-<<<<<<< HEAD
-||||||| parent of 7b12174ad873 (chore(webkit): bootstrap build #2365)
-=======
-    // Documents keep document.cookie until a zero-delay timer that on GLib ports may fire after the next IPC message.
->>>>>>> 7b12174ad873 (chore(webkit): bootstrap build #2365)
     for (auto& document : Document::allDocuments())
         document->invalidateDOMCookieCache();
     m_cache->clear();
