@@ -102,8 +102,8 @@ void InspectorScreencastAgent::didPaint(sk_sp<SkImage>&& surface)
 
     // Get actual image size (in device pixels).
     WebCore::IntSize displaySize(image->width(), image->height());
-    WebCore::IntSize drawingAreaSize = m_page.drawingArea()->size();
-    drawingAreaSize.scale(m_page.deviceScaleFactor());
+    WebCore::IntSize drawingAreaSize = m_page->drawingArea()->size();
+    drawingAreaSize.scale(m_page->deviceScaleFactor());
     if (drawingAreaSize != displaySize)
         return;
 
@@ -201,7 +201,7 @@ void InspectorScreencastAgent::kickFramesStarted()
         scheduleFrameEncoding();
 #endif
     }
-    m_page.updateRenderingWithForcedRepaint([] { });
+    m_page->updateRenderingWithForcedRepaint([] { });
 }
 
 #if !PLATFORM(WPE)
@@ -214,7 +214,7 @@ void InspectorScreencastAgent::scheduleFrameEncoding()
     RunLoop::mainSingleton().dispatchAfter(Seconds(1.0 / fps), [agent = WeakPtr { this }]() mutable {
         if (!agent)
             return;
-        if (!agent->m_page.hasPageClient())
+        if (!agent->m_page->hasPageClient())
             return;
 
         agent->encodeFrame();
@@ -228,7 +228,7 @@ void InspectorScreencastAgent::encodeFrame()
         return;
 
 #if PLATFORM(MAC)
-    RetainPtr<CGImageRef> imageRef = m_page.pageClient()->takeSnapshotForAutomation();
+    RetainPtr<CGImageRef> imageRef = m_page->pageClient()->takeSnapshotForAutomation();
     MonotonicTime timestamp = MonotonicTime::now();
     CGImage* imagePtr = imageRef.get();
     WebCore::IntSize imageSize(CGImageGetWidth(imagePtr), CGImageGetHeight(imagePtr));
@@ -262,10 +262,10 @@ void InspectorScreencastAgent::encodeFrame()
         m_lastFrameDigest = digest;
     }
 #elif PLATFORM(GTK)
-    if (auto* drawingArea = m_page.drawingArea())
+    if (auto* drawingArea = m_page->drawingArea())
         static_cast<DrawingAreaProxyCoordinatedGraphics*>(drawingArea)->captureFrame();
 #elif PLATFORM(WIN)
-    if (auto* drawingArea = m_page.drawingArea())
+    if (auto* drawingArea = m_page->drawingArea())
         static_cast<DrawingAreaProxyWC*>(drawingArea)->captureFrame();
 #endif
 }

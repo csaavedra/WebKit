@@ -31,7 +31,7 @@ namespace WebKit {
 
 void WebPageInspectorEmulationAgent::platformSetSize(int width, int height, Function<void (const String& error)>&& callback)
 {
-    HWND viewHwnd = reinterpret_cast<HWND>(m_page.viewWidget());
+    HWND viewHwnd = reinterpret_cast<HWND>(m_page->viewWidget());
     HWND windowHwnd = GetAncestor(viewHwnd, GA_ROOT);
     RECT viewRect;
     RECT windowRect;

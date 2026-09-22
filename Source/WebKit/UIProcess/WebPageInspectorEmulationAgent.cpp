@@ -66,16 +66,16 @@ void WebPageInspectorEmulationAgent::setDeviceMetricsOverride(int width, int hei
     // On gtk, fixed layout doesn't work with compositing enabled
     // FIXME: This turns off compositing forever, even if fixedLayout is disabled.
     if (fixedlayout) {
-        auto copy = m_page.preferences().copy();
+        auto copy = m_page->preferences().copy();
         copy->setAcceleratedCompositingEnabled(false);
-        m_page.setPreferences(copy);
+        m_page->setPreferences(copy);
     }
 #endif
 
     if (deviceScaleFactor)
-        m_page.setCustomDeviceScaleFactor(deviceScaleFactor.value(), [] { });
-    m_page.setUseFixedLayout(fixedlayout);
-    if (!m_page.pageClient()->isActiveViewVisible() && m_page.configuration().relatedPage()) {
+        m_page->setCustomDeviceScaleFactor(deviceScaleFactor.value(), [] { });
+    m_page->setUseFixedLayout(fixedlayout);
+    if (!m_page->pageClient()->isActiveViewVisible() && m_page->configuration().relatedPage()) {
         m_commandsToRunWhenShown.append([this, width, height, callback = WTF::move(callback)]() mutable {
             setSize(width, height, WTF::move(callback));
         });
@@ -96,16 +96,16 @@ void WebPageInspectorEmulationAgent::setSize(int width, int height, Ref<SetDevic
 
 Inspector::Protocol::ErrorStringOr<void> WebPageInspectorEmulationAgent::setJavaScriptEnabled(bool enabled)
 {
-    auto copy = m_page.preferences().copy();
+    auto copy = m_page->preferences().copy();
     copy->setJavaScriptEnabled(enabled);
-    m_page.setPreferences(copy);
+    m_page->setPreferences(copy);
     return { };
 }
 
 Inspector::Protocol::ErrorStringOr<void> WebPageInspectorEmulationAgent::setAuthCredentials(RefPtr<JSON::Array>&& credentials)
 {
     if (!credentials) {
-        m_page.setAuthCredentialsForAutomation(std::nullopt);
+        m_page->setAuthCredentialsForAutomation(std::nullopt);
         return { };
     }
 
@@ -129,13 +129,13 @@ Inspector::Protocol::ErrorStringOr<void> WebPageInspectorEmulationAgent::setAuth
             originURL = URL(origin);
         parsedCredentials.append({ WebCore::Credential(username, password, WebCore::CredentialPersistence::Permanent), WTF::move(originURL) });
     }
-    m_page.setAuthCredentialsForAutomation(WTF::move(parsedCredentials));
+    m_page->setAuthCredentialsForAutomation(WTF::move(parsedCredentials));
     return { };
 }
 
 Inspector::Protocol::ErrorStringOr<void> WebPageInspectorEmulationAgent::setActiveAndFocused(std::optional<bool>&& active)
 {
-    m_page.setActiveForAutomation(WTF::move(active));
+    m_page->setActiveForAutomation(WTF::move(active));
     return { };
 }
 
@@ -150,21 +150,21 @@ Inspector::Protocol::ErrorStringOr<void> WebPageInspectorEmulationAgent::grantPe
         set.add(name);
     }
     m_permissions.set(origin, WTF::move(set));
-    m_page.setPermissionsForAutomation(m_permissions);
+    m_page->setPermissionsForAutomation(m_permissions);
     return { };
 }
 
 Inspector::Protocol::ErrorStringOr<void> WebPageInspectorEmulationAgent::resetPermissions()
 {
     m_permissions.clear();
-    m_page.setPermissionsForAutomation(m_permissions);
+    m_page->setPermissionsForAutomation(m_permissions);
     return { };
 }
 
 Inspector::Protocol::ErrorStringOr<void> WebPageInspectorEmulationAgent::setOrientationOverride(std::optional<int>&& angle)
 {
 #if ENABLE(ORIENTATION_EVENTS)
-    m_page.setOrientationOverride(WTF::move(angle));
+    m_page->setOrientationOverride(WTF::move(angle));
     return { };
 #else
     UNUSED_PARAM(angle);

@@ -60,7 +60,7 @@ void WebPageInspectorInputAgent::platformDispatchMouseEvent(const String& type, 
     // WebEventFactory::createWebMouseEvent's MonotonicTime::fromRawSeconds round-trips
     // and DOM event.timeStamp comes out as a sensible DOMHighResTimeStamp.
     NSTimeInterval timestamp = monotonicTimestamp.secondsSinceEpoch().value();
-    NSWindow *window = m_page.platformWindow();
+    NSWindow *window = m_page->platformWindow();
     NSInteger windowNumber = window.windowNumber;
 
     NSEventType downEventType;
@@ -108,22 +108,22 @@ void WebPageInspectorInputAgent::platformDispatchMouseEvent(const String& type, 
 
     Ref nativeEvent = NativeWebMouseEvent::create(event, nil, [window contentView], WebKit::WebEventInputSource::UserDriven);
     nativeEvent->playwrightSetButtons(buttons);
-    m_page.handleMouseEvent(WTF::move(nativeEvent));
+    m_page->handleMouseEvent(WTF::move(nativeEvent));
 }
 
 void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, const String& text, const String& unmodifiedText, const String& key, const String& code, const String& keyIdentifier, int windowsVirtualKeyCode, int nativeVirtualKeyCode, bool isAutoRepeat, bool isKeypad, bool isSystemKey, OptionSet<WebEventModifier> modifiers, Vector<String>& commands, MonotonicTime timestamp)
 {
     Vector<WebCore::KeypressCommand> macCommands;
     for (const String& command : commands) {
-        m_page.registerKeypressCommandName(command);
+        m_page->registerKeypressCommandName(command);
         macCommands.append(WebCore::KeypressCommand(command));
     }
     if (text.length() > 0 && macCommands.size() == 0)
         macCommands.append(WebCore::KeypressCommand("insertText:"_s, text));
     if (!macCommands.isEmpty())
-        if (auto replyID = m_page.grantAccessToCurrentPasteboardData(NSPasteboardNameGeneral, [] () { }))
-            protect(m_page.websiteDataStore().networkProcess())->connection().waitForAsyncReplyAndDispatchImmediately<Messages::NetworkProcess::AllowFilesAccessFromWebProcess>(*replyID, 100_ms);
-    m_page.handleKeyboardEvent(NativeWebKeyboardEvent::create(
+        if (auto replyID = m_page->grantAccessToCurrentPasteboardData(NSPasteboardNameGeneral, [] () { }))
+            protect(m_page->websiteDataStore().networkProcess())->connection().waitForAsyncReplyAndDispatchImmediately<Messages::NetworkProcess::AllowFilesAccessFromWebProcess>(*replyID, 100_ms);
+    m_page->handleKeyboardEvent(NativeWebKeyboardEvent::create(
         type,
         text,
         unmodifiedText,

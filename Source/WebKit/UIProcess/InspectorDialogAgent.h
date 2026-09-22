@@ -34,6 +34,7 @@
 #include <wtf/CheckedPtr.h>
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
+#include <wtf/WeakRef.h>
 
 namespace Inspector {
 class FrontendChannel;
@@ -69,7 +70,7 @@ private:
     void platformHandleJavaScriptDialog(bool accept, const String* promptText);
     std::unique_ptr<Inspector::DialogFrontendDispatcher> m_frontendDispatcher;
     Ref<Inspector::DialogBackendDispatcher> m_backendDispatcher;
-    WebPageProxy& m_page;
+    WeakRef<WebPageProxy> m_page;
 };
 
 } // namespace WebKit

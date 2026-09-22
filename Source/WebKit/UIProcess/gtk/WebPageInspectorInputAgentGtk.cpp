@@ -55,7 +55,7 @@ void WebPageInspectorInputAgent::platformDispatchKeyEvent(WebEventType type, con
         unsigned state = modifiersToEventState(modifiers);
         commands = KeyBindingTranslator().commandsForKeyval(keyVal, state);
     }
-    m_page.handleKeyboardEvent(NativeWebKeyboardEvent::create(
+    m_page->handleKeyboardEvent(NativeWebKeyboardEvent::create(
         type,
         text,
         unmodifiedText,

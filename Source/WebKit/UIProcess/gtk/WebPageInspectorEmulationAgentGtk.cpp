@@ -47,7 +47,7 @@ static bool windowHasManyTabs(GtkWidget* widget) {
 void WebPageInspectorEmulationAgent::platformSetSize(int width, int height, Function<void (const String& error)>&& callback)
 {
     WebCore::IntSize viewSize(width, height);
-    GtkWidget* viewWidget = m_page.viewWidget();
+    GtkWidget* viewWidget = m_page->viewWidget();
     GtkWidget* window = gtk_widget_get_toplevel(viewWidget);
     if (!window) {
         callback("Cannot find parent window"_s);
@@ -78,7 +78,7 @@ void WebPageInspectorEmulationAgent::platformSetSize(int width, int height, Func
     width += windowAllocation.width - viewAllocation.width;
     height += windowAllocation.height - viewAllocation.height;
 
-    if (auto* drawingArea = static_cast<DrawingAreaProxyCoordinatedGraphics*>(m_page.drawingArea())) {
+    if (auto* drawingArea = static_cast<DrawingAreaProxyCoordinatedGraphics*>(m_page->drawingArea())) {
         bool didNotHaveInitialAllocation = (!windowAllocation.width && !windowAllocation.height) ||
             // Default size for new windows from browser_window_init in Tools/MiniBrowser/gtk/BrowserWindow.c.
             (windowAllocation.width == 1024 && windowAllocation.height == 768);

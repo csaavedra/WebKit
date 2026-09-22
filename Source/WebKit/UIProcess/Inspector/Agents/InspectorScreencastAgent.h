@@ -33,6 +33,7 @@
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/WeakPtr.h>
+#include <wtf/WeakRef.h>
 
 #if USE(SKIA)
 WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_BEGIN
@@ -84,7 +85,7 @@ private:
 
     std::unique_ptr<Inspector::ScreencastFrontendDispatcher> m_frontendDispatcher;
     Ref<Inspector::ScreencastBackendDispatcher> m_backendDispatcher;
-    WebPageProxy& m_page;
+    WeakRef<WebPageProxy> m_page;
     Vector<uint8_t> m_lastFrameDigest;
     bool m_screencast = false;
     bool m_framesAreGoing = false;

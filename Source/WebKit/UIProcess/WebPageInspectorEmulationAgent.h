@@ -33,6 +33,7 @@
 #include <wtf/Function.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/Vector.h>
+#include <wtf/WeakRef.h>
 
 namespace Inspector {
 class BackendDispatcher;
@@ -72,7 +73,7 @@ private:
     void platformSetSize(int width, int height, Function<void (const String& error)>&&);
 
     Ref<Inspector::EmulationBackendDispatcher> m_backendDispatcher;
-    WebPageProxy& m_page;
+    WeakRef<WebPageProxy> m_page;
     Vector<Function<void()>> m_commandsToRunWhenShown;
     UncheckedKeyHashMap<String, HashSet<String>> m_permissions;
 };

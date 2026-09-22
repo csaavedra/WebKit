@@ -33,6 +33,7 @@
 #include <wtf/CheckedPtr.h>
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
+#include <wtf/WeakRef.h>
 
 namespace Inspector {
 class BackendDispatcher;
@@ -76,7 +77,7 @@ private:
 #endif
 
     Ref<Inspector::InputBackendDispatcher> m_backendDispatcher;
-    WebPageProxy& m_page;
+    WeakRef<WebPageProxy> m_page;
     // Keep track of currently active modifiers across multiple keystrokes.
     // Most platforms do not track current modifiers from synthesized events.
     unsigned m_currentModifiers { 0 };

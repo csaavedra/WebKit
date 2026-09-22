@@ -61,25 +61,25 @@ void InspectorDialogAgent::willDestroyFrontendAndBackend(Inspector::DisconnectRe
 
 Inspector::Protocol::ErrorStringOr<void> InspectorDialogAgent::enable()
 {
-    if (m_page.inspectorDialogAgent())
+    if (m_page->inspectorDialogAgent())
         return makeUnexpected("Dialog domain is already enabled."_s);
 
-    m_page.setInspectorDialogAgent(this);
+    m_page->setInspectorDialogAgent(this);
     return { };
 }
 
 Inspector::Protocol::ErrorStringOr<void> InspectorDialogAgent::disable()
 {
-    if (m_page.inspectorDialogAgent() != this)
+    if (m_page->inspectorDialogAgent() != this)
         return { };
 
-    m_page.setInspectorDialogAgent(nullptr);
+    m_page->setInspectorDialogAgent(nullptr);
     return { };
 }
 
 Inspector::Protocol::ErrorStringOr<void> InspectorDialogAgent::handleJavaScriptDialog(bool accept, const String& value)
 {
-    m_page.uiClient().handleJavaScriptDialog(m_page, accept, value);
+    m_page->uiClient().handleJavaScriptDialog(m_page, accept, value);
     return { };
 }
 
