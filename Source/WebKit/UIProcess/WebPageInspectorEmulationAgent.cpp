@@ -75,7 +75,8 @@ void WebPageInspectorEmulationAgent::setDeviceMetricsOverride(int width, int hei
     if (deviceScaleFactor)
         m_page->setCustomDeviceScaleFactor(deviceScaleFactor.value(), [] { });
     m_page->setUseFixedLayout(fixedlayout);
-    if (!m_page->pageClient()->isActiveViewVisible() && m_page->configuration().relatedPage()) {
+    RefPtr pageClient = m_page->pageClient();
+    if (pageClient && !pageClient->isActiveViewVisible() && m_page->configuration().relatedPage()) {
         m_commandsToRunWhenShown.append([this, width, height, callback = WTF::move(callback)]() mutable {
             setSize(width, height, WTF::move(callback));
         });

@@ -150,7 +150,9 @@ void InspectorPlaywrightAgentClientGlib::takePageScreenshot(WebPageProxy& page, 
 {
     page.callAfterNextPresentationUpdate([protectedPage = Ref{ page }, clip = WTF::move(clip), nominalResolution, completionHandler = WTF::move(completionHandler)]() mutable {
 #if PLATFORM(GTK) || (PLATFORM(WPE) && USE(SKIA))
-        RefPtr<ViewSnapshot> viewSnapshot = protectedPage->pageClient()->takeViewSnapshot(WTF::move(clip), nominalResolution);
+        RefPtr<ViewSnapshot> viewSnapshot;
+        if (RefPtr pageClient = protectedPage->pageClient())
+            viewSnapshot = pageClient->takeViewSnapshot(WTF::move(clip), nominalResolution);
         if (viewSnapshot) {
             std::optional<String> data = WebAutomationSession::platformGetBase64EncodedPNGData(*viewSnapshot);
             if (data) {

@@ -102,7 +102,11 @@ void InspectorScreencastAgent::didPaint(sk_sp<SkImage>&& surface)
 
     // Get actual image size (in device pixels).
     WebCore::IntSize displaySize(image->width(), image->height());
-    WebCore::IntSize drawingAreaSize = m_page->drawingArea()->size();
+    RefPtr drawingArea = m_page->drawingArea();
+    if (!drawingArea)
+        return;
+
+    WebCore::IntSize drawingAreaSize = drawingArea->size();
     drawingAreaSize.scale(m_page->deviceScaleFactor());
     if (drawingAreaSize != displaySize)
         return;
@@ -228,7 +232,11 @@ void InspectorScreencastAgent::encodeFrame()
         return;
 
 #if PLATFORM(MAC)
-    RetainPtr<CGImageRef> imageRef = m_page->pageClient()->takeSnapshotForAutomation();
+    RefPtr pageClient = m_page->pageClient();
+    if (!pageClient)
+        return;
+
+    RetainPtr<CGImageRef> imageRef = pageClient->takeSnapshotForAutomation();
     MonotonicTime timestamp = MonotonicTime::now();
     CGImage* imagePtr = imageRef.get();
     WebCore::IntSize imageSize(CGImageGetWidth(imagePtr), CGImageGetHeight(imagePtr));
