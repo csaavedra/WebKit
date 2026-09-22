@@ -436,15 +436,9 @@ static void webkitWebContextConstructed(GObject* object)
 {
     G_OBJECT_CLASS(webkit_web_context_parent_class)->constructed(object);
 
-<<<<<<< HEAD
-    GUniquePtr<char> bundleFilename(g_build_filename(injectedBundleDirectory().legacyCStringPointer(), INJECTED_BUNDLE_FILENAME, nullptr));
-||||||| parent of 7b12174ad873 (chore(webkit): bootstrap build #2365)
-    GUniquePtr<char> bundleFilename(g_build_filename(injectedBundleDirectory(), INJECTED_BUNDLE_FILENAME, nullptr));
-=======
     ++webkitWebContext;
 
-    GUniquePtr<char> bundleFilename(g_build_filename(injectedBundleDirectory(), INJECTED_BUNDLE_FILENAME, nullptr));
->>>>>>> 7b12174ad873 (chore(webkit): bootstrap build #2365)
+    GUniquePtr<char> bundleFilename(g_build_filename(injectedBundleDirectory().legacyCStringPointer(), INJECTED_BUNDLE_FILENAME, nullptr));
 
     WebKitWebContext* webContext = WEBKIT_WEB_CONTEXT(object);
     WebKitWebContextPrivate* priv = webContext->priv;
