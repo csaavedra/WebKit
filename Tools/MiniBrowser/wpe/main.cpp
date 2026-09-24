@@ -685,22 +685,10 @@ static void activate(GApplication* application, gpointer)
     } else if (profileDirectory) {
         g_autofree char* dataDirectory = g_build_filename(profileDirectory, "data", nullptr);
         g_autofree char* cacheDirectory = g_build_filename(profileDirectory, "cache", nullptr);
-<<<<<<< HEAD
         manager = webkit_website_data_manager_new("base-data-directory", dataDirectory, "base-cache-directory", cacheDirectory, nullptr);
     } else
         manager = webkit_website_data_manager_new(nullptr);
 
-||||||| parent of 64e38d405ff6 (chore(webkit): bootstrap build #2367)
-        webkit_website_data_manager_new("base-data-directory", dataDirectory, "base-cache-directory", cacheDirectory, nullptr);
-    } else
-        webkit_website_data_manager_new(nullptr);
-
-=======
-        webkit_website_data_manager_new("base-data-directory", dataDirectory, "base-cache-directory", cacheDirectory, nullptr);
-    } else {
-        manager = webkit_website_data_manager_new(NULL);
-    }
->>>>>>> 64e38d405ff6 (chore(webkit): bootstrap build #2367)
     webkit_website_data_manager_set_itp_enabled(manager, enableITP);
 
     if (proxy) {
