@@ -235,7 +235,7 @@ RefPtr<Inspector::Protocol::Network::Response> InspectorNetworkAgent::buildObjec
         .setSource(responseSource(response.source()))
         .release();
 
-    responseObject->setRequestHeaders(buildObjectForHeaders(response.m_httpRequestHeaderFields));
+    responseObject->setRequestHeaders(ResourceUtilities::buildObjectForHeaders(response.m_httpRequestHeaderFields));
 
     if (resourceLoader) {
         auto* metrics = response.deprecatedNetworkLoadMetricsOrNull();
