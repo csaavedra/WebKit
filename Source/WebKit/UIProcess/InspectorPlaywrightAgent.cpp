@@ -301,14 +301,13 @@ public:
         // Check if new pages have been created during the context destruction and
         // close all of them if necessary.
         if (m_numberOfPages == 1) {
-            auto pages = m_browserContext->pages;
-            size_t numberOfPages = pages.size();
+            size_t numberOfPages = m_browserContext->pages.computeSize();
             if (numberOfPages > 1) {
                 m_numberOfPages = numberOfPages;
-                for (auto* existingPage : pages) {
-                    if (existingPage != &page)
-                        existingPage->closePage();
-                }
+                m_browserContext->pages.forEach([&](auto& existingPage) {
+                    if (&existingPage != &page)
+                        existingPage.closePage();
+                });
             }
         }
         --m_numberOfPages;
@@ -422,7 +421,7 @@ void InspectorPlaywrightAgent::didCreateInspectorController(WebPageProxy& page)
         openerId = toPageProxyIDProtocolString(*opener);
 
     BrowserContext* browserContext = getExistingBrowserContext(browserContextID);
-    browserContext->pages.add(&page);
+    browserContext->pages.add(page);
     m_frontendDispatcher->pageProxyCreated(browserContextID, pageProxyID, openerId);
 
     // Auto-connect to all new pages.
@@ -445,7 +444,7 @@ void InspectorPlaywrightAgent::willDestroyInspectorController(WebPageProxy& page
 
     String browserContextID = toBrowserContextIDProtocolString(page.sessionID());
     BrowserContext* browserContext = getExistingBrowserContext(browserContextID);
-    browserContext->pages.remove(&page);
+    browserContext->pages.remove(page);
     m_frontendDispatcher->pageProxyDestroyed(toPageProxyIDProtocolString(page));
 
     auto it = m_browserContextDeletions.find(browserContextID);
@@ -637,15 +636,16 @@ void InspectorPlaywrightAgent::deleteContext(const String& browserContextID, Ref
         return;
     }
 
-    auto pages = browserContext->pages;
+    size_t numberOfPages = browserContext->pages.computeSize();
     PAL::SessionID sessionID = browserContext->dataStore->sessionID();
     auto contextHolder = m_browserContexts.take(browserContextID);
-    if (pages.isEmpty()) {
+    if (!numberOfPages) {
         callback->sendSuccess();
     } else {
-        m_browserContextDeletions.set(browserContextID, makeUnique<BrowserContextDeletion>(WTF::move(contextHolder), pages.size(), WTF::move(callback)));
-        for (auto* page : pages)
-            page->closePage();
+        m_browserContextDeletions.set(browserContextID, makeUnique<BrowserContextDeletion>(WTF::move(contextHolder), numberOfPages, WTF::move(callback)));
+        browserContext->pages.forEach([](auto& page) {
+            page.closePage();
+        });
     }
     m_client->deleteBrowserContext(errorString, sessionID);
 }

@@ -31,9 +31,9 @@
 #include <pal/SessionID.h>
 #include <WebCore/IntRect.h>
 #include <wtf/Forward.h>
-#include <wtf/HashSet.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/RefCounted.h>
+#include <wtf/WeakHashSet.h>
 #include <wtf/WeakPtr.h>
 
 namespace WebKit {
@@ -52,7 +52,7 @@ public:
 
     RefPtr<WebsiteDataStore> dataStore;
     RefPtr<WebProcessPool> processPool;
-    HashSet<WebPageProxy*> pages;
+    WeakHashSet<WebPageProxy> pages;
     WeakPtr<OverridenGeolocationProvider> geolocationProvider;
     std::optional<bool> enableStoragePartitioning;
 };
