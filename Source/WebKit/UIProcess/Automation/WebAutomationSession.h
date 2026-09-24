@@ -339,10 +339,15 @@ public:
 
     void didDestroyFrame(WebCore::FrameIdentifier);
 
+<<<<<<< HEAD
     // A process swap replaces the main frame's proxy, and the replacement is given a
     // freshly generated identifier, so references issued under the old one have to be
     // re-keyed or they read as never having existed.
     void transferKnownNodeReferences(WebCore::FrameIdentifier oldFrameID, WebCore::FrameIdentifier newFrameID);
+||||||| parent of 64e38d405ff6 (chore(webkit): bootstrap build #2367)
+=======
+    static std::optional<String> platformGetBase64EncodedPNGData(const ViewSnapshot&);
+>>>>>>> 64e38d405ff6 (chore(webkit): bootstrap build #2367)
 
     RefPtr<WebPageProxy> webPageProxyForHandle(const String&);
     String effectiveHandleForWebFrameProxy(const WebFrameProxy&);
@@ -415,7 +420,6 @@ private:
 
     // Get base64-encoded PNG data from a bitmap.
     static std::optional<String> platformGetBase64EncodedPNGData(WebCore::ShareableBitmap::Handle&&);
-    static std::optional<String> platformGetBase64EncodedPNGData(const ViewSnapshot&);
 
     // Save base64-encoded file contents to a local file path and return the path.
     // This reuses the basename of the remote file path so that the filename exposed to DOM API remains the same.

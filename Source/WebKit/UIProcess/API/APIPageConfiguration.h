@@ -175,8 +175,15 @@ public:
     WebKit::WebPageProxy* NODELETE relatedPage() const;
     void setRelatedPage(WeakPtr<WebKit::WebPageProxy>&& relatedPage) { m_data.relatedPage = WTF::move(relatedPage); }
 
+<<<<<<< HEAD
     WebKit::WebProcessProxy* NODELETE preferredProcessFromOpener() const;
     void setPreferredProcessFromOpener(WeakPtr<WebKit::WebProcessProxy>&& process) { m_data.preferredProcessFromOpener = WTF::move(process); }
+||||||| parent of 64e38d405ff6 (chore(webkit): bootstrap build #2367)
+=======
+    // This is similar to relatedPage(), but it is also set for noopener links.
+    WebKit::WebPageProxy* openerPageForInspector() const;
+    void setOpenerPageForInspector(WeakPtr<WebKit::WebPageProxy>&& openerPageForInspector) { m_data.openerPageForInspector = WTF::move(openerPageForInspector); }
+>>>>>>> 64e38d405ff6 (chore(webkit): bootstrap build #2367)
 
     WebKit::WebPageProxy* NODELETE pageToCloneSessionStorageFrom() const;
     void NODELETE setPageToCloneSessionStorageFrom(WeakPtr<WebKit::WebPageProxy>&&);
@@ -543,7 +550,12 @@ private:
 #endif
         RefPtr<WebKit::WebPageGroup> pageGroup;
         WeakPtr<WebKit::WebPageProxy> relatedPage;
+<<<<<<< HEAD
         WeakPtr<WebKit::WebProcessProxy> preferredProcessFromOpener;
+||||||| parent of 64e38d405ff6 (chore(webkit): bootstrap build #2367)
+=======
+        WeakPtr<WebKit::WebPageProxy> openerPageForInspector;
+>>>>>>> 64e38d405ff6 (chore(webkit): bootstrap build #2367)
         Box<std::optional<OpenerInfo>> openerInfo;
         WebCore::Site openedSite;
         bool processInheritedFromOpener { false };
