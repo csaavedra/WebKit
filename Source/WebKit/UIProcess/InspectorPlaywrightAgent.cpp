@@ -71,6 +71,7 @@
 #include <wtf/HashMap.h>
 #include <wtf/HashSet.h>
 #include <wtf/HexNumber.h>
+#include <wtf/RunLoop.h>
 #include <wtf/URL.h>
 #include <wtf/text/MakeString.h>
 
@@ -295,21 +296,14 @@ public:
         , m_numberOfPages(numberOfPages)
         , m_callback(WTF::move(callback)) { }
 
+    // A page can still be created in the context while it is being deleted, e.g. a
+    // popup opened by one of the pages being closed. Account for it here so that the
+    // deletion cannot complete while it is alive.
+    void didCreatePage() { ++m_numberOfPages; }
+
     void didDestroyPage(const WebPageProxy& page)
     {
         ASSERT(m_browserContext->dataStore->sessionID() == page.sessionID());
-        // Check if new pages have been created during the context destruction and
-        // close all of them if necessary.
-        if (m_numberOfPages == 1) {
-            size_t numberOfPages = m_browserContext->pages.computeSize();
-            if (numberOfPages > 1) {
-                m_numberOfPages = numberOfPages;
-                m_browserContext->pages.forEach([&](auto& existingPage) {
-                    if (&existingPage != &page)
-                        existingPage.closePage();
-                });
-            }
-        }
         --m_numberOfPages;
         if (m_numberOfPages)
             return;
@@ -432,6 +426,17 @@ void InspectorPlaywrightAgent::didCreateInspectorController(WebPageProxy& page)
     page.inspectorController().setPauseOnStart(true);
     m_pageProxyChannels.set(pageProxyID, WTF::move(pageProxyChannel));
     page.setFullScreenManagerClientOverride(makeUnique<PlaywrightFullScreenManagerProxyClient>(page));
+
+    if (auto* browserContextDeletion = m_browserContextDeletions.get(browserContextID)) {
+        browserContextDeletion->didCreatePage();
+        // We are called from the WebPageProxy constructor, before the UI client that
+        // closePage() goes through has been attached to the page, so close it on the
+        // next run loop iteration instead.
+        RunLoop::mainSingleton().dispatch([weakPage = WeakPtr { page }] {
+            if (RefPtr page = weakPage.get())
+                page->closePage();
+        });
+    }
 }
 
 void InspectorPlaywrightAgent::willDestroyInspectorController(WebPageProxy& page)
