@@ -4193,10 +4193,7 @@ private:
     std::optional<WebCore::DragOperation> m_currentDragOperation;
     bool m_currentDragIsOverFileInput { false };
     unsigned m_currentDragNumberOfFilesToBeAccepted { 0 };
-<<<<<<< HEAD
     std::optional<WebCore::FrameIdentifier> m_dragSourceFrameID;
-||||||| parent of 886ed088d899 (chore(webkit): bootstrap build #2368)
-=======
     WebCore::IntRect m_currentDragCaretRect;
     WebCore::IntRect m_currentDragCaretEditableElementRect;
     bool m_interceptDrags { false };
@@ -4213,7 +4210,6 @@ private:
 #if PLATFORM(WIN)
     std::optional<WebCore::DragDataMap> m_dragSelectionData;
 #endif
->>>>>>> 886ed088d899 (chore(webkit): bootstrap build #2368)
 #endif
 
     bool m_mainFrameHasHorizontalScrollbar { false };
