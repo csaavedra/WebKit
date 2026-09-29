@@ -832,21 +832,11 @@ static void activate(GApplication* application, gpointer)
         nullptr));
     g_object_unref(settings);
     g_object_unref(defaultWebsitePolicies);
-<<<<<<< HEAD
 
     if (logInputMethod) {
         g_autoptr(WebKitInputMethodContext) inputMethodContext = browser_logging_input_method_context_new();
         webkit_web_view_set_input_method_context(webView, inputMethodContext);
     }
-#if ENABLE_WPE_PLATFORM_HEADLESS
-    g_clear_object(&wpeDisplay);
-#endif
-||||||| parent of 886ed088d899 (chore(webkit): bootstrap build #2368)
-#if ENABLE_WPE_PLATFORM_HEADLESS
-    g_clear_object(&wpeDisplay);
-#endif
-=======
->>>>>>> 886ed088d899 (chore(webkit): bootstrap build #2368)
 
 #if defined(USE_LIBWPE) && USE_LIBWPE
     if (backend) {
