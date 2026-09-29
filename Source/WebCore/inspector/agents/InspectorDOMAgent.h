@@ -101,12 +101,8 @@ public:
     static String toErrorString(Exception&&);
 
     static String documentURLString(Document*);
-<<<<<<< HEAD
     static String documentBaseURLString(Document*);
-||||||| parent of 886ed088d899 (chore(webkit): bootstrap build #2368)
-=======
     static std::optional<Color> parseColor(RefPtr<JSON::Object>&&);
->>>>>>> 886ed088d899 (chore(webkit): bootstrap build #2368)
 
     // We represent embedded doms as a part of the same hierarchy. Hence we treat children of frame owners differently.
     // We also skip whitespace text nodes conditionally. Following methods encapsulate these specifics.
