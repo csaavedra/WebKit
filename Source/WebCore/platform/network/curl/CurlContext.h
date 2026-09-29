@@ -328,7 +328,6 @@ private:
     };
 
     void enableRequestHeaders();
-    void appendProxyRequestHeader(String&&);
     void enableProxyRequestHeaders();
 
     static CURLcode willSetupSslCtxCallback(CURL*, void* sslCtx, void* userData);
