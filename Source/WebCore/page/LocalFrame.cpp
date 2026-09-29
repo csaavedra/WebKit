@@ -93,6 +93,7 @@
 #include "MixedContentChecker.h"
 #include "Navigator.h"
 #include "NodeList.h"
+#include "NodeRenderStyle.h"
 #include "NodeTraversal.h"
 #include "Page.h"
 #include "PaymentSession.h"
@@ -213,6 +214,7 @@ LocalFrame::LocalFrame(Page& page, ClientCreator&& clientCreator, FrameIdentifie
 
 void LocalFrame::init()
 {
+    InspectorInstrumentation::frameAttached(this);
     loader().init();
 }
 
@@ -462,7 +464,7 @@ void LocalFrame::orientationChanged()
 IntDegrees LocalFrame::orientation() const
 {
     if (RefPtr page = this->page())
-        return page->chrome().client().deviceOrientation();
+        return page->orientation();
     return 0;
 }
 #endif // ENABLE(ORIENTATION_EVENTS)
@@ -1714,7 +1716,6 @@ String LocalFrame::frameURLProtocol() const
     return ""_s;
 }
 
-#if PLATFORM(COCOA)
 
 static bool nodeIsMouseFocusable(Node& node)
 {
@@ -1972,8 +1973,6 @@ RefPtr<LocalDOMWindow> LocalFrame::windowWithDoubleClickEventListener() const
 
     return window;
 }
-
-#endif // PLATFORM(COCOA)
 
 } // namespace WebCore
 

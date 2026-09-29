@@ -478,7 +478,7 @@ ALLOW_DEPRECATED_DECLARATIONS_END
 
 #if PLATFORM(MAC)
     parameters.screenProperties = cachedScreenProperties();
-    parameters.useOverlayScrollbars = ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
+    parameters.useOverlayScrollbars = m_configuration->forceOverlayScrollbars() || ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
 #else
     parameters.screenProperties = WebCore::collectScreenProperties();
 #endif
@@ -897,10 +897,22 @@ void WebProcessPool::registerNotificationObservers()
         screenPropertiesChanged();
     }] });
 
+<<<<<<< HEAD
     lazyInitialize(m_scrollerStyleNotificationObserver, RetainPtr<NSObject> { [[NSNotificationCenter defaultCenter] addObserverForName:NSPreferredScrollerStyleDidChangeNotification object:nil queue:[NSOperationQueue currentQueue] usingBlock:^(NSNotification *notification) {
         auto scrollbarStyle = [NSScroller preferredScrollerStyle];
         sendToAllProcesses(Messages::WebProcess::ScrollerStylePreferenceChanged(scrollbarStyle));
     }] });
+||||||| parent of 886ed088d899 (chore(webkit): bootstrap build #2368)
+    m_scrollerStyleNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NSPreferredScrollerStyleDidChangeNotification object:nil queue:[NSOperationQueue currentQueue] usingBlock:^(NSNotification *notification) {
+        auto scrollbarStyle = [NSScroller preferredScrollerStyle];
+        sendToAllProcesses(Messages::WebProcess::ScrollerStylePreferenceChanged(scrollbarStyle));
+    }];
+=======
+    m_scrollerStyleNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NSPreferredScrollerStyleDidChangeNotification object:nil queue:[NSOperationQueue currentQueue] usingBlock:^(NSNotification *notification) {
+        bool useOverlayScrollbars = m_configuration->forceOverlayScrollbars() || ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
+        sendToAllProcesses(Messages::WebProcess::ScrollerStylePreferenceChanged(useOverlayScrollbars));
+    }];
+>>>>>>> 886ed088d899 (chore(webkit): bootstrap build #2368)
 
     lazyInitialize(m_activationObserver, RetainPtr<NSObject> { [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidBecomeActiveNotification object:NSAppSingleton() queue:[NSOperationQueue currentQueue] usingBlock:^(NSNotification *notification) {
 #if ENABLE(CFPREFS_DIRECT_MODE)
