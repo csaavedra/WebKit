@@ -13140,20 +13140,6 @@ void WebPageProxy::requestDOMPasteAccess(IPC::Connection& connection, DOMPasteAc
         }
     }
 
-<<<<<<< HEAD
-    protect(pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, elementRect, originIdentifier, WTF::move(completionHandler));
-||||||| parent of 886ed088d899 (chore(webkit): bootstrap build #2368)
-    auto rootFrameID = frame->rootFrame()->frameID();
-    convertRectToMainFrameCoordinates(elementRect, rootFrameID, [weakThis = WeakPtr { *this }, pasteAccessCategory, requiresInteraction, frameID, originIdentifier, completionHandler = WTF::move(completionHandler)](std::optional<FloatRect> convertedRect) mutable {
-        RefPtr protectedThis = weakThis.get();
-        if (!protectedThis || !convertedRect) {
-            completionHandler(DOMPasteAccessResponse::DeniedForGesture);
-            return;
-        }
-
-        protect(protectedThis->pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, IntRect(*convertedRect), originIdentifier, WTF::move(completionHandler));
-    });
-=======
     if (isControlledByAutomation()) {
         DOMPasteAccessResponse response = DOMPasteAccessResponse::DeniedForGesture;
         if (permissionForAutomation(originIdentifier, "clipboard-read"_s).value_or(false)) {
@@ -13165,17 +13151,7 @@ void WebPageProxy::requestDOMPasteAccess(IPC::Connection& connection, DOMPasteAc
         return;
     }
 
-    auto rootFrameID = frame->rootFrame()->frameID();
-    convertRectToMainFrameCoordinates(elementRect, rootFrameID, [weakThis = WeakPtr { *this }, pasteAccessCategory, requiresInteraction, frameID, originIdentifier, completionHandler = WTF::move(completionHandler)](std::optional<FloatRect> convertedRect) mutable {
-        RefPtr protectedThis = weakThis.get();
-        if (!protectedThis || !convertedRect) {
-            completionHandler(DOMPasteAccessResponse::DeniedForGesture);
-            return;
-        }
-
-        protect(protectedThis->pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, IntRect(*convertedRect), originIdentifier, WTF::move(completionHandler));
-    });
->>>>>>> 886ed088d899 (chore(webkit): bootstrap build #2368)
+    protect(pageClient())->requestDOMPasteAccess(pasteAccessCategory, requiresInteraction, frameID, elementRect, originIdentifier, WTF::move(completionHandler));
 }
 
 // BackForwardList
