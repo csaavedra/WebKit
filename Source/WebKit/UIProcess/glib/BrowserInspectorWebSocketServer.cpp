@@ -37,7 +37,7 @@
 #include <wtf/glib/GRefPtr.h>
 #include <wtf/glib/GSpanExtras.h>
 #include <wtf/NeverDestroyed.h>
-#include <wtf/text/CStringView.h>
+#include <wtf/text/UTF8CStringView.h>
 
 namespace WebKit {
 
@@ -143,7 +143,7 @@ void initializeBrowserInspectorWebSocket(unsigned port, std::unique_ptr<Inspecto
     GUniqueOutPtr<GError> error;
     const SoupServerListenOptions options = static_cast<SoupServerListenOptions>(0);
     if (!soup_server_listen_local(soupServer.get(), port, options, &error.outPtr())) {
-        SAFE_FPRINTF(stderr, "Failed to start WebSocket server at port %u: %s\n", port, CStringView::unsafeFromUTF8(error->message));
+        SAFE_FPRINTF(stderr, "Failed to start WebSocket server at port %u: %s\n", port, UTF8CStringView::unsafeFromUTF8(error->message));
         return;
     }
 

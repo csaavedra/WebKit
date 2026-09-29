@@ -54,7 +54,7 @@ namespace WebKit {
 static bool hasArgument(ASCIILiteral argument, std::span<char*> argv)
 {
     for (auto& arg : argv) {
-        if (CStringView::unsafeFromUTF8(arg) == argument)
+        if (UTF8CStringView::unsafeFromUTF8(arg) == argument)
             return true;
     }
     return false;
