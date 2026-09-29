@@ -3959,14 +3959,8 @@ private:
     String m_overrideContentSecurityPolicy;
     String m_openedMainFrameName;
 
-<<<<<<< HEAD
     const RefPtr<WebInspectorUIProxy> m_inspector;
-||||||| parent of 886ed088d899 (chore(webkit): bootstrap build #2368)
-    RefPtr<WebInspectorUIProxy> m_inspector;
-=======
-    RefPtr<WebInspectorUIProxy> m_inspector;
     InspectorDialogAgent* m_inspectorDialogAgent { nullptr };
->>>>>>> 886ed088d899 (chore(webkit): bootstrap build #2368)
 
     struct PendingUndoRedo {
         WebUndoStepID stepID;

@@ -243,23 +243,11 @@ void WebPageInspectorController::disconnectFrontend(FrontendChannel& frontendCha
     bool disconnectingLastFrontend = !m_frontendRouter->hasFrontends();
     if (disconnectingLastFrontend) {
         m_agents.willDestroyFrontendAndBackend(DisconnectReason::InspectorDestroyed);
-<<<<<<< HEAD
         if (m_networkAgent)
             m_networkAgent->willDestroyFrontendAndBackend(DisconnectReason::InspectorDestroyed);
         if (m_pageAgent)
             m_pageAgent->willDestroyFrontendAndBackend(DisconnectReason::InspectorDestroyed);
-||||||| parent of 886ed088d899 (chore(webkit): bootstrap build #2368)
-        if (RefPtr networkAgent = m_networkAgent)
-            networkAgent->willDestroyFrontendAndBackend(DisconnectReason::InspectorDestroyed);
-        if (RefPtr pageAgent = m_pageAgent)
-            pageAgent->willDestroyFrontendAndBackend(DisconnectReason::InspectorDestroyed);
-=======
-        if (RefPtr networkAgent = m_networkAgent)
-            networkAgent->willDestroyFrontendAndBackend(DisconnectReason::InspectorDestroyed);
-        if (RefPtr pageAgent = m_pageAgent)
-            pageAgent->willDestroyFrontendAndBackend(DisconnectReason::InspectorDestroyed);
         m_pendingNavigations.clear();
->>>>>>> 886ed088d899 (chore(webkit): bootstrap build #2368)
     }
 
     Ref inspectedPage = m_inspectedPage.get();
