@@ -38,7 +38,7 @@
 
 namespace WebKit {
 
-class OverridenGeolocationProvider;
+class OverriddenGeolocationProvider;
 class WebsiteDataStore;
 class WebPageProxy;
 class WebProcessPool;
@@ -53,7 +53,7 @@ public:
     RefPtr<WebsiteDataStore> dataStore;
     RefPtr<WebProcessPool> processPool;
     WeakHashSet<WebPageProxy> pages;
-    WeakPtr<OverridenGeolocationProvider> geolocationProvider;
+    WeakPtr<OverriddenGeolocationProvider> geolocationProvider;
     std::optional<bool> enableStoragePartitioning;
 };
 

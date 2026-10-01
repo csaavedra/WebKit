@@ -131,10 +131,10 @@ private:
     WebPageProxy& m_page;
 };
 
-class OverridenGeolocationProvider final : public API::GeolocationProvider, public CanMakeWeakPtr<OverridenGeolocationProvider> {
-     WTF_MAKE_NONCOPYABLE(OverridenGeolocationProvider);
+class OverriddenGeolocationProvider final : public API::GeolocationProvider, public CanMakeWeakPtr<OverriddenGeolocationProvider> {
+     WTF_MAKE_NONCOPYABLE(OverriddenGeolocationProvider);
 public:
-    OverridenGeolocationProvider()
+    OverriddenGeolocationProvider()
         : m_position(WebGeolocationPosition::create(WebCore::GeolocationPositionData()))
     {
     }
@@ -163,7 +163,7 @@ private:
 namespace {
 
 void setGeolocationProvider(BrowserContext* browserContext) {
-    auto provider = makeUnique<OverridenGeolocationProvider>();
+    auto provider = makeUnique<OverriddenGeolocationProvider>();
     browserContext->geolocationProvider = *provider;
     RefPtr geoManager = browserContext->processPool->supplement<WebGeolocationManagerProxy>();
     geoManager->setProvider(WTF::move(provider));

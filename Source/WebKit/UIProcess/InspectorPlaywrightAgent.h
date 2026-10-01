@@ -49,12 +49,12 @@ class SessionID;
 }
 
 namespace WebKit {
-class OverridenGeolocationProvider;
+class OverriddenGeolocationProvider;
 }
 
 namespace WTF {
 template<typename T> struct IsDeprecatedWeakRefSmartPointerException;
-template<> struct IsDeprecatedWeakRefSmartPointerException<WebKit::OverridenGeolocationProvider> : std::true_type { };
+template<> struct IsDeprecatedWeakRefSmartPointerException<WebKit::OverriddenGeolocationProvider> : std::true_type { };
 }
 
 namespace WebKit {
