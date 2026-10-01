@@ -856,7 +856,7 @@ void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JS
     Vector<WebCore::Cookie> cookies;
     for (unsigned i = 0; i < in_cookies->length(); ++i) {
         RefPtr<JSON::Value> item = in_cookies->get(i);
-        RefPtr<JSON::Object> obj = item->asObject();
+        RefPtr<JSON::Object> obj = item ? item->asObject() : nullptr;
         if (!obj) {
             callback->sendFailure("Invalid cookie payload format"_s);
             return;
@@ -868,7 +868,7 @@ void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JS
         cookie.domain = obj->getString("domain"_s);
         cookie.path = obj->getString("path"_s);
         if (!cookie.name || !cookie.value || !cookie.domain || !cookie.path) {
-            callback->sendFailure("Invalid file payload format"_s);
+            callback->sendFailure("Invalid cookie payload format"_s);
             return;
         }
 
