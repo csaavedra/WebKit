@@ -491,7 +491,7 @@ static RefPtr<WebsiteDataStore> findDefaultWebsiteDataStore() {
     RefPtr<WebsiteDataStore> result;
     WebsiteDataStore::forEachWebsiteDataStore([&result] (WebsiteDataStore& dataStore) {
         if (dataStore.isPersistent()) {
-            RELEASE_ASSERT(result == nullptr);
+            RELEASE_ASSERT(!result);
             result = &dataStore;
         }
     });
