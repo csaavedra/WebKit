@@ -60,50 +60,6 @@ static HWND clipboardOwner()
     return owner;
 }
 
-<<<<<<< HEAD
-PlatformPasteboard::PlatformPasteboard(const String&)
-{
-}
-
-void PlatformPasteboard::performAsDataOwner(DataOwnerType, NOESCAPE const Function<void()>& actions)
-{
-    actions();
-}
-
-int64_t PlatformPasteboard::changeCount() const
-{
-    return ::GetClipboardSequenceNumber();
-}
-
-void PlatformPasteboard::getTypes(Vector<String>& types) const
-{
-    if (::IsClipboardFormatAvailable(CF_UNICODETEXT) || ::IsClipboardFormatAvailable(CF_TEXT))
-        types.append(textPlainContentTypeAtom());
-}
-
-||||||| parent of e17920ede524 (chore(webkit): bootstrap build #2369)
-PlatformPasteboard::PlatformPasteboard(const String&)
-{
-}
-
-void PlatformPasteboard::performAsDataOwner(DataOwnerType, NOESCAPE Function<void()>&& actions)
-{
-    actions();
-}
-
-int64_t PlatformPasteboard::changeCount() const
-{
-    return ::GetClipboardSequenceNumber();
-}
-
-void PlatformPasteboard::getTypes(Vector<String>& types) const
-{
-    if (::IsClipboardFormatAvailable(CF_UNICODETEXT) || ::IsClipboardFormatAvailable(CF_TEXT))
-        types.append(textPlainContentTypeAtom());
-}
-
-=======
->>>>>>> e17920ede524 (chore(webkit): bootstrap build #2369)
 static String readClipboardString(UINT format)
 {
     if (!::IsClipboardFormatAvailable(format) || !::OpenClipboard(clipboardOwner()))
@@ -289,7 +245,7 @@ PlatformPasteboard::PlatformPasteboard(const String&)
 {
 }
 
-void PlatformPasteboard::performAsDataOwner(DataOwnerType, NOESCAPE Function<void()>&& actions)
+void PlatformPasteboard::performAsDataOwner(DataOwnerType, NOESCAPE const Function<void()>& actions)
 {
     actions();
 }
