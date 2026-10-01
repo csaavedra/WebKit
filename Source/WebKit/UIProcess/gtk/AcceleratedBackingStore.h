@@ -42,7 +42,6 @@
 #include <wtf/unix/UnixFileDescriptor.h>
 
 typedef void *EGLImage;
-typedef struct _cairo_surface cairo_surface_t;
 
 #if USE(GBM)
 struct gbm_bo;
