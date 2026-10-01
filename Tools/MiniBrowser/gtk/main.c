@@ -72,7 +72,6 @@ static gboolean logInputMethod;
 static gboolean webProcessCrashed;
 static gboolean inspectorPipe;
 static gint remoteDebuggingPort = -1;
-static gboolean headless;
 static gboolean noStartupWindow;
 static const char *userDataDir;
 static gboolean printVersion;
@@ -195,7 +194,6 @@ static const GOptionEntry commandLineOptions[] =
     { "inspector-pipe", 0, 0, G_OPTION_ARG_NONE, &inspectorPipe, "Open pipe connection to the remote inspector", NULL },
     { "remote-debugging-port", 0, 0, G_OPTION_ARG_INT, &remoteDebuggingPort, "Start remote debugging server on the specified port",  NULL },
     { "user-data-dir", 0, 0, G_OPTION_ARG_STRING, &userDataDir, "Default profile persistence folder location", NULL },
-    { "headless", 0, 0, G_OPTION_ARG_NONE, &headless, "Noop headless operation", NULL },
     { "no-startup-window", 0, 0, G_OPTION_ARG_NONE, &noStartupWindow, "Do not open default page", NULL },
     { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &uriArguments, 0, "[URL…]" },
     { 0, 0, 0, 0, 0, 0, 0 }
