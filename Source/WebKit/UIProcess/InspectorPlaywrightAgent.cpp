@@ -80,7 +80,7 @@ using namespace Inspector;
 namespace WebKit {
 
 class InspectorPlaywrightAgent::PageProxyChannel : public FrontendChannel {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(InspectorPlaywrightAgent);
+    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(PageProxyChannel);
 public:
     PageProxyChannel(FrontendChannel& frontendChannel, String browserContextID, String pageProxyID, WebPageProxy& page)
         : m_browserContextID(browserContextID)
