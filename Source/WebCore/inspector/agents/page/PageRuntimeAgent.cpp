@@ -171,19 +171,13 @@ void PageRuntimeAgent::didClearWindowObjectInWorld(LocalFrame& frame, DOMWrapper
         return;
 
     SetForScope ignoreDidClearWindowObject(m_ignoreDidClearWindowObject, true);
-<<<<<<< HEAD
-    notifyContextCreated(frameId, protect(frame.script())->globalObject(world), world);
-||||||| parent of e17920ede524 (chore(webkit): bootstrap build #2369)
-    notifyContextCreated(frameId, frame.script().globalObject(world), world);
-=======
 
     if (world.isNormal()) {
         for (const auto& name : m_bindingNames)
             addBindingToFrame(frame, name);
     }
 
-    notifyContextCreated(frameId, frame.script().globalObject(world), world);
->>>>>>> e17920ede524 (chore(webkit): bootstrap build #2369)
+    notifyContextCreated(frameId, protect(frame.script())->globalObject(world), world);
 }
 
 void PageRuntimeAgent::didReceiveMainResourceError(LocalFrame& frame)
@@ -229,16 +223,6 @@ void PageRuntimeAgent::reportExecutionContextCreation()
     Ref identifierRegistry = m_inspectedPage->inspectorController().identifierRegistry();
 
     protect(m_inspectedPage)->forEachLocalFrame([&](LocalFrame& frame) {
-<<<<<<< HEAD
-        if (!protect(frame.script())->canExecuteScripts(ReasonForCallingCanExecuteScripts::NotAboutToExecuteScript))
-            return;
-
-||||||| parent of e17920ede524 (chore(webkit): bootstrap build #2369)
-        if (!frame.script().canExecuteScripts(ReasonForCallingCanExecuteScripts::NotAboutToExecuteScript))
-            return;
-
-=======
->>>>>>> e17920ede524 (chore(webkit): bootstrap build #2369)
         auto frameId = identifierRegistry->frameId(&frame);
 
         // Always send the main world first.
