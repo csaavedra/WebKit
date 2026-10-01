@@ -26,11 +26,6 @@
 #pragma once
 
 #include "UserMessage.h"
-#if USE(SKIA)
-WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_BEGIN
-#include <skia/core/SkImage.h>
-WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_END
-#endif
 #include <wtf/CompletionHandler.h>
 #include <wtf/TZoneMallocInlines.h>
 
@@ -55,11 +50,6 @@ public:
     virtual bool isGLibBasedAPI() { return false; }
 
     virtual void frameDisplayed(WKWPE::View&) { }
-// Playwright begin
-#if USE(SKIA)
-    virtual sk_sp<SkImage> takeViewScreenshot() { return nullptr; }
-#endif
-// Playwright end
     virtual void willStartLoad(WKWPE::View&) { }
     virtual void didChangePageID(WKWPE::View&) { }
     virtual void didReceiveUserMessage(WKWPE::View&, WebKit::UserMessage&&, CompletionHandler<void(WebKit::UserMessage&&)>&& completionHandler) { completionHandler(WebKit::UserMessage()); }
