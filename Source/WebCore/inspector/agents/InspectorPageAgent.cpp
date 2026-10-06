@@ -1170,7 +1170,8 @@ Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotRect(int 
     if (quality && (*quality < 0 || *quality > 100))
         return makeUnexpected("Quality must be between 0 and 100"_s);
 
-    SnapshotOptions options { { }, PixelFormat::BGRA8, ColorSpace::SRGB() };
+    // Snapshots are requested in CSS (Page) or view (Viewport) pixels, whether or not the page scale is delegated.
+    SnapshotOptions options { { SnapshotFlags::IgnoreScaleDelegation }, PixelFormat::BGRA8, ColorSpace::SRGB() };
     if (coordinateSystem == Inspector::Protocol::Page::CoordinateSystem::Viewport)
         options.flags.add(SnapshotFlags::InViewCoordinates);
     if (omitDeviceScaleFactor.has_value() && *omitDeviceScaleFactor)

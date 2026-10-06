@@ -62,6 +62,7 @@ enum class SnapshotFlags : uint32_t {
     IncludeDocumentMarkers                  = 1 << 14,
     FastAndLowQualityFilters                = 1 << 15,
     OmitDeviceScaleFactor                   = 1 << 16,
+    IgnoreScaleDelegation                   = 1 << 17,
 };
 
 struct SnapshotOptions {
