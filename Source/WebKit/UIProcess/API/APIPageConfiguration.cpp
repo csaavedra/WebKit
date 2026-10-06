@@ -276,17 +276,15 @@ BrowsingContextGroup* PageConfiguration::preferredBrowsingContextGroup() const
     return nullptr;
 }
 
-<<<<<<< HEAD
 WebCore::CrossOriginMode PageConfiguration::crossOriginMode() const
 {
     RefPtr group = preferredBrowsingContextGroup();
     return group ? group->crossOriginMode() : WebCore::CrossOriginMode::Shared;
-||||||| parent of e46c514984f3 (chore(webkit): bootstrap build #2372)
-=======
+}
+
 WebKit::WebPageProxy* PageConfiguration::openerPageForInspector() const
 {
     return m_data.openerPageForInspector.get();
->>>>>>> e46c514984f3 (chore(webkit): bootstrap build #2372)
 }
 
 WebPageProxy* PageConfiguration::pageToCloneSessionStorageFrom() const
