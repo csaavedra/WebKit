@@ -1204,15 +1204,12 @@ public:
     WEBCORE_EXPORT void setInteractionRegionsEnabled(bool);
 #endif
 
-<<<<<<< HEAD
     WEBCORE_EXPORT void devicePostureTypeChanged();
-||||||| parent of e46c514984f3 (chore(webkit): bootstrap build #2372)
-=======
+
 #if ENABLE(ORIENTATION_EVENTS)
     int orientation() const;
     WEBCORE_EXPORT void setOverrideOrientation(std::optional<int>);
 #endif
->>>>>>> e46c514984f3 (chore(webkit): bootstrap build #2372)
 
 #if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
     DeviceOrientationUpdateProvider* deviceOrientationUpdateProvider() const { return m_deviceOrientationUpdateProvider.get(); }
