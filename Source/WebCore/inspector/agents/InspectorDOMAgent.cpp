@@ -1897,9 +1897,10 @@ static FloatPoint contentsToRootView(LocalFrameView& containingView, const Float
 
 static void frameQuadToViewport(LocalFrameView& containingView, FloatQuad& quad, Page& inspectedPage)
 {
-    float pageScaleFactor = inspectedPage.pageScaleFactor();
+    // frameScaleFactor() is 1 when the page delegates scaling to the UI process,
+    // in which case contents coordinates do not carry the page scale.
     auto mainFrame = inspectedPage.localMainFrame();
-    float scale = pageScaleFactor * mainFrame->pageZoomFactor();
+    float scale = mainFrame->frameScaleFactor() * mainFrame->pageZoomFactor();
 
     // Return css (not dip) coordinates by scaling back.
     quad.setP1(contentsToRootView(containingView, quad.p1()).scaled(1 / scale));
