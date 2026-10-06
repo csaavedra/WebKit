@@ -155,8 +155,10 @@ bool RemoteInspectorPipe::start()
 
     m_playwrightAgent.connectFrontend(*m_remoteFrontendChannel);
     m_terminated = false;
-    m_receiverThread = Thread::create("Inspector pipe reader"_s, [this] {
-        workerRun();
+    // stop(), which the destructor calls, joins the reader thread, so the thread can use `this`.
+    // Work it posts to the main thread can outlive the pipe and must go through weakThis.
+    m_receiverThread = Thread::create("Inspector pipe reader"_s, [this, weakThis = WeakPtr { *this }] {
+        workerRun(weakThis);
     });
     return true;
 }
@@ -173,16 +175,16 @@ void RemoteInspectorPipe::stop()
     m_receiverThread = nullptr;
 }
 
-void RemoteInspectorPipe::workerRun()
+void RemoteInspectorPipe::workerRun(WeakPtr<RemoteInspectorPipe> weakThis)
 {
     Vector<char> buffer(256 * 1024);
     Vector<char> line;
     while (!m_terminated) {
         size_t size = readBytes(buffer.mutableSpan());
         if (!size) {
-            RunLoop::mainSingleton().dispatch([this] {
-                if (!m_terminated)
-                    m_playwrightAgent.disconnectFrontend();
+            RunLoop::mainSingleton().dispatch([weakThis] {
+                if (weakThis && !weakThis->m_terminated)
+                    weakThis->m_playwrightAgent.disconnectFrontend();
             });
             break;
         }
@@ -199,9 +201,9 @@ void RemoteInspectorPipe::workerRun()
 
             if (end > start) {
                 String message = String::fromUTF8(line.span().subspan(start, end - start));
-                RunLoop::mainSingleton().dispatch([this, message = WTF::move(message)] {
-                    if (!m_terminated)
-                        m_playwrightAgent.dispatchMessageFromFrontend(message);
+                RunLoop::mainSingleton().dispatch([weakThis, message = WTF::move(message)] {
+                    if (weakThis && !weakThis->m_terminated)
+                        weakThis->m_playwrightAgent.dispatchMessageFromFrontend(message);
                 });
             }
             ++end;

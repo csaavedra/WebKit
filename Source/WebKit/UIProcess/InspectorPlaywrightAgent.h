@@ -32,10 +32,12 @@
 #include "WebPageInspectorController.h"
 #include "WebProcessPool.h"
 #include "DownloadProxy.h"
+#include <wtf/CheckedPtr.h>
 #include <wtf/HashMap.h>
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/TZoneMalloc.h>
+#include <wtf/WeakPtr.h>
 #include <WebCore/NavigationIdentifier.h>
 
 namespace Inspector {
@@ -65,9 +67,12 @@ class WebFrameProxy;
 class InspectorPlaywrightAgent final
     : public WebPageInspectorControllerObserver
     , public Inspector::PlaywrightBackendDispatcherHandler
-    , public DownloadInstrumentation {
+    , public DownloadInstrumentation
+    , public CanMakeWeakPtr<InspectorPlaywrightAgent>
+    , public CanMakeCheckedPtr<InspectorPlaywrightAgent> {
     WTF_MAKE_NONCOPYABLE(InspectorPlaywrightAgent);
     WTF_MAKE_TZONE_ALLOCATED(InspectorPlaywrightAgent);
+    WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(InspectorPlaywrightAgent);
 public:
     explicit InspectorPlaywrightAgent(std::unique_ptr<InspectorPlaywrightAgentClient> client);
     ~InspectorPlaywrightAgent() override;

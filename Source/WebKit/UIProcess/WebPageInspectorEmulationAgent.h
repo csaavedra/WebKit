@@ -33,6 +33,7 @@
 #include <wtf/Function.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/Vector.h>
+#include <wtf/WeakPtr.h>
 #include <wtf/WeakRef.h>
 
 namespace Inspector {
@@ -45,7 +46,7 @@ namespace WebKit {
 
 class WebPageProxy;
 
-class WebPageInspectorEmulationAgent : public Inspector::InspectorAgentBase, public Inspector::EmulationBackendDispatcherHandler, public CanMakeCheckedPtr<WebPageInspectorEmulationAgent> {
+class WebPageInspectorEmulationAgent : public Inspector::InspectorAgentBase, public Inspector::EmulationBackendDispatcherHandler, public CanMakeWeakPtr<WebPageInspectorEmulationAgent>, public CanMakeCheckedPtr<WebPageInspectorEmulationAgent> {
     WTF_MAKE_NONCOPYABLE(WebPageInspectorEmulationAgent);
     WTF_MAKE_TZONE_ALLOCATED(WebPageInspectorEmulationAgent);
     WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(WebPageInspectorEmulationAgent);

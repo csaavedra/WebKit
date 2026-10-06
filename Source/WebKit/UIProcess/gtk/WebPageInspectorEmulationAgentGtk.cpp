@@ -82,16 +82,15 @@ void WebPageInspectorEmulationAgent::platformSetSize(int width, int height, Func
         bool didNotHaveInitialAllocation = (!windowAllocation.width && !windowAllocation.height) ||
             // Default size for new windows from browser_window_init in Tools/MiniBrowser/gtk/BrowserWindow.c.
             (windowAllocation.width == 1024 && windowAllocation.height == 768);
-        // The callback can only be called if the page is still alive, so we can safely capture `this`.
-        drawingArea->waitForSizeUpdate([this, callback = WTF::move(callback), didNotHaveInitialAllocation, viewSize](const DrawingAreaProxyCoordinatedGraphics& drawingArea) mutable {
+        drawingArea->waitForSizeUpdate([weakThis = WeakPtr { *this }, callback = WTF::move(callback), didNotHaveInitialAllocation, viewSize](const DrawingAreaProxyCoordinatedGraphics& drawingArea) mutable {
             if (viewSize == drawingArea.size()) {
                 callback(String());
                 return;
             }
-            if (didNotHaveInitialAllocation) {
+            if (didNotHaveInitialAllocation && weakThis) {
                 // In gtk4 resize request may be lost (overridden by default one) if the window is not yet
                 // allocated when we are changing the size, so we try again.
-                platformSetSize(viewSize.width(), viewSize.height(), WTF::move(callback));
+                weakThis->platformSetSize(viewSize.width(), viewSize.height(), WTF::move(callback));
                 return;
             }
             callback("Failed to resize window"_s);

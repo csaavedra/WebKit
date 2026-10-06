@@ -27,10 +27,12 @@
 
 #if ENABLE(REMOTE_INSPECTOR)
 
+#include <wtf/CheckedPtr.h>
 #include <wtf/Ref.h>
 #include <wtf/RefPtr.h>
 #include <wtf/TZoneMalloc.h>
 #include <wtf/Threading.h>
+#include <wtf/WeakPtr.h>
 
 namespace Inspector {
 class FrontendChannel;
@@ -40,9 +42,10 @@ namespace WebKit {
 
 class InspectorPlaywrightAgent;
 
-class RemoteInspectorPipe {
+class RemoteInspectorPipe : public CanMakeWeakPtr<RemoteInspectorPipe>, public CanMakeCheckedPtr<RemoteInspectorPipe> {
     WTF_MAKE_NONCOPYABLE(RemoteInspectorPipe);
     WTF_MAKE_TZONE_ALLOCATED(RemoteInspectorPipe);
+    WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(RemoteInspectorPipe);
 public:
     explicit RemoteInspectorPipe(InspectorPlaywrightAgent&);
     ~RemoteInspectorPipe();
@@ -53,7 +56,7 @@ private:
     bool start();
     void stop();
 
-    void workerRun();
+    void workerRun(WeakPtr<RemoteInspectorPipe>);
 
     RefPtr<Thread> m_receiverThread;
     std::atomic<bool> m_terminated { false };

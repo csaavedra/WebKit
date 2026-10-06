@@ -602,11 +602,11 @@ void InspectorPlaywrightAgent::closeImpl(Function<void(String)>&& callback)
         return;
     }
 
-    m_defaultContext->dataStore->syncLocalStorage([this, callback = WTF::move(callback)] () {
-        if (m_client == nullptr) {
+    m_defaultContext->dataStore->syncLocalStorage([weakThis = WeakPtr { *this }, callback = WTF::move(callback)] () {
+        if (!weakThis || !weakThis->m_client) {
             callback("no platform delegate to close browser"_s);
         } else {
-            m_client->closeBrowser();
+            weakThis->m_client->closeBrowser();
             callback(String());
         }
     });
