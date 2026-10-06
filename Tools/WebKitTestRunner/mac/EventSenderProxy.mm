@@ -774,13 +774,6 @@ void EventSenderProxy::scaleGestureEnd(double scale)
     sendMagnifyEvent(*m_testController, m_position, ++m_eventNumber, absoluteTimeForEventTime(currentEventTime()), scale, NSEventPhaseEnded, "scaleGestureEnd"_s);
 }
 
-<<<<<<< HEAD
-||||||| parent of e46c514984f3 (chore(webkit): bootstrap build #2372)
-#endif // ENABLE(MAC_GESTURE_EVENTS)
-
-=======
-#endif // ENABLE(MAC_GESTURE_EVENTS)
-
 #if ENABLE(TOUCH_EVENTS)
 void EventSenderProxy::addTouchPoint(int, int)
 {
@@ -836,5 +829,4 @@ void EventSenderProxy::setTouchModifier(WKEventModifiers, bool)
 #endif // ENABLE(TOUCH_EVENTS)
 
 
->>>>>>> e46c514984f3 (chore(webkit): bootstrap build #2372)
 } // namespace WTR
