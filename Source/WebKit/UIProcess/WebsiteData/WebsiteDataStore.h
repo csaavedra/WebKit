@@ -144,11 +144,9 @@ struct WebsiteDataStoreParameters;
 enum RemoveDataTaskCounterType { };
 using RemoveDataTaskCounter = RefCounter<RemoveDataTaskCounterType>;
 
-<<<<<<< HEAD
 struct LocalNetworkAccessPromptIdentifierType;
 using LocalNetworkAccessPromptIdentifier = ObjectIdentifier<LocalNetworkAccessPromptIdentifierType>;
-||||||| parent of e46c514984f3 (chore(webkit): bootstrap build #2372)
-=======
+
 class DownloadInstrumentation {
 public:
     virtual void downloadCreated(const String& uuid, const WebCore::ResourceRequest&, const FrameInfoData& frameInfoData, WebPageProxy* page, RefPtr<DownloadProxy> download) = 0;
@@ -156,7 +154,6 @@ public:
     virtual void downloadFinished(const String& uuid, const String& error) = 0;
     virtual ~DownloadInstrumentation() = default;
 };
->>>>>>> e46c514984f3 (chore(webkit): bootstrap build #2372)
 
 class WebsiteDataStore : public API::ObjectImpl<API::Object::Type::WebsiteDataStore>, public CanMakeWeakPtr<WebsiteDataStore> {
 public:
