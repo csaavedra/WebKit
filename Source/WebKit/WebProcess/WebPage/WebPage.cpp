@@ -9044,16 +9044,12 @@ Ref<DocumentLoader> WebPage::createDocumentLoader(LocalFrame& frame, ResourceReq
             m_allowsContentJavaScriptFromMostRecentNavigation = m_internals->pendingWebsitePolicies->allowsContentJavaScript;
             WebsitePoliciesData::applyToDocumentLoader(*std::exchange(m_internals->pendingWebsitePolicies, std::nullopt), documentLoader);
         }
-<<<<<<< HEAD
 
         if (!frame.isMainFrame())
             documentLoader->setUnpartitionedStorageSite(std::exchange(m_pendingUnpartitionedStorageSite, std::nullopt));
-||||||| parent of e46c514984f3 (chore(webkit): bootstrap build #2372)
-=======
     } else if (m_pendingFrameNavigationID) {
         documentLoader->setNavigationID(*m_pendingFrameNavigationID);
         m_pendingFrameNavigationID = std::nullopt;
->>>>>>> e46c514984f3 (chore(webkit): bootstrap build #2372)
     }
 
     return documentLoader;

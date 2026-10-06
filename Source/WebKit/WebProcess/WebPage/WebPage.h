@@ -3349,12 +3349,8 @@ private:
     bool m_isAppNapEnabled { true };
 
     Markable<WebCore::NavigationIdentifier> m_pendingNavigationID;
-<<<<<<< HEAD
     std::optional<WebCore::RegistrableDomain> m_pendingUnpartitionedStorageSite;
-||||||| parent of e46c514984f3 (chore(webkit): bootstrap build #2372)
-=======
     Markable<WebCore::NavigationIdentifier> m_pendingFrameNavigationID;
->>>>>>> e46c514984f3 (chore(webkit): bootstrap build #2372)
 
     bool m_shouldConsiderEnhancedSecurityForInsecureResponseForCurrentNavigation { false };
     bool m_mainFrameProgressCompleted { false };
