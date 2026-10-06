@@ -37,9 +37,12 @@
 #import "WKWebViewInternal.h"
 #import <WebCore/ImageUtilities.h>
 #import <wtf/RefPtr.h>
+#import <wtf/TZoneMallocInlines.h>
 #import <wtf/text/WTFString.h>
 
 namespace WebKit {
+
+WTF_MAKE_TZONE_ALLOCATED_IMPL(InspectorPlaywrightAgentClientMac);
 
 InspectorPlaywrightAgentClientMac::InspectorPlaywrightAgentClientMac(_WKBrowserInspectorDelegate* delegate, bool headless)
   : delegate_(delegate),

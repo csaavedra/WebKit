@@ -29,6 +29,7 @@
 
 #include <wtf/Ref.h>
 #include <wtf/RefPtr.h>
+#include <wtf/TZoneMalloc.h>
 #include <wtf/Threading.h>
 
 namespace Inspector {
@@ -41,7 +42,7 @@ class InspectorPlaywrightAgent;
 
 class RemoteInspectorPipe {
     WTF_MAKE_NONCOPYABLE(RemoteInspectorPipe);
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(RemoteInspectorPipe);
+    WTF_MAKE_TZONE_ALLOCATED(RemoteInspectorPipe);
 public:
     explicit RemoteInspectorPipe(InspectorPlaywrightAgent&);
     ~RemoteInspectorPipe();

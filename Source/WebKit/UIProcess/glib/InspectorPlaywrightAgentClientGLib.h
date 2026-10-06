@@ -32,13 +32,14 @@
 #include "WebKitWebContext.h"
 #include <wtf/Forward.h>
 #include <wtf/HashMap.h>
+#include <wtf/TZoneMalloc.h>
 #include <wtf/glib/GRefPtr.h>
 #include <wtf/text/StringHash.h>
 
 namespace WebKit {
 
 class InspectorPlaywrightAgentClientGlib : public InspectorPlaywrightAgentClient {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(InspectorPlaywrightAgentClientGlib);
+    WTF_MAKE_TZONE_ALLOCATED(InspectorPlaywrightAgentClientGlib);
 public:
     InspectorPlaywrightAgentClientGlib(const WTF::String& proxyURI, const char* const* ignoreHosts);
     ~InspectorPlaywrightAgentClientGlib() override = default;

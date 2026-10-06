@@ -35,6 +35,7 @@
 #include <wtf/MainThread.h>
 #include <wtf/RunLoop.h>
 #include <wtf/StdLibExtras.h>
+#include <wtf/TZoneMallocInlines.h>
 #include <wtf/Vector.h>
 #include <wtf/WorkQueue.h>
 
@@ -48,6 +49,8 @@
 #endif
 
 namespace WebKit {
+
+WTF_MAKE_TZONE_ALLOCATED_IMPL(RemoteInspectorPipe);
 
 namespace {
 
@@ -101,7 +104,7 @@ void writeBytes(std::span<const char> bytes)
 }  // namespace
 
 class RemoteInspectorPipe::RemoteFrontendChannel : public Inspector::FrontendChannel {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(RemoteInspectorPipe::RemoteFrontendChannel);
+    WTF_MAKE_TZONE_ALLOCATED_INLINE(RemoteFrontendChannel);
 public:
     RemoteFrontendChannel()
         : m_senderQueue(WorkQueue::create("Inspector pipe writer"_s))

@@ -40,10 +40,13 @@
 #include <WebCore/CurlProxySettings.h>
 #include <wtf/HashMap.h>
 #include <wtf/RefPtr.h>
+#include <wtf/TZoneMallocInlines.h>
 #include <wtf/text/StringView.h>
 #include <wtf/text/WTFString.h>
 
 namespace WebKit {
+
+WTF_MAKE_TZONE_ALLOCATED_IMPL(InspectorPlaywrightAgentClientWin);
 
 InspectorPlaywrightAgentClientWin::InspectorPlaywrightAgentClientWin(ConfigureDataStoreCallback configureDataStore, CreatePageCallback createPage, QuitCallback quit)
     : m_configureDataStore(configureDataStore)

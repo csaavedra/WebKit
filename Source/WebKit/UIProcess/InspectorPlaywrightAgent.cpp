@@ -72,6 +72,7 @@
 #include <wtf/HashSet.h>
 #include <wtf/HexNumber.h>
 #include <wtf/RunLoop.h>
+#include <wtf/TZoneMallocInlines.h>
 #include <wtf/URL.h>
 #include <wtf/text/MakeString.h>
 
@@ -80,7 +81,7 @@ using namespace Inspector;
 namespace WebKit {
 
 class InspectorPlaywrightAgent::PageProxyChannel : public FrontendChannel {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(PageProxyChannel);
+    WTF_MAKE_TZONE_ALLOCATED_INLINE(PageProxyChannel);
 public:
     PageProxyChannel(FrontendChannel& frontendChannel, String browserContextID, String pageProxyID, WebPageProxy& page)
         : m_browserContextID(browserContextID)
@@ -283,13 +284,15 @@ void adjustInspectedPagePreferences(WebPreferences& preferences, std::optional<b
 
 }  // namespace
 
+WTF_MAKE_TZONE_ALLOCATED_IMPL(BrowserContext);
+
 BrowserContext::BrowserContext() = default;
 
 BrowserContext::~BrowserContext() = default;
 
 class InspectorPlaywrightAgent::BrowserContextDeletion {
     WTF_MAKE_NONCOPYABLE(BrowserContextDeletion);
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(InspectorPlaywrightAgent::BrowserContextDeletion);
+    WTF_MAKE_TZONE_ALLOCATED_INLINE(BrowserContextDeletion);
 public:
     BrowserContextDeletion(std::unique_ptr<BrowserContext>&& context, size_t numberOfPages, Ref<DeleteContextCallback>&& callback)
         : m_browserContext(WTF::move(context))
@@ -320,6 +323,7 @@ private:
     Ref<DeleteContextCallback> m_callback;
 };
 
+WTF_MAKE_TZONE_ALLOCATED_IMPL(InspectorPlaywrightAgent);
 
 InspectorPlaywrightAgent::InspectorPlaywrightAgent(std::unique_ptr<InspectorPlaywrightAgentClient> client)
     : m_frontendChannel(nullptr)

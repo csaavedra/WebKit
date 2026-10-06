@@ -35,6 +35,7 @@
 #include "WebTouchEvent.h"
 #include "WebWheelEvent.h"
 #include <wtf/MathExtras.h>
+#include <wtf/TZoneMallocInlines.h>
 #include <wtf/HexNumber.h>
 #include <WebCore/Scrollbar.h>
 
@@ -50,7 +51,7 @@ namespace {
 
 template<class T>
 class CallbackList {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(CallbackList);
+    WTF_MAKE_TZONE_ALLOCATED_TEMPLATE(CallbackList);
 public:
     ~CallbackList()
     {
@@ -73,6 +74,8 @@ public:
 private:
     Vector<Ref<T>> m_callbacks;
 };
+
+WTF_MAKE_TZONE_ALLOCATED_TEMPLATE_IMPL(template<class T>, CallbackList<T>);
 
 } // namespace
 

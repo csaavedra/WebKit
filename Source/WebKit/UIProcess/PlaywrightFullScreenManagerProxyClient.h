@@ -28,13 +28,15 @@
 #if ENABLE(FULLSCREEN_API)
 
 #include "WebFullScreenManagerProxy.h"
+#include <wtf/TZoneMalloc.h>
 
 namespace WebKit {
 
 class WebPageProxy;
 
 class PlaywrightFullScreenManagerProxyClient : public WebFullScreenManagerProxyClient {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(PlaywrightFullScreenManagerProxyClient);
+    WTF_MAKE_TZONE_ALLOCATED(PlaywrightFullScreenManagerProxyClient);
+    WTF_OVERRIDE_DELETE_FOR_CHECKED_PTR(PlaywrightFullScreenManagerProxyClient);
 public:
     PlaywrightFullScreenManagerProxyClient(WebPageProxy&);
     ~PlaywrightFullScreenManagerProxyClient() override = default;

@@ -30,6 +30,7 @@
 #include "InspectorPlaywrightAgentClient.h"
 #include <WebKit/WKInspector.h>
 #include <wtf/Forward.h>
+#include <wtf/TZoneMalloc.h>
 #include <wtf/text/StringHash.h>
 
 typedef void (*ConfigureDataStoreCallback)(WKWebsiteDataStoreRef dataStore);
@@ -39,7 +40,7 @@ typedef void (*QuitCallback)();
 namespace WebKit {
 
 class InspectorPlaywrightAgentClientWin : public InspectorPlaywrightAgentClient {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(InspectorPlaywrightAgentClientWin);
+    WTF_MAKE_TZONE_ALLOCATED(InspectorPlaywrightAgentClientWin);
 public:
     InspectorPlaywrightAgentClientWin(ConfigureDataStoreCallback, CreatePageCallback, QuitCallback);
     ~InspectorPlaywrightAgentClientWin() override = default;

@@ -30,9 +30,12 @@
 #if ENABLE(FULLSCREEN_API)
 
 #include "WebPageProxy.h"
+#include <wtf/TZoneMallocInlines.h>
 
 namespace WebKit {
 using namespace WebCore;
+
+WTF_MAKE_TZONE_ALLOCATED_IMPL(PlaywrightFullScreenManagerProxyClient);
 
 PlaywrightFullScreenManagerProxyClient::PlaywrightFullScreenManagerProxyClient(WebPageProxy&)
 {

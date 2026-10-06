@@ -39,12 +39,15 @@
 #include "WebPageProxy.h"
 #include <wtf/HashMap.h>
 #include <wtf/RefPtr.h>
+#include <wtf/TZoneMallocInlines.h>
 #include <wtf/glib/GSpanExtras.h>
 #include <wtf/text/Base64.h>
 #include <wtf/text/StringView.h>
 #include <wtf/text/WTFString.h>
 
 namespace WebKit {
+
+WTF_MAKE_TZONE_ALLOCATED_IMPL(InspectorPlaywrightAgentClientGlib);
 
 static WebCore::SoupNetworkProxySettings makeProxySettings(const String& proxyServer, Vector<UTF8CString>&& ignoreHosts)
 {

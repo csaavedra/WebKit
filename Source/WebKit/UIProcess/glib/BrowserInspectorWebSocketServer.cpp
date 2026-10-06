@@ -37,6 +37,7 @@
 #include <wtf/glib/GRefPtr.h>
 #include <wtf/glib/GSpanExtras.h>
 #include <wtf/NeverDestroyed.h>
+#include <wtf/TZoneMallocInlines.h>
 #include <wtf/text/UTF8CStringView.h>
 
 namespace WebKit {
@@ -44,7 +45,7 @@ namespace WebKit {
 namespace {
 
 class WebSocketFrontendChannel : public Inspector::FrontendChannel {
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(WebSocketFrontendChannel);
+    WTF_MAKE_TZONE_ALLOCATED_INLINE(WebSocketFrontendChannel);
 public:
     explicit WebSocketFrontendChannel(SoupWebsocketConnection* connection)
         : m_connection(connection)

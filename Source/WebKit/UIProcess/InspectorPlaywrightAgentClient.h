@@ -33,6 +33,7 @@
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/RefCounted.h>
+#include <wtf/TZoneMalloc.h>
 #include <wtf/WeakHashSet.h>
 #include <wtf/WeakPtr.h>
 
@@ -45,7 +46,7 @@ class WebProcessPool;
 
 class BrowserContext {
     WTF_MAKE_NONCOPYABLE(BrowserContext);
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(BrowserContext);
+    WTF_MAKE_TZONE_ALLOCATED(BrowserContext);
 public:
     BrowserContext();
     ~BrowserContext();

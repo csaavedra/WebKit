@@ -35,6 +35,7 @@
 #include <wtf/HashMap.h>
 #include <wtf/Forward.h>
 #include <wtf/Noncopyable.h>
+#include <wtf/TZoneMalloc.h>
 #include <WebCore/NavigationIdentifier.h>
 
 namespace Inspector {
@@ -66,7 +67,7 @@ class InspectorPlaywrightAgent final
     , public Inspector::PlaywrightBackendDispatcherHandler
     , public DownloadInstrumentation {
     WTF_MAKE_NONCOPYABLE(InspectorPlaywrightAgent);
-    WTF_DEPRECATED_MAKE_FAST_ALLOCATED(InspectorPlaywrightAgent);
+    WTF_MAKE_TZONE_ALLOCATED(InspectorPlaywrightAgent);
 public:
     explicit InspectorPlaywrightAgent(std::unique_ptr<InspectorPlaywrightAgentClient> client);
     ~InspectorPlaywrightAgent() override;
