@@ -429,15 +429,13 @@ messages -> WebPage WantsAsyncDispatchMessage {
     ModelDragEnded(WebCore::NodeIdentifier nodeID)
 #endif
 
-<<<<<<< HEAD
 #if ENABLE(CONNECTED_VOLUMETRIC_SCENE)
     [EnabledBy=SpatialPortalEnabled] VolumetricSceneDidClose(WebCore::NodeIdentifier nodeID)
     [EnabledBy=SpatialPortalEnabled] UpdateVolumetricSceneSize(WebCore::NodeIdentifier nodeID, WebCore::FloatSize volumeSizeInMeters)
-||||||| parent of e46c514984f3 (chore(webkit): bootstrap build #2372)
-=======
+#endif
+
 #if PLATFORM(MAC) && ENABLE(DRAG_SUPPORT)
     SetDragPasteboardName(String pasteboardName)
->>>>>>> e46c514984f3 (chore(webkit): bootstrap build #2372)
 #endif
 
 #if PLATFORM(IOS_FAMILY) && ENABLE(DRAG_SUPPORT)
