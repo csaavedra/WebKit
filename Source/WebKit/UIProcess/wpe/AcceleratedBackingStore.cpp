@@ -244,20 +244,10 @@ static std::expected<Ref<ViewSnapshot>, String> saveBufferSnapshot(const GRefPtr
         return makeUnexpected("Failed to read current WPEBuffer for snapshot"_s);
     }
 
-<<<<<<< HEAD
-    GRefPtr bytes = gBytesNew(span(pixels));
-||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
-    gsize pixelsDataSize;
-    const auto* pixelsData = g_bytes_get_data(pixels, &pixelsDataSize);
-    GRefPtr<GBytes> bytes = adoptGRef(g_bytes_new(pixelsData, pixelsDataSize));
-=======
     // wpe_buffer_import_to_pixels() returns memory owned by the WPEBuffer (transfer none), which
     // may be recycled once a newer frame is committed. Copy it into a GBytes owned by the SkImage
     // so snapshots (including per-frame screencast captures) can safely outlive the buffer.
-    gsize pixelsDataSize;
-    const auto* pixelsData = g_bytes_get_data(pixels, &pixelsDataSize);
-    GRefPtr<GBytes> bytes = adoptGRef(g_bytes_new(pixelsData, pixelsDataSize));
->>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
+    GRefPtr bytes = gBytesNew(span(pixels));
 
     auto info = getImageInfoFromBuffer(buffer);
     if (!info)
