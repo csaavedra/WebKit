@@ -42,9 +42,9 @@
 #include "SandboxExtension.h"
 #include "StorageNamespaceIdentifier.h"
 #include "WebAutomationSession.h"
+#include "WebFrameProxy.h"
 #include "WebGeolocationManagerProxy.h"
 #include "WebGeolocationPosition.h"
-#include "WebFrameProxy.h"
 #include "WebInspectorUtilities.h"
 #include "WebPageGroup.h"
 #include "WebPageInspectorController.h"
@@ -55,6 +55,9 @@
 #include "WebProcessPool.h"
 #include "WebProcessProxy.h"
 #include "WebsiteDataRecord.h"
+#include <JavaScriptCore/InspectorBackendDispatcher.h>
+#include <JavaScriptCore/InspectorFrontendChannel.h>
+#include <JavaScriptCore/InspectorFrontendRouter.h>
 #include <WebCore/FrameIdentifier.h>
 #include <WebCore/GeolocationPositionData.h>
 #include <WebCore/InspectorPageAgent.h>
@@ -63,9 +66,6 @@
 #include <WebCore/SecurityOriginData.h>
 #include <WebCore/StorageBlockingPolicy.h>
 #include <WebCore/WindowFeatures.h>
-#include <JavaScriptCore/InspectorBackendDispatcher.h>
-#include <JavaScriptCore/InspectorFrontendChannel.h>
-#include <JavaScriptCore/InspectorFrontendRouter.h>
 #include <pal/SessionID.h>
 #include <stdlib.h>
 #include <wtf/HashMap.h>
@@ -76,9 +76,9 @@
 #include <wtf/URL.h>
 #include <wtf/text/MakeString.h>
 
-using namespace Inspector;
-
 namespace WebKit {
+
+using namespace Inspector;
 
 class InspectorPlaywrightAgent::PageProxyChannel : public FrontendChannel {
     WTF_MAKE_TZONE_ALLOCATED_INLINE(PageProxyChannel);
@@ -854,7 +854,7 @@ static void clearWebProcessCookieCaches(WebsiteDataStore& dataStore)
     }
 }
 
-void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JSON::Array>&& in_cookies, Ref<SetCookiesCallback>&& callback)
+void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JSON::Array>&& cookiesArray, Ref<SetCookiesCallback>&& callback)
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
@@ -864,8 +864,8 @@ void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JS
     }
 
     Vector<WebCore::Cookie> cookies;
-    for (unsigned i = 0; i < in_cookies->length(); ++i) {
-        RefPtr<JSON::Value> item = in_cookies->get(i);
+    for (unsigned i = 0; i < cookiesArray->length(); ++i) {
+        RefPtr<JSON::Value> item = cookiesArray->get(i);
         RefPtr<JSON::Object> obj = item ? item->asObject() : nullptr;
         if (!obj) {
             callback->sendFailure("Invalid cookie payload format"_s);

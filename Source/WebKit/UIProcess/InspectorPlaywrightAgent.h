@@ -27,18 +27,18 @@
 
 #if ENABLE(REMOTE_INSPECTOR)
 
+#include "DownloadProxy.h"
 #include "InspectorPlaywrightAgentClient.h"
-#include <JavaScriptCore/InspectorBackendDispatchers.h>
 #include "WebPageInspectorController.h"
 #include "WebProcessPool.h"
-#include "DownloadProxy.h"
+#include <JavaScriptCore/InspectorBackendDispatchers.h>
+#include <WebCore/NavigationIdentifier.h>
 #include <wtf/CheckedPtr.h>
-#include <wtf/HashMap.h>
 #include <wtf/Forward.h>
+#include <wtf/HashMap.h>
 #include <wtf/Noncopyable.h>
 #include <wtf/TZoneMalloc.h>
 #include <wtf/WeakPtr.h>
-#include <WebCore/NavigationIdentifier.h>
 
 namespace Inspector {
 class BackendDispatcher;
@@ -109,7 +109,7 @@ private:
     Inspector::Protocol::ErrorStringOr<void> closePage(const String& pageProxyID, std::optional<bool>&& runBeforeUnload) override;
 
     void getAllCookies(const String& browserContextID, Ref<GetAllCookiesCallback>&&) override;
-    void setCookies(const String& browserContextID, Ref<JSON::Array>&& in_cookies, Ref<SetCookiesCallback>&&) override;
+    void setCookies(const String& browserContextID, Ref<JSON::Array>&& cookiesArray, Ref<SetCookiesCallback>&&) override;
     void deleteAllCookies(const String& browserContextID, Ref<DeleteAllCookiesCallback>&&) override;
 
     Inspector::Protocol::ErrorStringOr<void> setGeolocationOverride(const String& browserContextID, RefPtr<JSON::Object>&& geolocation) override;
