@@ -639,7 +639,7 @@ void InspectorPlaywrightAgent::deleteContext(const String& browserContextID, Ref
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!lookupBrowserContext(errorString, browserContextID)) {
+    if (!browserContext) {
         callback->sendFailure(errorString);
         return;
     }
@@ -792,7 +792,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::setIgnoreCert
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty())
+    if (!browserContext)
         return makeUnexpected(errorString);
 
     browserContext->dataStore->setIgnoreTLSErrors(ignore);
@@ -826,7 +826,7 @@ void InspectorPlaywrightAgent::getAllCookies(const String& browserContextID, Ref
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty()) {
+    if (!browserContext) {
         callback->sendFailure(errorString);
         return;
     }
@@ -858,7 +858,7 @@ void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JS
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty()) {
+    if (!browserContext) {
         callback->sendFailure(errorString);
         return;
     }
@@ -926,7 +926,7 @@ void InspectorPlaywrightAgent::deleteAllCookies(const String& browserContextID, 
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty()) {
+    if (!browserContext) {
         callback->sendFailure(errorString);
         return;
     }
@@ -944,7 +944,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::setLanguages(
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty())
+    if (!browserContext)
         return makeUnexpected(errorString);
 
     Vector<String> items;
@@ -964,7 +964,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::setDownloadBe
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty())
+    if (!browserContext)
         return makeUnexpected(errorString);
 
     std::optional<bool> allow;
@@ -980,7 +980,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::setGeolocatio
 {
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty())
+    if (!browserContext)
         return makeUnexpected(errorString);
 
     RefPtr geoManager = browserContext->processPool->supplement<WebGeolocationManagerProxy>();
@@ -1051,7 +1051,7 @@ void InspectorPlaywrightAgent::clearMemoryCache(const String& browserContextID, 
     }
     String errorString;
     auto browserContext = lookupBrowserContext(errorString, browserContextID);
-    if (!errorString.isEmpty()) {
+    if (!browserContext) {
         callback->sendFailure(errorString);
         return;
     }
