@@ -62,7 +62,7 @@ WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_END
 
 namespace WebKit {
 
-const int kMaxFramesInFlight = 1;
+static constexpr int maxFramesInFlight = 1;
 
 using namespace Inspector;
 
@@ -92,7 +92,7 @@ void InspectorScreencastAgent::didPaint(sk_sp<SkImage>&& surface)
     if (!m_screencast)
         return;
 
-    if (m_screencastFramesInFlight > kMaxFramesInFlight)
+    if (m_screencastFramesInFlight > maxFramesInFlight)
         return;
 
     MonotonicTime timestamp = MonotonicTime::now();
@@ -226,7 +226,7 @@ void InspectorScreencastAgent::scheduleFrameEncoding()
 
 void InspectorScreencastAgent::encodeFrame()
 {
-    if (!m_screencast || m_screencastFramesInFlight > kMaxFramesInFlight)
+    if (!m_screencast || m_screencastFramesInFlight > maxFramesInFlight)
         return;
 
 #if PLATFORM(MAC)
