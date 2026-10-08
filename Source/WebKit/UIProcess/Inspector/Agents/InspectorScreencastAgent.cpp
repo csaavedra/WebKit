@@ -76,9 +76,7 @@ InspectorScreencastAgent::InspectorScreencastAgent(BackendDispatcher& backendDis
 {
 }
 
-InspectorScreencastAgent::~InspectorScreencastAgent()
-{
-}
+InspectorScreencastAgent::~InspectorScreencastAgent() = default;
 
 void InspectorScreencastAgent::didCreateFrontendAndBackend()
 {
@@ -98,7 +96,7 @@ void InspectorScreencastAgent::didPaint(sk_sp<SkImage>&& surface)
         return;
 
     MonotonicTime timestamp = MonotonicTime::now();
-    sk_sp<SkImage> image(surface);
+    sk_sp<SkImage> image(WTF::move(surface));
 
     // Get actual image size (in device pixels).
     WebCore::IntSize displaySize(image->width(), image->height());

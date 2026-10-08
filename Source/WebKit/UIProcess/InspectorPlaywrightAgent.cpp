@@ -83,7 +83,7 @@ namespace WebKit {
 class InspectorPlaywrightAgent::PageProxyChannel : public FrontendChannel {
     WTF_MAKE_TZONE_ALLOCATED_INLINE(PageProxyChannel);
 public:
-    PageProxyChannel(FrontendChannel& frontendChannel, String browserContextID, String pageProxyID, WebPageProxy& page)
+    PageProxyChannel(FrontendChannel& frontendChannel, const String& browserContextID, const String& pageProxyID, WebPageProxy& page)
         : m_browserContextID(browserContextID)
         , m_pageProxyID(pageProxyID)
         , m_frontendChannel(frontendChannel)
@@ -156,7 +156,7 @@ private:
     {
     }
 
-    void setEnableHighAccuracy(WebGeolocationManagerProxy&, bool enabled) override
+    void setEnableHighAccuracy(WebGeolocationManagerProxy&, bool) override
     {
     }
 
