@@ -58,6 +58,7 @@
 #include "InspectorIdentifierRegistry.h"
 #include "InspectorNetworkAgent.h"
 #include "InspectorOverlay.h"
+#include "InspectorOverlayConfigParser.h"
 #include "InspectorResourceUtilities.h"
 #include "InstrumentingAgents.h"
 #include "JSDOMWindowCustom.h"
@@ -1314,7 +1315,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::setDefaultBackgroun
         return { };
     }
 
-    view->updateBackgroundRecursively(InspectorDOMAgent::parseColor(WTF::move(color)));
+    view->updateBackgroundRecursively(parseInspectorColor(WTF::move(color)));
     return { };
 }
 

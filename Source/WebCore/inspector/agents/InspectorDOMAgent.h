@@ -62,7 +62,6 @@ namespace WebCore {
 
 class AXCoreObject;
 class CharacterData;
-class Color;
 class DOMEditor;
 class Document;
 class Element;
@@ -102,7 +101,6 @@ public:
 
     static String documentURLString(Document*);
     static String documentBaseURLString(Document*);
-    static std::optional<Color> parseColor(RefPtr<JSON::Object>&&);
 
     // We represent embedded doms as a part of the same hierarchy. Hence we treat children of frame owners differently.
     // We also skip whitespace text nodes conditionally. Following methods encapsulate these specifics.
