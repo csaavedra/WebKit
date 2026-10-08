@@ -147,49 +147,7 @@ Ref<Inspector::Protocol::Network::ResourceTiming> InspectorNetworkAgent::buildOb
 
 static Ref<Inspector::Protocol::Network::Request> buildObjectForResourceRequest(const ResourceRequest& request, ResourceLoader* resourceLoader)
 {
-<<<<<<< HEAD
     return ResourceUtilities::buildObjectForResourceRequest(request, ResourceUtilities::copyRequestExtras(request, resourceLoader));
-||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
-    auto requestObject = Inspector::Protocol::Network::Request::create()
-        .setUrl(request.url().string())
-        .setMethod(request.httpMethod())
-        .setHeaders(ResourceUtilities::buildObjectForHeaders(request.httpHeaderFields()))
-        .release();
-
-    if (request.httpBody() && !request.httpBody()->isEmpty()) {
-        auto bytes = protect(request.httpBody())->flatten();
-        requestObject->setPostData(String::fromUTF8WithLatin1Fallback(bytes.span()));
-    }
-
-    if (resourceLoader) {
-        requestObject->setReferrerPolicy(toProtocol(resourceLoader->options().referrerPolicy));
-
-        if (auto integrity = resourceLoader->options().integrity; !integrity.isEmpty())
-            requestObject->setIntegrity(integrity);
-    }
-
-    return requestObject;
-=======
-    auto requestObject = Inspector::Protocol::Network::Request::create()
-        .setUrl(request.url().string())
-        .setMethod(request.httpMethod())
-        .setHeaders(ResourceUtilities::buildObjectForHeaders(request.httpHeaderFields()))
-        .release();
-
-    if (request.httpBody() && !request.httpBody()->isEmpty()) {
-        auto bytes = protect(request.httpBody())->flatten();
-        requestObject->setPostData(base64EncodeToString(bytes));
-    }
-
-    if (resourceLoader) {
-        requestObject->setReferrerPolicy(toProtocol(resourceLoader->options().referrerPolicy));
-
-        if (auto integrity = resourceLoader->options().integrity; !integrity.isEmpty())
-            requestObject->setIntegrity(integrity);
-    }
-
-    return requestObject;
->>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
 }
 
 static Inspector::Protocol::Network::Response::Source NODELETE responseSource(ResourceResponse::Source source)
