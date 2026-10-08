@@ -65,7 +65,7 @@ static WebCore::SoupNetworkProxySettings parseRawProxySettings(const String& pro
 {
     Vector<UTF8CString> hosts;
     for (auto* host : span(ignoreHosts))
-        hosts.append(UTF8CString { byteCast<char8_t>(host) });
+        hosts.append(UTF8CString::unsafeFromUTF8(host));
     return makeProxySettings(proxyServer, WTF::move(hosts));
 }
 
