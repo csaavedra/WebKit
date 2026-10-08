@@ -67,15 +67,11 @@
 #include "Event.h"
 #include "EventListener.h"
 #include "EventNames.h"
-<<<<<<< HEAD
-#include "FrameDOMAgent.h"
-||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
-=======
 #include <FileChooser.h>
 #include "File.h"
 #include "FileList.h"
 #include "FloatQuad.h"
->>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
+#include "FrameDOMAgent.h"
 #include "FrameInlines.h"
 #include "FrameInspectorController.h"
 #include "FrameTree.h"
