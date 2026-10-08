@@ -112,7 +112,8 @@ private:
         m_frontendChannel.sendMessageToFrontend(addTabIdToMessage(message));
     }
 
-    String addTabIdToMessage(const String& message) {
+    String addTabIdToMessage(const String& message)
+    {
         RefPtr<JSON::Value> parsedMessage = JSON::Value::parseJSON(message);
         if (!parsedMessage)
             return message;
@@ -133,14 +134,15 @@ private:
 };
 
 class OverriddenGeolocationProvider final : public API::GeolocationProvider, public CanMakeWeakPtr<OverriddenGeolocationProvider> {
-     WTF_MAKE_NONCOPYABLE(OverriddenGeolocationProvider);
+    WTF_MAKE_NONCOPYABLE(OverriddenGeolocationProvider);
 public:
     OverriddenGeolocationProvider()
         : m_position(WebGeolocationPosition::create(WebCore::GeolocationPositionData()))
     {
     }
 
-    void setPosition(const Ref<WebGeolocationPosition>& position) {
+    void setPosition(const Ref<WebGeolocationPosition>& position)
+    {
         m_position = position;
     }
 
@@ -163,7 +165,8 @@ private:
 
 namespace {
 
-void setGeolocationProvider(BrowserContext* browserContext) {
+void setGeolocationProvider(BrowserContext* browserContext)
+{
     auto provider = makeUnique<OverriddenGeolocationProvider>();
     browserContext->geolocationProvider = *provider;
     RefPtr geoManager = browserContext->processPool->supplement<WebGeolocationManagerProxy>();
@@ -183,39 +186,40 @@ String toPageProxyIDProtocolString(const WebPageProxy& page)
 }
 
 
-static Ref<JSON::ArrayOf<String>> getEnabledWindowFeatures(const WebCore::WindowFeatures& features) {
-  auto result = JSON::ArrayOf<String>::create();
-  if (features.x)
-    result->addItem(makeString("left="_s, String::number(*features.x)));
-  if (features.y)
-    result->addItem(makeString("top="_s, String::number(*features.y)));
-  if (features.width)
-    result->addItem(makeString("width="_s, String::number(*features.width)));
-  if (features.height)
-    result->addItem(makeString("height="_s, String::number(*features.height)));
-  if (features.menuBarVisible)
-    result->addItem("menubar"_s);
-  if (features.toolBarVisible)
-    result->addItem("toolbar"_s);
-  if (features.statusBarVisible)
-    result->addItem("status"_s);
-  if (features.locationBarVisible)
-    result->addItem("location"_s);
-  if (features.scrollbarsVisible)
-    result->addItem("scrollbars"_s);
-  if (features.resizable)
-    result->addItem("resizable"_s);
-  if (features.fullscreen)
-    result->addItem("fullscreen"_s);
-  if (features.dialog)
-    result->addItem("dialog"_s);
-  if (features.noopener)
-    result->addItem("noopener"_s);
-  if (features.noreferrer)
-    result->addItem("noreferrer"_s);
-  for (const auto& additionalFeature : features.additionalFeatures)
-    result->addItem(additionalFeature);
-  return result;
+static Ref<JSON::ArrayOf<String>> getEnabledWindowFeatures(const WebCore::WindowFeatures& features)
+{
+    auto result = JSON::ArrayOf<String>::create();
+    if (features.x)
+        result->addItem(makeString("left="_s, String::number(*features.x)));
+    if (features.y)
+        result->addItem(makeString("top="_s, String::number(*features.y)));
+    if (features.width)
+        result->addItem(makeString("width="_s, String::number(*features.width)));
+    if (features.height)
+        result->addItem(makeString("height="_s, String::number(*features.height)));
+    if (features.menuBarVisible)
+        result->addItem("menubar"_s);
+    if (features.toolBarVisible)
+        result->addItem("toolbar"_s);
+    if (features.statusBarVisible)
+        result->addItem("status"_s);
+    if (features.locationBarVisible)
+        result->addItem("location"_s);
+    if (features.scrollbarsVisible)
+        result->addItem("scrollbars"_s);
+    if (features.resizable)
+        result->addItem("resizable"_s);
+    if (features.fullscreen)
+        result->addItem("fullscreen"_s);
+    if (features.dialog)
+        result->addItem("dialog"_s);
+    if (features.noopener)
+        result->addItem("noopener"_s);
+    if (features.noreferrer)
+        result->addItem("noreferrer"_s);
+    for (const auto& additionalFeature : features.additionalFeatures)
+        result->addItem(additionalFeature);
+    return result;
 }
 
 Inspector::Protocol::Playwright::CookieSameSitePolicy cookieSameSitePolicy(WebCore::Cookie::SameSitePolicy policy)
@@ -282,7 +286,7 @@ void adjustInspectedPagePreferences(WebPreferences& preferences, std::optional<b
     }
 }
 
-}  // namespace
+} // namespace
 
 WTF_MAKE_TZONE_ALLOCATED_IMPL(BrowserContext);
 
@@ -363,7 +367,7 @@ void InspectorPlaywrightAgent::disconnectFrontend()
     WebPageInspectorController::setObserver(nullptr);
     m_frontendChannel = nullptr;
 
-    closeImpl([](String error){});
+    closeImpl([](String error) { });
 }
 
 void InspectorPlaywrightAgent::dispatchMessageFromFrontend(const String& message)
@@ -491,9 +495,10 @@ void InspectorPlaywrightAgent::willCreateNewPage(WebPageProxy& page, const WebCo
         getEnabledWindowFeatures(features));
 }
 
-static RefPtr<WebsiteDataStore> findDefaultWebsiteDataStore() {
+static RefPtr<WebsiteDataStore> findDefaultWebsiteDataStore()
+{
     RefPtr<WebsiteDataStore> result;
-    WebsiteDataStore::forEachWebsiteDataStore([&result] (WebsiteDataStore& dataStore) {
+    WebsiteDataStore::forEachWebsiteDataStore([&result](WebsiteDataStore& dataStore) {
         if (dataStore.isPersistent()) {
             RELEASE_ASSERT(!result);
             result = &dataStore;
@@ -522,7 +527,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::enable()
         m_browserContexts.set(toBrowserContextIDProtocolString(sessionID), WTF::move(context));
     }
 
-    WebsiteDataStore::forEachWebsiteDataStore([this] (WebsiteDataStore& dataStore) {
+    WebsiteDataStore::forEachWebsiteDataStore([this](WebsiteDataStore& dataStore) {
         dataStore.setDownloadInstrumentation(this);
     });
     for (Ref pool : WebProcessPool::allProcessPools()) {
@@ -545,7 +550,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::disable()
         it->value->disconnect();
     m_pageProxyChannels.clear();
 
-    WebsiteDataStore::forEachWebsiteDataStore([] (WebsiteDataStore& dataStore) {
+    WebsiteDataStore::forEachWebsiteDataStore([](WebsiteDataStore& dataStore) {
         dataStore.setDownloadInstrumentation(nullptr);
         dataStore.setDownloadForAutomation(std::optional<bool>(), String());
     });
@@ -572,7 +577,7 @@ Inspector::Protocol::ErrorStringOr<String> InspectorPlaywrightAgent::getInfo()
 
 void InspectorPlaywrightAgent::close(Ref<CloseCallback>&& callback)
 {
-    closeImpl([callback = WTF::move(callback)] (String error) {
+    closeImpl([callback = WTF::move(callback)](String error) {
         if (!callback->isActive())
             return;
         if (error.isNull())
@@ -602,15 +607,14 @@ void InspectorPlaywrightAgent::closeImpl(Function<void(String)>&& callback)
         return;
     }
 
-    m_defaultContext->dataStore->syncLocalStorage([weakThis = WeakPtr { *this }, callback = WTF::move(callback)] () {
-        if (!weakThis || !weakThis->m_client) {
+    m_defaultContext->dataStore->syncLocalStorage([weakThis = WeakPtr { *this }, callback = WTF::move(callback)] {
+        if (!weakThis || !weakThis->m_client)
             callback("no platform delegate to close browser"_s);
-        } else {
+        else {
             weakThis->m_client->closeBrowser();
             callback(String());
         }
     });
-
 }
 
 Inspector::Protocol::ErrorStringOr<String /* browserContextID */> InspectorPlaywrightAgent::createContext(const String& proxyServer, const String& proxyBypassList, std::optional<bool>&& enableStoragePartitioning)
@@ -648,9 +652,9 @@ void InspectorPlaywrightAgent::deleteContext(const String& browserContextID, Ref
     size_t numberOfPages = browserContext->pages.computeSize();
     PAL::SessionID sessionID = browserContext->dataStore->sessionID();
     auto contextHolder = m_browserContexts.take(browserContextID);
-    if (!numberOfPages) {
+    if (!numberOfPages)
         callback->sendSuccess();
-    } else {
+    else {
         m_browserContextDeletions.set(browserContextID, makeUnique<BrowserContextDeletion>(WTF::move(contextHolder), numberOfPages, WTF::move(callback)));
         browserContext->pages.forEach([](auto& page) {
             page.closePage();
@@ -818,7 +822,8 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::closePage(con
     return { };
 }
 
-void InspectorPlaywrightAgent::getAllCookies(const String& browserContextID, Ref<GetAllCookiesCallback>&& callback) {
+void InspectorPlaywrightAgent::getAllCookies(const String& browserContextID, Ref<GetAllCookiesCallback>&& callback)
+{
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
     if (!errorString.isEmpty()) {
@@ -849,7 +854,8 @@ static void clearWebProcessCookieCaches(WebsiteDataStore& dataStore)
     }
 }
 
-void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JSON::Array>&& in_cookies, Ref<SetCookiesCallback>&& callback) {
+void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JSON::Array>&& in_cookies, Ref<SetCookiesCallback>&& callback)
+{
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
     if (!errorString.isEmpty()) {
@@ -908,7 +914,7 @@ void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JS
     }
 
     browserContext->dataStore->cookieStore().setCookies(WTF::move(cookies),
-        [dataStore = Ref { *browserContext->dataStore }, callback = WTF::move(callback)]() {
+        [dataStore = Ref { *browserContext->dataStore }, callback = WTF::move(callback)] {
             clearWebProcessCookieCaches(dataStore);
             if (!callback->isActive())
                 return;
@@ -916,7 +922,8 @@ void InspectorPlaywrightAgent::setCookies(const String& browserContextID, Ref<JS
         });
 }
 
-void InspectorPlaywrightAgent::deleteAllCookies(const String& browserContextID, Ref<DeleteAllCookiesCallback>&& callback) {
+void InspectorPlaywrightAgent::deleteAllCookies(const String& browserContextID, Ref<DeleteAllCookiesCallback>&& callback)
+{
     String errorString;
     BrowserContext* browserContext = lookupBrowserContext(errorString, browserContextID);
     if (!errorString.isEmpty()) {
@@ -925,7 +932,7 @@ void InspectorPlaywrightAgent::deleteAllCookies(const String& browserContextID, 
     }
 
     browserContext->dataStore->cookieStore().deleteAllCookies(
-        [dataStore = Ref { *browserContext->dataStore }, callback = WTF::move(callback)]() {
+        [dataStore = Ref { *browserContext->dataStore }, callback = WTF::move(callback)] {
             clearWebProcessCookieCaches(dataStore);
             if (!callback->isActive())
                 return;
@@ -962,9 +969,9 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::setDownloadBe
 
     std::optional<bool> allow;
     if (behavior == "allow"_s)
-      allow = true;
+        allow = true;
     if (behavior == "deny"_s)
-      allow = false;
+        allow = false;
     browserContext->dataStore->setDownloadForAutomation(allow, downloadPath);
     return { };
 }
@@ -993,9 +1000,8 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::setGeolocatio
             return makeUnexpected("Internal error: geolocation provider has been destroyed."_s);
         browserContext->geolocationProvider->setPosition(position);
         geoManager->providerDidChangePosition(&position.get());
-    } else {
+    } else
         geoManager->providerDidFailToDeterminePosition("Position unavailable"_s);
-    }
     return { };
 }
 
@@ -1033,7 +1039,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::cancelDownloa
     auto download = m_downloads.get(uuid);
     if (!download)
         return { };
-    download->cancel([] (auto*) {});
+    download->cancel([](auto*) { });
     return { };
 }
 

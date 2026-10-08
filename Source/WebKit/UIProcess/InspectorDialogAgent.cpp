@@ -83,11 +83,13 @@ Inspector::Protocol::ErrorStringOr<void> InspectorDialogAgent::handleJavaScriptD
     return { };
 }
 
-void InspectorDialogAgent::javascriptDialogOpening(const String& type, const String& message, const String& defaultValue) {
+void InspectorDialogAgent::javascriptDialogOpening(const String& type, const String& message, const String& defaultValue)
+{
     m_frontendDispatcher->javascriptDialogOpening(type, message, defaultValue);
 }
 
-void InspectorDialogAgent::javascriptDialogClosed() {
+void InspectorDialogAgent::javascriptDialogClosed()
+{
     m_frontendDispatcher->javascriptDialogClosed();
 }
 
