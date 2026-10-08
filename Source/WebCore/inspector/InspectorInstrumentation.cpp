@@ -1272,19 +1272,13 @@ void InspectorInstrumentation::consoleStopRecordingCanvasImpl(InstrumentingAgent
         canvasAgent->consoleStopRecordingCanvas(device);
 }
 
-<<<<<<< HEAD
-void InspectorInstrumentation::didDispatchDOMStorageEventImpl(InstrumentingAgents& instrumentingAgents, Page& page, const String& key, const String& oldValue, const String& newValue, StorageType storageType, const SecurityOrigin& securityOrigin)
-||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
-void InspectorInstrumentation::didDispatchDOMStorageEventImpl(InstrumentingAgents& instrumentingAgents, const String& key, const String& oldValue, const String& newValue, StorageType storageType, const SecurityOrigin& securityOrigin)
-=======
 void InspectorInstrumentation::bindingCalledImpl(InstrumentingAgents& instrumentingAgents, JSC::JSGlobalObject* globalObject, const String& name, const String& arg)
 {
     if (auto* pageRuntimeAgent = instrumentingAgents.enabledPageRuntimeAgent())
         pageRuntimeAgent->bindingCalled(globalObject, name, arg);
 }
 
-void InspectorInstrumentation::didDispatchDOMStorageEventImpl(InstrumentingAgents& instrumentingAgents, const String& key, const String& oldValue, const String& newValue, StorageType storageType, const SecurityOrigin& securityOrigin)
->>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
+void InspectorInstrumentation::didDispatchDOMStorageEventImpl(InstrumentingAgents& instrumentingAgents, Page& page, const String& key, const String& oldValue, const String& newValue, StorageType storageType, const SecurityOrigin& securityOrigin)
 {
     // Notify at most one agent: same-origin frames share a StorageArea, and the frontend keys
     // DOMStorageObject on the StorageId alone.
