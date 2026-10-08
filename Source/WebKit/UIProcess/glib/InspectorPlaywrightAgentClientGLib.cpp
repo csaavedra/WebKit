@@ -129,7 +129,7 @@ std::unique_ptr<BrowserContext> InspectorPlaywrightAgentClientGlib::createBrowse
     webkit_web_context_set_network_session_for_automation(context.get(), networkSession.get());
     GRefPtr<WebKitWebsiteDataManager> data_manager = webkit_network_session_get_website_data_manager(networkSession.get());
 
-    auto browserContext = std::make_unique<BrowserContext>();
+    auto browserContext = makeUnique<BrowserContext>();
     browserContext->processPool = &webkitWebContextGetProcessPool(context.get());
     browserContext->dataStore = &webkitWebsiteDataManagerGetDataStore(data_manager.get());
     PAL::SessionID sessionID = browserContext.get()->dataStore->sessionID();

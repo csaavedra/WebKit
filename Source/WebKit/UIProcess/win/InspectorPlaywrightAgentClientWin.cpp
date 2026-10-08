@@ -71,7 +71,7 @@ void InspectorPlaywrightAgentClientWin::closeBrowser()
 std::unique_ptr<BrowserContext> InspectorPlaywrightAgentClientWin::createBrowserContext(WTF::String& error, const WTF::String& proxyServer, const WTF::String& proxyBypassList)
 {
     auto config = API::ProcessPoolConfiguration::create();
-    auto browserContext = std::make_unique<BrowserContext>();
+    auto browserContext = makeUnique<BrowserContext>();
     browserContext->processPool = WebKit::WebProcessPool::create(config);
     browserContext->dataStore = WebKit::WebsiteDataStore::createNonPersistent();
     m_configureDataStore(toAPI(browserContext->dataStore.get()));

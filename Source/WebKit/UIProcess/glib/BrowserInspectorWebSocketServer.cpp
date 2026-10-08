@@ -122,7 +122,7 @@ private:
             fprintf(stderr, "WebSocket connection already established\n");
             return false;
         }
-        m_frontendChannel = std::make_unique<WebSocketFrontendChannel>(connection);
+        m_frontendChannel = makeUnique<WebSocketFrontendChannel>(connection);
         m_playwrightAgent.connectFrontend(*m_frontendChannel);
         return true;
     }

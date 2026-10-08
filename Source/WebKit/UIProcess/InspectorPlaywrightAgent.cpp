@@ -516,7 +516,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::enable()
 
     RefPtr defaultDataStore = findDefaultWebsiteDataStore();
     if (!m_defaultContext && defaultDataStore) {
-        auto context = std::make_unique<BrowserContext>();
+        auto context = makeUnique<BrowserContext>();
         m_defaultContext = context.get();
         context->processPool = WebProcessPool::allProcessPools().first().ptr();
         context->dataStore = defaultDataStore;
