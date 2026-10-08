@@ -214,7 +214,15 @@ bool PointerCaptureController::preventsCompatibilityMouseEventsForIdentifier(Poi
     return capturingData && capturingData->preventsCompatibilityMouseEvents;
 }
 
+<<<<<<< HEAD
 bool PointerCaptureController::hierarchyHasCapturingEventListeners(Element* target, const AtomString& eventName)
+||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
+#if ENABLE(TOUCH_EVENTS) && (PLATFORM(IOS_FAMILY) || PLATFORM(WPE) || PLATFORM(GTK))
+static bool hierarchyHasCapturingEventListeners(Element* target, const AtomString& eventName)
+=======
+#if ENABLE(TOUCH_EVENTS)
+static bool hierarchyHasCapturingEventListeners(Element* target, const AtomString& eventName)
+>>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
 {
     for (RefPtr<ContainerNode> currentNode = target; currentNode; currentNode = currentNode->parentInComposedTree()) {
         if (currentNode->hasCapturingEventListeners(eventName))
@@ -697,6 +705,12 @@ void PointerCaptureController::cancelPointer(PointerID pointerId, const IntPoint
     capturingData->pendingTargetOverride = nullptr;
     capturingData->state = CapturingData::State::Cancelled;
 
+<<<<<<< HEAD
+||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
+#if ENABLE(TOUCH_EVENTS) && (PLATFORM(IOS_FAMILY) || PLATFORM(WPE) || PLATFORM(GTK))
+=======
+#if ENABLE(TOUCH_EVENTS)
+>>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
     capturingData->previousTarget = nullptr;
 
     auto target = [&]() -> RefPtr<Element> {

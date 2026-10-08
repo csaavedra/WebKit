@@ -64,7 +64,7 @@ public:
 
     RefPtr<PointerEvent> pointerEventForMouseEvent(const MouseEvent&, PointerID, const String& pointerType);
 
-#if ENABLE(TOUCH_EVENTS) && (PLATFORM(IOS_FAMILY) || PLATFORM(WPE) || PLATFORM(GTK))
+#if ENABLE(TOUCH_EVENTS)
     void dispatchEventForTouchAtIndex(EventTarget&, const PlatformTouchEvent&, unsigned, bool isPrimary, WindowProxy&, const DoublePoint&);
 #endif
 
@@ -98,9 +98,29 @@ private:
         WeakPtr<Document, WeakPtrImplWithEventTargetData> activeDocument;
         RefPtr<Element> pendingTargetOverride;
         RefPtr<Element> targetOverride;
+<<<<<<< HEAD
+||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
+#if ENABLE(TOUCH_EVENTS) && (PLATFORM(IOS_FAMILY) || PLATFORM(WPE) || PLATFORM(GTK))
+=======
+#if ENABLE(TOUCH_EVENTS)
+>>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
         RefPtr<Element> previousTarget;
         bool hasAnyElement() const {
+<<<<<<< HEAD
             return pendingTargetOverride || targetOverride || previousTarget;
+||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
+            return pendingTargetOverride || targetOverride
+#if ENABLE(TOUCH_EVENTS) && (PLATFORM(IOS_FAMILY) || PLATFORM(WPE) || PLATFORM(GTK))
+                || previousTarget
+#endif
+                ;
+=======
+            return pendingTargetOverride || targetOverride
+#if ENABLE(TOUCH_EVENTS)
+                || previousTarget
+#endif
+                ;
+>>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
         }
         String pointerType;
         enum class State : uint8_t {
