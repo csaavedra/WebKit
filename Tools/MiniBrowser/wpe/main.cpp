@@ -633,15 +633,9 @@ static void activate(GApplication* application, gpointer)
 #endif
 {
     g_application_hold(application);
-<<<<<<< HEAD
-
-||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
-#if ENABLE_2022_GLIB_API
-=======
     if (noStartupWindow)
         return;
-#if ENABLE_2022_GLIB_API
->>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
+
     WebKitNetworkSession* networkSession = nullptr;
     if (!automationMode) {
         if (userDataDir) {
@@ -683,94 +677,7 @@ static void activate(GApplication* application, gpointer)
         }
     }
     auto* webContext = WEBKIT_WEB_CONTEXT(g_object_new(WEBKIT_TYPE_WEB_CONTEXT, "time-zone-override", timeZone, nullptr));
-<<<<<<< HEAD
-||||||| parent of aae49be47166 (chore(webkit): bootstrap build #2373)
-#else
-    WebKitWebsiteDataManager* manager;
-    if (privateMode || automationMode)
-        manager = webkit_website_data_manager_new_ephemeral();
-    else if (profileDirectory) {
-        g_autofree char* dataDirectory = g_build_filename(profileDirectory, "data", nullptr);
-        g_autofree char* cacheDirectory = g_build_filename(profileDirectory, "cache", nullptr);
-        manager = webkit_website_data_manager_new("base-data-directory", dataDirectory, "base-cache-directory", cacheDirectory, nullptr);
-    } else
-        manager = webkit_website_data_manager_new(nullptr);
-
-    webkit_website_data_manager_set_itp_enabled(manager, enableITP);
-
-    if (proxy) {
-        auto* webkitProxySettings = webkit_network_proxy_settings_new(proxy, ignoreHosts);
-        webkit_website_data_manager_set_network_proxy_settings(manager, WEBKIT_NETWORK_PROXY_MODE_CUSTOM, webkitProxySettings);
-        webkit_network_proxy_settings_free(webkitProxySettings);
-    }
-
-    if (ignoreTLSErrors)
-        webkit_website_data_manager_set_tls_errors_policy(manager, WEBKIT_TLS_ERRORS_POLICY_IGNORE);
-
-    auto* webContext = WEBKIT_WEB_CONTEXT(g_object_new(WEBKIT_TYPE_WEB_CONTEXT, "website-data-manager", manager, "time-zone-override", timeZone, nullptr));
-    g_object_unref(manager);
-
-    if (cookiesPolicy) {
-        auto* cookieManager = webkit_web_context_get_cookie_manager(webContext);
-        auto* enumClass = static_cast<GEnumClass*>(g_type_class_ref(WEBKIT_TYPE_COOKIE_ACCEPT_POLICY));
-        GEnumValue* enumValue = g_enum_get_value_by_nick(enumClass, cookiesPolicy);
-        if (enumValue)
-            webkit_cookie_manager_set_accept_policy(cookieManager, static_cast<WebKitCookieAcceptPolicy>(enumValue->value));
-        g_type_class_unref(enumClass);
-    }
-
-    if (cookiesFile && !webkit_web_context_is_ephemeral(webContext)) {
-        auto* cookieManager = webkit_web_context_get_cookie_manager(webContext);
-        auto storageType = g_str_has_suffix(cookiesFile, ".txt") ? WEBKIT_COOKIE_PERSISTENT_STORAGE_TEXT : WEBKIT_COOKIE_PERSISTENT_STORAGE_SQLITE;
-        webkit_cookie_manager_set_persistent_storage(cookieManager, cookiesFile, storageType);
-    }
-#endif
-=======
     webkit_web_context_set_network_session_for_automation(webContext, networkSession);
-#else
-    WebKitWebsiteDataManager *manager;
-    if (userDataDir) {
-        manager = webkit_website_data_manager_new("base-data-directory", userDataDir, "base-cache-directory", userDataDir, NULL);
-        cookiesFile = g_build_filename(userDataDir, "cookies.txt", NULL);
-    } else if (inspectorPipe || remoteDebuggingPort != -1 || privateMode || automationMode) {
-        manager = webkit_website_data_manager_new_ephemeral();
-    } else if (profileDirectory) {
-        g_autofree char* dataDirectory = g_build_filename(profileDirectory, "data", nullptr);
-        g_autofree char* cacheDirectory = g_build_filename(profileDirectory, "cache", nullptr);
-        manager = webkit_website_data_manager_new("base-data-directory", dataDirectory, "base-cache-directory", cacheDirectory, nullptr);
-    } else
-        manager = webkit_website_data_manager_new(nullptr);
-
-    webkit_website_data_manager_set_itp_enabled(manager, enableITP);
-
-    if (proxy) {
-        auto* webkitProxySettings = webkit_network_proxy_settings_new(proxy, ignoreHosts);
-        webkit_website_data_manager_set_network_proxy_settings(manager, WEBKIT_NETWORK_PROXY_MODE_CUSTOM, webkitProxySettings);
-        webkit_network_proxy_settings_free(webkitProxySettings);
-    }
-
-    if (ignoreTLSErrors)
-        webkit_website_data_manager_set_tls_errors_policy(manager, WEBKIT_TLS_ERRORS_POLICY_IGNORE);
-
-    auto* webContext = WEBKIT_WEB_CONTEXT(g_object_new(WEBKIT_TYPE_WEB_CONTEXT, "website-data-manager", manager, "time-zone-override", timeZone, nullptr));
-    g_object_unref(manager);
-
-    if (cookiesPolicy) {
-        auto* cookieManager = webkit_web_context_get_cookie_manager(webContext);
-        auto* enumClass = static_cast<GEnumClass*>(g_type_class_ref(WEBKIT_TYPE_COOKIE_ACCEPT_POLICY));
-        GEnumValue* enumValue = g_enum_get_value_by_nick(enumClass, cookiesPolicy);
-        if (enumValue)
-            webkit_cookie_manager_set_accept_policy(cookieManager, static_cast<WebKitCookieAcceptPolicy>(enumValue->value));
-        g_type_class_unref(enumClass);
-    }
-
-    if (cookiesFile && !webkit_web_context_is_ephemeral(webContext)) {
-        auto* cookieManager = webkit_web_context_get_cookie_manager(webContext);
-        auto storageType = g_str_has_suffix(cookiesFile, ".txt") ? WEBKIT_COOKIE_PERSISTENT_STORAGE_TEXT : WEBKIT_COOKIE_PERSISTENT_STORAGE_SQLITE;
-        webkit_cookie_manager_set_persistent_storage(cookieManager, cookiesFile, storageType);
-    }
-#endif
->>>>>>> aae49be47166 (chore(webkit): bootstrap build #2373)
 
     persistentWebContext = webContext;
     g_autoptr(WebKitUserContentManager) userContentManager = nullptr;
