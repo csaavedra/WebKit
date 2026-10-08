@@ -481,7 +481,7 @@ void InspectorPlaywrightAgent::didFailProvisionalLoad(WebPageProxy& page, WebCor
 
     m_frontendDispatcher->provisionalLoadFailed(
         toPageProxyIDProtocolString(page),
-        String::number(navigationID.toUInt64()), error);
+        navigationID.toString(), error);
 }
 
 void InspectorPlaywrightAgent::willCreateNewPage(WebPageProxy& page, const WebCore::WindowFeatures& features, const URL& url)
@@ -735,7 +735,7 @@ void InspectorPlaywrightAgent::navigate(const String& url, const String& pagePro
 
         String navigationIDString;
         if (navigationID)
-            navigationIDString = String::number(navigationID->toUInt64());
+            navigationIDString = navigationID->toString();
         callback->sendSuccess(navigationIDString);
     });
 }

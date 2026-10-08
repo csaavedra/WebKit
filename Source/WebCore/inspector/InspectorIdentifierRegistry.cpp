@@ -80,7 +80,7 @@ Protocol::Network::LoaderId LegacyIdentifierRegistry::loaderId(WebCore::Document
     if (!navigationID)
         return emptyString();
 
-    return String::number(navigationID->toUInt64());
+    return navigationID->toString();
 }
 
 RefPtr<WebCore::LocalFrame> LegacyIdentifierRegistry::assertFrame(Protocol::ErrorString& errorString, const Protocol::Network::FrameId& frameId)
@@ -105,7 +105,7 @@ Protocol::Network::LoaderId LegacyIdentifierRegistry::takeLoader(WebCore::Docume
     if (!navigationID)
         return {};
 
-    return String::number(navigationID->toUInt64());
+    return navigationID->toString();
 }
 
 // --- BackendIdentifierRegistry ---
