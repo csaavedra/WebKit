@@ -672,14 +672,8 @@ void WebLoaderStrategy::scheduleLoadFromNetworkProcess(ResourceLoader& resourceL
     std::optional<NetworkResourceLoadIdentifier> existingNetworkResourceLoadIdentifierToResume;
     if (request.requester() == ResourceRequestRequester::Main)
         existingNetworkResourceLoadIdentifierToResume = std::exchange(m_existingNetworkResourceLoadIdentifierToResume, std::nullopt);
-<<<<<<< HEAD
     if (loadParameters.isMainFrameNavigation) {
-        if (RefPtr webFrame = WebFrame::webFrame(frame->frameID()))
-||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
-        if (RefPtr webFrame = WebFrame::webFrame(frame->frameID()))
-=======
         if (RefPtr webFrame = WebFrame::webFrame(trackingParameters.frameID))
->>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
             loadParameters.shouldConsiderEnhancedSecurityForInsecureResponse = webFrame->page() ? webFrame->page()->takeShouldConsiderEnhancedSecurityForInsecureResponseForCurrentNavigation() : false;
     }
     WEBLOADERSTRATEGY_RELEASE_LOG_FORWARDABLE(WebLoaderStrategyScheduleLoadResourceScheduledWithNetworkProcess, static_cast<int>(resourceLoader.request().priority()), existingNetworkResourceLoadIdentifierToResume ? existingNetworkResourceLoadIdentifierToResume->toUInt64() : 0);
