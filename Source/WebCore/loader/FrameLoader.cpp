@@ -2039,15 +2039,12 @@ void FrameLoader::loadWithDocumentLoader(DocumentLoader* loader, FrameLoadType t
     const String& httpMethod = loader->request().httpMethod();
 
     if (shouldPerformFragmentNavigation(isFormSubmission, httpMethod, policyChecker().loadType(), newURL) && !loader->substituteData().isValid()) {
-<<<<<<< HEAD
+        loader->replacedByFragmentNavigation(m_frame);
+
         RefPtr policyDocumentLoader = m_policyDocumentLoader;
         // A navigation that a listener starts replaces this one.
         if (dispatchNavigateEventForFragmentNavigationFromAnotherProcess(*loader, type, historyHandling).isNotCompleted() || m_policyDocumentLoader != policyDocumentLoader || !frame->page())
             return;
-||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
-=======
-        loader->replacedByFragmentNavigation(m_frame);
->>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
 
         RefPtr oldDocumentLoader = m_documentLoader;
         NavigationAction action { protect(frame->document()).releaseNonNull(), loader->request(), InitiatedByMainFrame::Unknown, loader->isRequestFromClientOrUserInput(), policyChecker().loadType(), isFormSubmission };
