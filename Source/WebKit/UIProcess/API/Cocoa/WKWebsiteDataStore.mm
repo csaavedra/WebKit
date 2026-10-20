@@ -57,12 +57,8 @@
 #import "_WKWebPushActionInternal.h"
 #import "_WKWebsiteDataStoreConfigurationInternal.h"
 #import "_WKWebsiteDataStoreDelegate.h"
-<<<<<<< HEAD
 #import <Network/Network.h>
-||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
-=======
 #import <pal/SessionID.h>
->>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
 #import <WebCore/Credential.h>
 #import <WebCore/RegistrableDomain.h>
 #import <WebCore/ResourceResponse.h>
