@@ -326,7 +326,16 @@ public:
     void setEmulatedConditions(std::optional<uint64_t> bandwidthBytesPerSecond, Seconds latency);
 #endif
 
+<<<<<<< HEAD
 #if PLATFORM(COCOA)
+||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
+#if HAVE(NW_PROXY_CONFIG)
+=======
+    bool emulateOfflineState() const { return m_emulateOfflineState; }
+    void setEmulateOfflineState(bool offline) { m_emulateOfflineState = offline; }
+
+#if HAVE(NW_PROXY_CONFIG)
+>>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
     virtual void clearProxyConfigData() { }
     virtual void setProxyConfigData(const Vector<std::pair<Vector<uint8_t>, std::optional<WTF::UUID>>>&) { };
 #endif
@@ -493,6 +502,7 @@ protected:
     std::optional<uint64_t> m_emulatedBandwidthBytesPerSecond;
     Seconds m_emulatedLatency;
 #endif
+    bool m_emulateOfflineState { false };
 #if ENABLE(DECLARATIVE_WEB_PUSH)
     bool m_isDeclarativeWebPushEnabled { false };
 #endif

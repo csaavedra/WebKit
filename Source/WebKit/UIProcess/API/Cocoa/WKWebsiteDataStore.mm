@@ -57,7 +57,12 @@
 #import "_WKWebPushActionInternal.h"
 #import "_WKWebsiteDataStoreConfigurationInternal.h"
 #import "_WKWebsiteDataStoreDelegate.h"
+<<<<<<< HEAD
 #import <Network/Network.h>
+||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
+=======
+#import <pal/SessionID.h>
+>>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
 #import <WebCore/Credential.h>
 #import <WebCore/RegistrableDomain.h>
 #import <WebCore/ResourceResponse.h>
@@ -510,6 +515,11 @@ static WallTime toSystemClockTime(NSDate *date)
     protect(*_websiteDataStore)->removeData(WebKit::toWebsiteDataTypes(dataTypes), toSystemClockTime(date ? date : [NSDate distantPast]), [completionHandlerCopy] {
         completionHandlerCopy();
     });
+}
+
+- (uint64_t) sessionID
+{
+    return _websiteDataStore->sessionID().toUInt64();
 }
 
 static Vector<WebKit::WebsiteDataRecord> toWebsiteDataRecords(NSArray *dataRecords)
