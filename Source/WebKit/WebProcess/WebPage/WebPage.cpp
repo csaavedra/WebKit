@@ -2909,15 +2909,9 @@ void WebPage::stopLoadingDueToProcessSwap(WebCore::NavigationIdentifier navigati
         return;
 
     SetForScope isStoppingLoadingDueToProcessSwap(m_isStoppingLoadingDueToProcessSwap, true);
-<<<<<<< HEAD
-    stopLoadingInRootFrames(AbortOngoingNavigation::No);
-||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
-    stopLoading();
-=======
     InspectorInstrumentationWebKit::setStoppingLoadingDueToProcessSwap(m_page.get(), true);
-    stopLoading();
+    stopLoadingInRootFrames(AbortOngoingNavigation::No);
     InspectorInstrumentationWebKit::setStoppingLoadingDueToProcessSwap(m_page.get(), false);
->>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
 }
 
 void WebPage::keepBlobURLAliveForNewWindowNavigation(URL&& blobURL, std::optional<SecurityOriginData>&& topOrigin)
