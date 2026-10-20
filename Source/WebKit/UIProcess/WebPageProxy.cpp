@@ -9305,15 +9305,11 @@ void WebPageProxy::didDestroyNavigationShared(Ref<WebProcessProxy>&& process, We
     RefPtr protectedPageClient { pageClient() };
 
     m_navigationState->didDestroyNavigation(process->coreProcessIdentifier(), navigationID);
-<<<<<<< HEAD
+    m_inspectorController->didDestroyNavigation(navigationID);
 
     auto it = internals().pendingBackForwardIframeRestores.find(navigationID);
     if (it != internals().pendingBackForwardIframeRestores.end() && it->value->mainFrameProcessIdentifier == process->coreProcessIdentifier())
         restoreOrCancelPendingBackForwardIframes(*internals().pendingBackForwardIframeRestores.take(it), RestoredFromBackForwardCache::No);
-||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
-=======
-    m_inspectorController->didDestroyNavigation(navigationID);
->>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
 }
 
 void WebPageProxy::didStartProvisionalLoadForFrame(IPC::Connection& connection, FrameIdentifier frameID, FrameInfoData&& frameInfo, ResourceRequest&& request, std::optional<WebCore::NavigationIdentifier> navigationID, URL&& url, URL&& unreachableURL, const UserData& userData, WallTime timestamp)
