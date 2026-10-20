@@ -88,12 +88,8 @@ class DocumentLoader;
 class DocumentThreadableLoader;
 class EventListener;
 class GPUDevice;
-<<<<<<< HEAD
 class HTMLFrameOwnerElement;
-||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
-=======
 class HTMLInputElement;
->>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
 class HTTPHeaderMap;
 class InspectorTimelineAgent;
 class InstrumentingAgents;
