@@ -1767,22 +1767,14 @@ RefPtr<WebSocketTask> NetworkSessionCocoa::createWebSocketTask(WebPageProxyIdent
     enableAdvancedPrivacyProtections(ensureMutableRequest().get(), advancedPrivacyProtections);
 
     Ref sessionSet = sessionSetForPage(webPageProxyID);
-<<<<<<< HEAD
     CheckedRef sessionWrapper = sessionSet->sessionWithCredentialStorage;
     RetainPtr task = [sessionWrapper->session webSocketTaskWithRequest:nsRequest.get()];
-    
-||||||| parent of e623feb342e7 (chore(webkit): bootstrap build #2381)
-    RetainPtr task = [sessionSet->sessionWithCredentialStorage->session webSocketTaskWithRequest:nsRequest.get()];
-    
-=======
-    RetainPtr task = [sessionSet->sessionWithCredentialStorage->session webSocketTaskWithRequest:nsRequest.get()];
 
 #if HAVE(CFNETWORK_HOSTOVERRIDE)
     if (RetainPtr hostOverride = loopbackProxyHostOverrideForURL(request.url()))
         task.get()._hostOverride = hostOverride.get();
 #endif
 
->>>>>>> e623feb342e7 (chore(webkit): bootstrap build #2381)
     // Although the WebSocket protocol allows full 64-bit lengths, Chrome and Firefox limit the length to 2^63 - 1.
     // Use NSIntegerMax instead of 2^63 - 1 for 32-bit systems.
     task.get().maximumMessageSize = NSIntegerMax;
