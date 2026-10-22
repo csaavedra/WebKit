@@ -207,14 +207,10 @@ private:
     const RefPtr<Inspector::ProxyingPageAgent> m_pageAgent;
 
     bool m_didCreateLazyAgents { false };
-<<<<<<< HEAD
     std::unique_ptr<DebuggerPauseCoordinator> m_debuggerPauseCoordinator;
-||||||| parent of fe1550e061b2 (chore(webkit): bootstrap build #2382)
-=======
     UncheckedKeyHashMap<WebCore::NavigationIdentifier, NavigationHandler> m_pendingNavigations;
 
     static WebPageInspectorControllerObserver* s_observer;
->>>>>>> fe1550e061b2 (chore(webkit): bootstrap build #2382)
 };
 
 } // namespace WebKit

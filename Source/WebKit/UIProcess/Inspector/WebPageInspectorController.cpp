@@ -144,15 +144,11 @@ void WebPageInspectorController::didInitializeWebPage()
 
 void WebPageInspectorController::pageClosed()
 {
-<<<<<<< HEAD
     m_debuggerPauseCoordinator = nullptr;
-||||||| parent of fe1550e061b2 (chore(webkit): bootstrap build #2382)
-=======
     String pageTargetId = PageInspectorTarget::toTargetID(m_inspectedPage->webPageIDInMainFrameProcess());
     removeTarget(pageTargetId);
 
 
->>>>>>> fe1550e061b2 (chore(webkit): bootstrap build #2382)
     disconnectAllFrontends();
 
     m_agents.discardValues();
