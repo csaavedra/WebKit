@@ -237,22 +237,10 @@ void FrameInspectorController::connectFrontend(Inspector::FrontendChannel& front
         m_agents.didCreateFrontendAndBackend();
     }
 
-<<<<<<< HEAD
     // The node may belong to a document the frame has since navigated away from.
     if (RefPtr node = std::exchange(m_pendingNodeToInspect, nullptr); node && m_domAgent && &node->document() == m_frame->document())
         CheckedRef { *m_domAgent }->inspect(*node);
-}
 
-void FrameInspectorController::inspect(Node& node)
-{
-    if (m_frontendRouter->hasFrontends() && m_domAgent) {
-        CheckedRef { *m_domAgent }->inspect(node);
-        return;
-    }
-
-    m_pendingNodeToInspect = WeakPtr<Node, WeakPtrImplWithEventTargetData> { node };
-||||||| parent of fe1550e061b2 (chore(webkit): bootstrap build #2382)
-=======
     // Playwright begin
     // Auto attach/enable agents for subframes.
     if (!m_frame->isMainFrame()) {
@@ -265,7 +253,16 @@ void FrameInspectorController::inspect(Node& node)
         }
     }
     // Playwright end
->>>>>>> fe1550e061b2 (chore(webkit): bootstrap build #2382)
+}
+
+void FrameInspectorController::inspect(Node& node)
+{
+    if (m_frontendRouter->hasFrontends() && m_domAgent) {
+        CheckedRef { *m_domAgent }->inspect(node);
+        return;
+    }
+
+    m_pendingNodeToInspect = WeakPtr<Node, WeakPtrImplWithEventTargetData> { node };
 }
 
 void FrameInspectorController::disconnectFrontend(Inspector::FrontendChannel& frontendChannel)
