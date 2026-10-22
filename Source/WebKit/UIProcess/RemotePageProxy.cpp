@@ -41,6 +41,7 @@
 #include "RemoteMediaSessionManagerProxy.h"
 #include "RemotePageDrawingAreaProxy.h"
 #include "RemotePageFullscreenManagerProxy.h"
+#include "RemotePagePlaybackSessionManagerProxy.h"
 #include "RemotePageScreenOrientationManagerProxy.h"
 #include "RemotePageVisitedLinkStoreRegistration.h"
 #include "RemotePageWebAuthenticatorCoordinatorProxy.h"
@@ -62,6 +63,7 @@
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/RemoteUserInputEventData.h>
 #include <wtf/TZoneMallocInlines.h>
+
 
 #if ENABLE(FULLSCREEN_API)
 #include "WebFullScreenManagerProxy.h"

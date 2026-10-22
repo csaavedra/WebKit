@@ -351,9 +351,24 @@ bool Geolocation::shouldBlockGeolocationRequests()
     if (!PermissionsPolicy::isFeatureEnabled(PermissionsPolicy::Feature::Geolocation, *document))
         return true;
 
+<<<<<<< HEAD
     if (!document->isSecureContext()) {
         document->addConsoleMessage(MessageSource::Security, MessageLevel::Error, makeString("[blocked] Access to geolocation was blocked in a non-secure context with origin "_s, protect(securityOrigin())->toString(), '.'));
         return true;
+||||||| parent of fe1550e061b2 (chore(webkit): bootstrap build #2382)
+    bool isSecure = SecurityOrigin::isSecure(document->url()) || document->isSecureContext();
+    bool isLocalOrigin = securityOrigin()->isLocal();
+    if (document->canAccessResource(ScriptExecutionContext::ResourceType::Geolocation) != ScriptExecutionContext::HasResourceAccess::No) {
+        if (isLocalOrigin || isSecure)
+            return false;
+=======
+    bool isSecure = SecurityOrigin::isSecure(document->url()) || document->isSecureContext();
+    bool isLocalOrigin = securityOrigin()->isLocal();
+    bool isPotentiallyTrustworthy = securityOrigin()->isPotentiallyTrustworthy();
+    if (document->canAccessResource(ScriptExecutionContext::ResourceType::Geolocation) != ScriptExecutionContext::HasResourceAccess::No) {
+        if (isLocalOrigin || isSecure  || isPotentiallyTrustworthy)
+            return false;
+>>>>>>> fe1550e061b2 (chore(webkit): bootstrap build #2382)
     }
 
     return document->canAccessResource(ScriptExecutionContext::ResourceType::Geolocation) == ScriptExecutionContext::HasResourceAccess::No;
