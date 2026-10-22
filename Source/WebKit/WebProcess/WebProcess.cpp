@@ -453,14 +453,6 @@ void WebProcess::initializeProcess(const AuxiliaryProcessInitializationParameter
     {
         JSC::Options::AllowUnfinalizedAccessScope scope;
         JSC::Options::allowNonSPTagging() = false;
-        // Playwright begin
-        // Cocoa enables SharedArrayBuffer via the XPC service "enable-shared-array-buffer" option,
-        // GTK and WPE in initializeWebProcess(). For Windows, enable it here.
-#if PLATFORM(WIN)
-        if (parameters.shouldEnableSharedArrayBuffer)
-            JSC::Options::useSharedArrayBuffer() = true;
-#endif
-        // Playwright end
         JSC::Options::notifyOptionsChanged();
     }
 
