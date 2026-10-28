@@ -90,12 +90,8 @@
 #include <JavaScriptCore/InjectedScriptManager.h>
 #include <JavaScriptCore/JSDateMath.h>
 #include <JavaScriptCore/RegularExpression.h>
-<<<<<<< HEAD
 #include <wtf/CheckedRef.h>
-||||||| parent of a882adc5b45c (chore(webkit): bootstrap build #2384)
-=======
 #include <wtf/DateMath.h>
->>>>>>> a882adc5b45c (chore(webkit): bootstrap build #2384)
 #include <wtf/HashSet.h>
 #include <wtf/ListHashSet.h>
 #include <wtf/NeverDestroyed.h>

@@ -199,12 +199,8 @@ private:
     bool m_isAutomaticInspection { false };
     bool m_pauseAfterInitialization = { false };
     bool m_didCreateLazyAgents { false };
-<<<<<<< HEAD
     bool m_executionStopwatchIsShared { false };
-||||||| parent of a882adc5b45c (chore(webkit): bootstrap build #2384)
-=======
     PauseCondition m_pauseOnStart { PauseCondition::DONT_PAUSE };
->>>>>>> a882adc5b45c (chore(webkit): bootstrap build #2384)
 };
 
 } // namespace WebCore
