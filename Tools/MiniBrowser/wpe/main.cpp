@@ -448,19 +448,13 @@ static WebKitWebView* createWebViewImpl(WebKitWebView* webView, WebKitWebContext
 
     g_signal_connect(newWebView, "create", G_CALLBACK(createWebView), user_data);
     g_signal_connect(newWebView, "close", G_CALLBACK(webViewClose), user_data);
-<<<<<<< HEAD
     g_signal_connect(newWebView, "web-process-terminated", G_CALLBACK(webProcessTerminated), nullptr);
-
-||||||| parent of a882adc5b45c (chore(webkit): bootstrap build #2384)
-
-=======
 // Playwright begin
     g_signal_connect(newWebView, "load-failed", G_CALLBACK(webViewLoadFailed), nullptr);
     g_signal_connect(newWebView, "script-dialog", G_CALLBACK(scriptDialog), nullptr);
     g_signal_connect(newWebView, "script-dialog-handled", G_CALLBACK(scriptDialogHandled), nullptr);
     g_signal_connect(newWebView, "decide-policy", G_CALLBACK(webViewDecidePolicy), nullptr);
 // Playwright end
->>>>>>> a882adc5b45c (chore(webkit): bootstrap build #2384)
     g_hash_table_add(openViews, newWebView);
     return newWebView;
 }
@@ -871,17 +865,13 @@ static void activate(GApplication* application, gpointer)
     g_signal_connect(webView, "permission-request", G_CALLBACK(decidePermissionRequest), nullptr);
     g_signal_connect(webView, "create", G_CALLBACK(createWebView), application);
     g_signal_connect(webView, "close", G_CALLBACK(webViewClose), application);
-<<<<<<< HEAD
     g_signal_connect(webView, "web-process-terminated", G_CALLBACK(webProcessTerminated), nullptr);
-||||||| parent of a882adc5b45c (chore(webkit): bootstrap build #2384)
-=======
 // Playwright begin
     g_signal_connect(webView, "load-failed", G_CALLBACK(webViewLoadFailed), nullptr);
     g_signal_connect(webView, "script-dialog", G_CALLBACK(scriptDialog), nullptr);
     g_signal_connect(webView, "script-dialog-handled", G_CALLBACK(scriptDialogHandled), nullptr);
     g_signal_connect(webView, "decide-policy", G_CALLBACK(webViewDecidePolicy), nullptr);
 // Playwright end
->>>>>>> a882adc5b45c (chore(webkit): bootstrap build #2384)
     g_hash_table_add(openViews, webView);
 
     WebKitColor color;
