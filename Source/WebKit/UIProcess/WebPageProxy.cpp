@@ -12697,12 +12697,8 @@ void WebPageProxy::createNewPage(IPC::Connection& connection, WindowFeatures&& w
     configuration->setInitialReferrerPolicy(effectiveReferrerPolicy);
     configuration->setWindowFeatures(WTF::move(windowFeatures));
     configuration->setOpenedMainFrameName(openedMainFrameName);
-<<<<<<< HEAD
     configuration->setOpenedByScriptDomain(WTF::move(openedByScriptDomain));
-||||||| parent of a882adc5b45c (chore(webkit): bootstrap build #2384)
-=======
     configuration->setOpenerPageForInspector(*this);
->>>>>>> a882adc5b45c (chore(webkit): bootstrap build #2384)
 
     if (RefPtr openerFrame = originatingFrame; navigationActionData.hasOpener && openerFrame) {
         configuration->setRelatedPage(*this);
