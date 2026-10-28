@@ -22461,13 +22461,9 @@
 				41E242E026E0C908009A8C64 /* NetworkRTCUtilitiesCocoa.mm in Sources */,
 				FA5AAE9C2E6A217A00FE693D /* NetworkSoftLink.mm in Sources */,
 				DD4BDE7B2CA38213001A3339 /* ObjectiveCBlockConversions.swift in Sources */,
-<<<<<<< HEAD
+				D79902B2236E9404005D6F7E /* PageInspectorTargetProxyMac.mm in Sources */,
 				652C5CF187D079245D7A20DD /* PhoneNumberPossessionController.swift in Sources */,
 				AD68F1ED46BFEA0437BA3D85 /* PhoneNumberPossessionManaging.swift in Sources */,
-||||||| parent of a882adc5b45c (chore(webkit): bootstrap build #2384)
-=======
-				D79902B2236E9404005D6F7E /* PageInspectorTargetProxyMac.mm in Sources */,
->>>>>>> a882adc5b45c (chore(webkit): bootstrap build #2384)
 				1CB9138F2E8C6D500002BCB7 /* PlatformUnifiedSource1-ARC.mm in Sources */,
 				1CB913932E8C71920002BCB7 /* PlatformUnifiedSource2-ARC.mm in Sources */,
 				A1B849382F3D9F02004256A1 /* PlaybackSessionInterfaceAVKit.mm in Sources */,
