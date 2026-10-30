@@ -217,14 +217,10 @@ private:
 
     bool m_didCreateLazyAgents { false };
     std::unique_ptr<DebuggerPauseCoordinator> m_debuggerPauseCoordinator;
-<<<<<<< HEAD
     bool m_isMainFrameNavigating { false };
-||||||| parent of 10bfe2994464 (chore(webkit): bootstrap build #2386)
-=======
     UncheckedKeyHashMap<WebCore::NavigationIdentifier, NavigationHandler> m_pendingNavigations;
 
     static WebPageInspectorControllerObserver* s_observer;
->>>>>>> 10bfe2994464 (chore(webkit): bootstrap build #2386)
 };
 
 } // namespace WebKit

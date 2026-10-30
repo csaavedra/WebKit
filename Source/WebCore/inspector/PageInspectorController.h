@@ -207,12 +207,8 @@ private:
     bool m_pauseAfterInitialization = { false };
     bool m_didCreateLazyAgents { false };
     bool m_executionStopwatchIsShared { false };
-<<<<<<< HEAD
     bool m_isSuppressingPausesForNavigation { false };
-||||||| parent of 10bfe2994464 (chore(webkit): bootstrap build #2386)
-=======
     PauseCondition m_pauseOnStart { PauseCondition::DONT_PAUSE };
->>>>>>> 10bfe2994464 (chore(webkit): bootstrap build #2386)
 };
 
 } // namespace WebCore
