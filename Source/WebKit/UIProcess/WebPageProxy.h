@@ -1957,13 +1957,7 @@ public:
     bool cancelDragIfNeeded();
 #if PLATFORM(COCOA)
     void propagateDragAndDrop(DragEventForwardingData&&, const String&, WebCore::DragData&&);
-<<<<<<< HEAD
-    void startDrag(IPC::Connection&, const WebCore::DragItem&, WebCore::ShareableBitmapHandle&& dragImageHandle, const std::optional<WebCore::NodeIdentifier>&, const std::optional<WebCore::FrameIdentifier>&);
-||||||| parent of 10bfe2994464 (chore(webkit): bootstrap build #2386)
-    void startDrag(const WebCore::DragItem&, WebCore::ShareableBitmapHandle&& dragImageHandle, const std::optional<WebCore::NodeIdentifier>&, const std::optional<WebCore::FrameIdentifier>& = std::nullopt);
-=======
-    void startDrag(const WebCore::DragItem&, OptionSet<WebCore::DragOperation> dragOperationMask, WebCore::ShareableBitmapHandle&& dragImageHandle, const std::optional<WebCore::NodeIdentifier>&, const std::optional<WebCore::FrameIdentifier>& = std::nullopt);
->>>>>>> 10bfe2994464 (chore(webkit): bootstrap build #2386)
+    void startDrag(IPC::Connection&, const WebCore::DragItem&, OptionSet<WebCore::DragOperation> dragOperationMask, WebCore::ShareableBitmapHandle&& dragImageHandle, const std::optional<WebCore::NodeIdentifier>&, const std::optional<WebCore::FrameIdentifier>&);
     void setPromisedDataForImage(IPC::Connection&, const String& pasteboardName, WebCore::SharedMemoryHandle&& imageHandle, const String& filename, const String& extension,
         const String& title, const String& url, const String& visibleURL, WebCore::SharedMemoryHandle&& archiveHandle, const String& originIdentifier);
     void releaseInspectorDragPasteboard();
