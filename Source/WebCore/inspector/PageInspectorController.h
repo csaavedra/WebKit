@@ -126,6 +126,12 @@ public:
     WEBCORE_EXPORT void willComposite(LocalFrame&);
     WEBCORE_EXPORT void didComposite(LocalFrame&);
 
+    enum class PauseCondition { DONT_PAUSE, WHEN_SHOWN, WHEN_CREATION_FINISHED };
+    WEBCORE_EXPORT void pauseOnStart(PauseCondition);
+    WEBCORE_EXPORT void resumeIfPausedInNewWindow();
+    WEBCORE_EXPORT void didShowPage();
+    WEBCORE_EXPORT void didFinishPageCreation();
+
     // Testing support.
     bool isUnderTest() const { return m_isUnderTest; }
     void setIsUnderTest(bool isUnderTest) { m_isUnderTest = isUnderTest; }
@@ -174,6 +180,7 @@ private:
 
     PageAgentContext pageAgentContext();
     void createLazyAgents();
+    void runLoopWhilePaused();
 
     WeakRef<Page> m_page;
     const Ref<InstrumentingAgents> m_instrumentingAgents;
@@ -200,7 +207,12 @@ private:
     bool m_pauseAfterInitialization = { false };
     bool m_didCreateLazyAgents { false };
     bool m_executionStopwatchIsShared { false };
+<<<<<<< HEAD
     bool m_isSuppressingPausesForNavigation { false };
+||||||| parent of 10bfe2994464 (chore(webkit): bootstrap build #2386)
+=======
+    PauseCondition m_pauseOnStart { PauseCondition::DONT_PAUSE };
+>>>>>>> 10bfe2994464 (chore(webkit): bootstrap build #2386)
 };
 
 } // namespace WebCore
