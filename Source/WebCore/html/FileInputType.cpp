@@ -40,12 +40,8 @@
 #include "HTMLNames.h"
 #include "Icon.h"
 #include "InputTypeNames.h"
-<<<<<<< HEAD
-#include "LocalDOMWindow.h"
-||||||| parent of fcd680e120a9 (chore(webkit): bootstrap build #2388)
-=======
 #include "InspectorInstrumentation.h"
->>>>>>> fcd680e120a9 (chore(webkit): bootstrap build #2388)
+#include "LocalDOMWindow.h"
 #include "LocalFrame.h"
 #include "LocalFrameView.h"
 #include "LocalizedStrings.h"
@@ -169,20 +165,14 @@ void FileInputType::handleDOMActivateEvent(Event& event)
     if (element()->isDisabledFormControl())
         return;
 
-<<<<<<< HEAD
-    RefPtr window = element()->document().window();
-    if (!window || !window->consumeTransientActivation()) {
-        protect(element()->document())->addConsoleMessage(MessageSource::JS, MessageLevel::Warning, "File chooser dialog can only be shown with a user activation."_s);
-||||||| parent of fcd680e120a9 (chore(webkit): bootstrap build #2388)
-    if (!UserGestureIndicator::processingUserGesture())
-=======
     bool intercept = false;
     InspectorInstrumentation::runOpenPanel(element()->document().frame(), element(), &intercept);
     if (intercept)
         return;
 
-    if (!UserGestureIndicator::processingUserGesture())
->>>>>>> fcd680e120a9 (chore(webkit): bootstrap build #2388)
+    RefPtr window = element()->document().window();
+    if (!window || !window->consumeTransientActivation()) {
+        protect(element()->document())->addConsoleMessage(MessageSource::JS, MessageLevel::Warning, "File chooser dialog can only be shown with a user activation."_s);
         return;
     }
 
