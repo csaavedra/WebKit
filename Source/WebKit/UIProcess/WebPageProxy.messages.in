@@ -356,15 +356,7 @@ messages -> WebPageProxy {
 
     # Drag and drop messages
 #if PLATFORM(COCOA) && ENABLE(DRAG_SUPPORT)
-<<<<<<< HEAD
-    StartDrag(struct WebCore::DragItem dragItem, WebCore::ShareableBitmapHandle dragImage, std::optional<WebCore::NodeIdentifier> nodeID, std::optional<WebCore::FrameIdentifier> frameID)
-||||||| parent of fcd680e120a9 (chore(webkit): bootstrap build #2388)
-    PropagateDragAndDrop(struct WebKit::DragEventForwardingData forwardingData, String dragStorageName, WebCore::DragData dragData)
-    StartDrag(struct WebCore::DragItem dragItem, WebCore::ShareableBitmapHandle dragImage, std::optional<WebCore::NodeIdentifier> nodeID, std::optional<WebCore::FrameIdentifier> frameID)
-=======
-    PropagateDragAndDrop(struct WebKit::DragEventForwardingData forwardingData, String dragStorageName, WebCore::DragData dragData)
     StartDrag(struct WebCore::DragItem dragItem, OptionSet<WebCore::DragOperation> dragOperationMask, WebCore::ShareableBitmapHandle dragImage, std::optional<WebCore::NodeIdentifier> nodeID, std::optional<WebCore::FrameIdentifier> frameID)
->>>>>>> fcd680e120a9 (chore(webkit): bootstrap build #2388)
     SetPromisedDataForImage(String pasteboardName, WebCore::SharedMemory::Handle imageHandle, String filename, String extension, String title, String url, String visibleURL, WebCore::SharedMemory::Handle archiveHandle, String originIdentifier)
 #endif
 #if (PLATFORM(GTK) || PLATFORM(WPE)) && ENABLE(DRAG_SUPPORT)
