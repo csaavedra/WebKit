@@ -2160,15 +2160,9 @@ void FrameLoader::loadWithDocumentLoader(DocumentLoader* loader, FrameLoadType t
 
     const String& httpMethod = loader->request().httpMethod();
 
-<<<<<<< HEAD
     if (!loader->isContinuingLoadAfterProvisionalLoadStarted() && shouldPerformFragmentNavigation(isFormSubmission, httpMethod, policyChecker().loadType(), newURL) && !loader->substituteData().isValid()) {
-||||||| parent of fcd680e120a9 (chore(webkit): bootstrap build #2388)
-    if (shouldPerformFragmentNavigation(isFormSubmission, httpMethod, policyChecker().loadType(), newURL) && !loader->substituteData().isValid()) {
-=======
-    if (shouldPerformFragmentNavigation(isFormSubmission, httpMethod, policyChecker().loadType(), newURL) && !loader->substituteData().isValid()) {
         loader->replacedByFragmentNavigation(m_frame);
 
->>>>>>> fcd680e120a9 (chore(webkit): bootstrap build #2388)
         RefPtr policyDocumentLoader = m_policyDocumentLoader;
         // A navigation that a listener starts replaces this one.
         if (dispatchNavigateEventForFragmentNavigationFromAnotherProcess(*loader, type, historyHandling).isNotCompleted() || m_policyDocumentLoader != policyDocumentLoader || !frame->page())
