@@ -86,14 +86,8 @@
 #include <pal/text/TextEncoding.h>
 #include "UserGestureIndicator.h"
 #include <JavaScriptCore/ContentSearchUtilities.h>
-<<<<<<< HEAD
-||||||| parent of fcd680e120a9 (chore(webkit): bootstrap build #2388)
-#include <JavaScriptCore/IdentifiersFactory.h>
-=======
-#include <JavaScriptCore/IdentifiersFactory.h>
 #include <JavaScriptCore/InjectedScriptManager.h>
 #include <JavaScriptCore/JSDateMath.h>
->>>>>>> fcd680e120a9 (chore(webkit): bootstrap build #2388)
 #include <JavaScriptCore/RegularExpression.h>
 #include <wtf/CheckedRef.h>
 #include <wtf/DateMath.h>

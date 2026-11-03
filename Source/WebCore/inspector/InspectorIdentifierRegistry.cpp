@@ -94,24 +94,10 @@ Protocol::Network::FrameId LegacyIdentifierRegistry::frameId(const WebCore::Fram
 {
     if (!frame)
         return emptyString();
-<<<<<<< HEAD
-    return m_frameToIdentifier.ensure(*frame, [this, frame] {
-        auto identifier = WebCore::generateInspectorObjectIdentifierString();
-        m_identifierToFrame.set(identifier, frame);
-        return identifier;
-    }).iterator->value;
-||||||| parent of fcd680e120a9 (chore(webkit): bootstrap build #2388)
-    return m_frameToIdentifier.ensure(*frame, [this, frame] {
-        auto identifier = IdentifiersFactory::createIdentifier();
-        m_identifierToFrame.set(identifier, frame);
-        return identifier;
-    }).iterator->value;
-=======
 
     auto identifier = String::number(frame->frameID().toUInt64());
     m_identifierToFrame.set(identifier, frame);
     return identifier;
->>>>>>> fcd680e120a9 (chore(webkit): bootstrap build #2388)
 }
 
 RefPtr<WebCore::LocalFrame> LegacyIdentifierRegistry::assertFrame(Protocol::ErrorString& errorString, const Protocol::Network::FrameId& frameId)
