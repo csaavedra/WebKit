@@ -4998,6 +4998,12 @@ bool EventHandler::handleDrag(const MouseEventWithHitTestResults& event, CheckDr
     if (!document)
         return false;
 
+#if PLATFORM(MAC)
+    auto* page = m_frame->page();
+    if (page && !page->overrideDragPasteboardName().isEmpty())
+        dragState().dataTransfer = DataTransfer::createForDrag(*document, page->overrideDragPasteboardName());
+    else
+#endif
     dragState().dataTransfer = DataTransfer::createForDrag(*document);
     auto hasNonDefaultPasteboardData = HasNonDefaultPasteboardData::No;
     
@@ -5641,6 +5647,11 @@ std::expected<bool, RemoteFrameGeometryTransformer> EventHandler::handleTouchEve
             allTouchReleased = false;
     }
 
+    if (freshTouchEvents) {
+        if (RefPtr page = frame->page())
+            page->pointerCaptureController().resetCompatibilityMouseEventSuppressionForPrimaryTouch();
+    }
+
     bool swallowedEvent = false;
 
     for (unsigned index = 0; index < points.size(); index++) {
@@ -5739,7 +5750,7 @@ std::expected<bool, RemoteFrameGeometryTransformer> EventHandler::handleTouchEve
         if (!targetFrame)
             continue;
 
-#if PLATFORM(WPE) || PLATFORM(GTK)
+#if !ENABLE(IOS_TOUCH_EVENTS)
         RefPtr<EventTarget> pointerTarget = touchTarget;
 
         if (pointState != PlatformTouchPoint::TouchPressed) {
@@ -5759,13 +5770,6 @@ std::expected<bool, RemoteFrameGeometryTransformer> EventHandler::handleTouchEve
         Ref page = *document->page();
         page->pointerCaptureController().dispatchEventForTouchAtIndex(
             *pointerTarget, event, index, !index, *document->windowProxy(), { 0, 0 });
-
-        // https://w3c.github.io/pointerevents/#suppressing-a-compatibility-mouse-event
-        // If pointerdown was canceled via preventDefault(), suppress compatibility mouse events
-        // by marking the touch event as handled. This propagates to the UIProcess via
-        // doneWithTouchEvent(wasEventHandled=true), preventing gesture-based mouse synthesis.
-        if (page->pointerCaptureController().preventsCompatibilityMouseEventsForIdentifier(PointerEvent::pointerIdForTouchPoint(point)))
-            swallowedEvent = true;
 #endif
 
         // pagePoint should always be relative to the target elements containing frame.
