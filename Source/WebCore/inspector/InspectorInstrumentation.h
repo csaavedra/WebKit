@@ -608,34 +608,18 @@ private:
     static void layerTreeDidChangeImpl(InstrumentingAgents&);
     static void renderLayerDestroyedImpl(InstrumentingAgents&, const RenderLayer&);
 
-<<<<<<< HEAD
-    NODELETE static InstrumentingAgents& instrumentingAgents(Page&);
-    NODELETE static InstrumentingAgents& instrumentingAgents(const LocalFrame&);
-    NODELETE static InstrumentingAgents& instrumentingAgents(const LocalFrameView&);
-    NODELETE static InstrumentingAgents& instrumentingAgents(WorkerOrWorkletGlobalScope&);
-    NODELETE static InstrumentingAgents& instrumentingAgents(ServiceWorkerGlobalScope&);
-    NODELETE static InstrumentingAgents& instrumentingAgents(const RenderObject&);
-||||||| parent of 13c5416b9971 (chore(webkit): bootstrap build #2389)
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(Page&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(const LocalFrame&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(const LocalFrameView&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(WorkerOrWorkletGlobalScope&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(ServiceWorkerGlobalScope&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(const RenderObject&);
-=======
     static void runOpenPanelImpl(InstrumentingAgents&, HTMLInputElement*, bool*);
     static void frameAttachedImpl(InstrumentingAgents&, LocalFrame&);
     static bool shouldBypassCSPImpl(InstrumentingAgents&);
     static void willCheckNavigationPolicyImpl(InstrumentingAgents&, LocalFrame&);
     static void didCheckNavigationPolicyImpl(InstrumentingAgents&, LocalFrame&, bool cancel);
 
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(Page&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(const LocalFrame&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(const LocalFrameView&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(WorkerOrWorkletGlobalScope&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(ServiceWorkerGlobalScope&);
-    static InstrumentingAgents& LEGACY_NODELETE instrumentingAgents(const RenderObject&);
->>>>>>> 13c5416b9971 (chore(webkit): bootstrap build #2389)
+    NODELETE static InstrumentingAgents& instrumentingAgents(Page&);
+    NODELETE static InstrumentingAgents& instrumentingAgents(const LocalFrame&);
+    NODELETE static InstrumentingAgents& instrumentingAgents(const LocalFrameView&);
+    NODELETE static InstrumentingAgents& instrumentingAgents(WorkerOrWorkletGlobalScope&);
+    NODELETE static InstrumentingAgents& instrumentingAgents(ServiceWorkerGlobalScope&);
+    NODELETE static InstrumentingAgents& instrumentingAgents(const RenderObject&);
 
     static InstrumentingAgents* instrumentingAgents(const LocalFrame*);
     static InstrumentingAgents* instrumentingAgents(ScriptExecutionContext&);
