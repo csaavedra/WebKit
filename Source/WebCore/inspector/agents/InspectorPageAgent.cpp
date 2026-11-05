@@ -267,7 +267,13 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideUserAgent(c
     return { };
 }
 
-<<<<<<< HEAD
+Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overridePlatform(const String& value)
+{
+    m_platformOverride = value;
+
+    return { };
+}
+
 static std::optional<InspectorBackendClient::DeveloperPreference> developerPreferenceForSetting(Inspector::Protocol::Page::Setting setting)
 {
     switch (setting) {
@@ -282,14 +288,6 @@ static std::optional<InspectorBackendClient::DeveloperPreference> developerPrefe
     default:
         return std::nullopt;
     }
-||||||| parent of 13c5416b9971 (chore(webkit): bootstrap build #2389)
-=======
-Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overridePlatform(const String& value)
-{
-    m_platformOverride = value;
-
-    return { };
->>>>>>> 13c5416b9971 (chore(webkit): bootstrap build #2389)
 }
 
 Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Inspector::Protocol::Page::Setting setting, std::optional<bool>&& value)
@@ -317,8 +315,8 @@ bool InspectorPageAgent::applySettingOverride(Page& page, Inspector::Protocol::P
 
 #if ENABLE(DEVICE_ORIENTATION)
     case Inspector::Protocol::Page::Setting::DeviceOrientationEventEnabled:
-        inspectedPageSettings.setDeviceOrientationEventEnabled(value.value_or(false));
-        return { };
+        settings.setDeviceOrientationEventEnabled(value.value_or(false));
+        return true;
 #endif
 
     case Inspector::Protocol::Page::Setting::FixedBackgroundsPaintRelativeToDocument:
@@ -383,8 +381,8 @@ bool InspectorPageAgent::applySettingOverride(Page& page, Inspector::Protocol::P
 
 #if ENABLE(MEDIA_STREAM)
     case Inspector::Protocol::Page::Setting::SpeechRecognitionEnabled:
-        inspectedPageSettings.setSpeechRecognitionEnabled(value.value_or(false));
-        return { };
+        settings.setSpeechRecognitionEnabled(value.value_or(false));
+        return true;
 #endif
 
     case Inspector::Protocol::Page::Setting::WebSecurityEnabled:
