@@ -274,12 +274,8 @@
 #include <WebCore/ImageBufferParameters.h>
 #include <WebCore/ImageOverlay.h>
 #include <WebCore/ImageUtilities.h>
-<<<<<<< HEAD
-#include <WebCore/InteractiveModelElementHitTestResult.h>
-||||||| parent of a315dd59467f (chore(webkit): bootstrap build #2391)
-=======
 #include <WebCore/InspectorInstrumentationWebKit.h>
->>>>>>> a315dd59467f (chore(webkit): bootstrap build #2391)
+#include <WebCore/InteractiveModelElementHitTestResult.h>
 #include <WebCore/JSDOMExceptionHandling.h>
 #include <WebCore/JSNode.h>
 #include <WebCore/KeyboardEvent.h>
