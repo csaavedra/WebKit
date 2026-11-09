@@ -4931,7 +4931,7 @@ void WebPage::fakeTouchTap(const WebCore::IntPoint& position, uint8_t modifiers,
         localMainFrame->eventHandler().mouseMoved(PlatformMouseEvent(
             adjustedIntPoint,
             adjustedIntPoint,
-            MouseButton::None,
+            std::unexpected { MouseButtonState::None },
             PlatformEvent::Type::MouseMoved,
             0,
             modifiers,
