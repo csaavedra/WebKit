@@ -637,16 +637,8 @@ private:
     void clearResourceLoadStatistics();
     void flushResourceLoadStatistics();
     void seedResourceLoadStatisticsForTesting(const WebCore::RegistrableDomain& firstPartyDomain, const WebCore::RegistrableDomain& thirdPartyDomain, bool shouldScheduleNotification, CompletionHandler<void()>&&);
-<<<<<<< HEAD
-    void userPreferredLanguagesChanged(const Vector<String>&) const;
-    NODELETE void fullKeyboardAccessModeChanged(bool fullKeyboardAccessEnabled);
-||||||| parent of a315dd59467f (chore(webkit): bootstrap build #2391)
-    void userPreferredLanguagesChanged(const Vector<String>&) const;
-    void LEGACY_NODELETE fullKeyboardAccessModeChanged(bool fullKeyboardAccessEnabled);
-=======
     void userPreferredLanguagesChanged(const Vector<String>&);
-    void LEGACY_NODELETE fullKeyboardAccessModeChanged(bool fullKeyboardAccessEnabled);
->>>>>>> a315dd59467f (chore(webkit): bootstrap build #2391)
+    NODELETE void fullKeyboardAccessModeChanged(bool fullKeyboardAccessEnabled);
 #if ENABLE(OPT_IN_PARTITIONED_COOKIES)
     void setOptInCookiePartitioningEnabled(bool);
 #endif
