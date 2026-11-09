@@ -359,6 +359,7 @@ public:
     // freshly generated identifier, so references issued under the old one have to be
     // re-keyed or they read as never having existed.
     void transferKnownNodeReferences(WebCore::FrameIdentifier oldFrameID, WebCore::FrameIdentifier newFrameID);
+    static std::optional<String> platformGetBase64EncodedPNGData(const ViewSnapshot&);
 
     RefPtr<WebPageProxy> webPageProxyForHandle(const String&);
     std::optional<WebCore::FrameIdentifier> webFrameIDForHandle(const String&, bool& frameNotFound);
@@ -450,7 +451,6 @@ private:
 
     // Get base64-encoded PNG data from a bitmap.
     static std::optional<String> platformGetBase64EncodedPNGData(WebCore::ShareableBitmap::Handle&&);
-    static std::optional<String> platformGetBase64EncodedPNGData(const ViewSnapshot&);
 #if PLATFORM(COCOA)
     static std::optional<String> platformGetBase64EncodedPNGData(CGImageRef);
 #endif

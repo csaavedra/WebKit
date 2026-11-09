@@ -64,7 +64,7 @@ public:
 
     RefPtr<PointerEvent> pointerEventForMouseEvent(const MouseEvent&, PointerID, const String& pointerType);
 
-#if ENABLE(TOUCH_EVENTS) && (PLATFORM(IOS_FAMILY) || PLATFORM(WPE) || PLATFORM(GTK))
+#if ENABLE(TOUCH_EVENTS)
     void dispatchEventForTouchAtIndex(EventTarget&, const PlatformTouchEvent&, unsigned, bool isPrimary, WindowProxy&, const DoublePoint&);
 #endif
 
@@ -157,6 +157,11 @@ private:
     bool m_processingPendingPointerCapture { false };
     bool m_haveAnyCapturingElement { false };
 #if ENABLE(TOUCH_EVENTS) && !ENABLE(IOS_TOUCH_EVENTS)
+<<<<<<< HEAD
+||||||| parent of a315dd59467f (chore(webkit): bootstrap build #2391)
+=======
+    // Mouse events synthesized after touchend still need the primary touch's prevention state.
+>>>>>>> a315dd59467f (chore(webkit): bootstrap build #2391)
     bool m_preventsCompatibilityMouseEventsForPrimaryTouch { false };
 #endif
 };
