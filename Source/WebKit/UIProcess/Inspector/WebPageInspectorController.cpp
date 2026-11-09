@@ -320,13 +320,12 @@ void WebPageInspectorController::setIndicating(bool indicating)
 }
 #endif
 
-<<<<<<< HEAD
 void WebPageInspectorController::debuggerPauseSessionDidChange(WebCore::DebuggerPauseSessionIdentifier sessionID, bool isPaused, const Vector<String>& stoppingTargetIDs)
 {
     if (CheckedPtr targetAgent = m_targetAgent)
         targetAgent->debuggerPauseSessionChanged(String::number(sessionID.toUInt64()), isPaused, stoppingTargetIDs);
-||||||| parent of a315dd59467f (chore(webkit): bootstrap build #2391)
-=======
+}
+
 #if USE(SKIA)
 void WebPageInspectorController::didPaint(sk_sp<SkImage>&& surface)
 {
@@ -390,7 +389,6 @@ void WebPageInspectorController::didFailProvisionalLoadForFrame(WebCore::Navigat
 {
     if (s_observer)
         s_observer->didFailProvisionalLoad(m_inspectedPage, navigationID, error.localizedDescription());
->>>>>>> a315dd59467f (chore(webkit): bootstrap build #2391)
 }
 
 void WebPageInspectorController::sendMessageToInspectorFrontend(const String& targetId, const String& message)
