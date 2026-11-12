@@ -17613,7 +17613,7 @@ void WebPageProxy::requestGeolocationPermissionForFrame(IPC::Connection& connect
     };
 
     if (isControlledByAutomation()) {
-        auto securityOrigin = frameInfo.securityOrigin.securityOrigin();
+        auto securityOrigin = frame->documentSecurityOriginData().securityOrigin();
         completionHandler(permissionForAutomation(securityOrigin->toString(), "geolocation"_s).value_or(false));
         return;
     }
