@@ -93,6 +93,7 @@
 #include "MixedContentChecker.h"
 #include "Navigator.h"
 #include "NodeList.h"
+#include "NodeRenderStyle.h"
 #include "NodeTraversal.h"
 #include "Page.h"
 #include "PaymentSession.h"
@@ -210,6 +211,7 @@ LocalFrame::LocalFrame(Page& page, ClientCreator&& clientCreator, FrameIdentifie
 
 void LocalFrame::init()
 {
+    InspectorInstrumentation::frameAttached(this);
     loader().init();
 }
 
@@ -461,7 +463,7 @@ void LocalFrame::orientationChanged()
 IntDegrees LocalFrame::orientation() const
 {
     if (RefPtr page = this->page())
-        return page->chrome().client().deviceOrientation();
+        return page->orientation();
     return 0;
 }
 #endif // ENABLE(ORIENTATION_EVENTS)
@@ -1272,10 +1274,10 @@ FloatSize LocalFrame::screenSize() const
 
 void LocalFrame::setOverrideScreenSize(FloatSize&& screenSize)
 {
-    if (m_overrideScreenSize && m_overrideScreenSize->size == screenSize)
+    if ((!m_overrideScreenSize && screenSize.isEmpty()) || (m_overrideScreenSize && m_overrideScreenSize->size == screenSize))
         return;
 
-    m_overrideScreenSize = makeUnique<OverrideScreenSize>(OverrideScreenSize { WTF::move(screenSize) });
+    m_overrideScreenSize = screenSize.isEmpty() ? nullptr : makeUnique<OverrideScreenSize>(OverrideScreenSize { WTF::move(screenSize) });
     if (RefPtr document = this->document())
         document->updateViewportArguments();
 }
@@ -1847,7 +1849,6 @@ String LocalFrame::frameURLProtocol() const
     return ""_s;
 }
 
-#if PLATFORM(COCOA)
 
 static bool nodeIsMouseFocusable(Node& node)
 {
@@ -2105,8 +2106,6 @@ RefPtr<LocalDOMWindow> LocalFrame::windowWithDoubleClickEventListener() const
 
     return window;
 }
-
-#endif // PLATFORM(COCOA)
 
 } // namespace WebCore
 

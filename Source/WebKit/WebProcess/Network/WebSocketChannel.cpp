@@ -310,7 +310,42 @@ void WebSocketChannel::connectWithParameters(ConnectParameters&& parameters, con
 
     m_url = parameters.request.url();
 
+<<<<<<< HEAD
     MessageSender::send(Messages::NetworkConnectionToWebProcess::CreateSocketChannel { parameters.request, protocol, identifier(), m_webPageProxyID, parameters.frameIdentifier, parameters.pageIdentifier, parameters.clientOrigin, parameters.hadMainFrameMainResourcePrivateRelayed, parameters.allowPrivacyProxy, parameters.advancedPrivacyProtections, parameters.storedCredentialsPolicy, m_isInitiatedByWorker });
+||||||| parent of c456ff41030e (chore(webkit): bootstrap build #2393)
+    if (auto* page = frame->page())
+        storedCredentialsPolicy = page->canUseCredentialStorage() ? StoredCredentialsPolicy::Use : StoredCredentialsPolicy::DoNotUse;
+
+    m_inspector.didCreateWebSocket(url);
+    m_url = request->url();
+    m_inspector.willSendWebSocketHandshakeRequest(*request);
+    Ref mainFrame = frame->mainFrame();
+
+    Ref policySourceFrame = [&] -> Ref<Frame> {
+        if (!WTF::URLParser::isSpecialScheme(mainFrame->frameURLProtocol()) && document->url().protocolIsInHTTPFamily())
+            return *frame;
+        return mainFrame;
+    }();
+
+    MessageSender::send(Messages::NetworkConnectionToWebProcess::CreateSocketChannel { *request, protocol, identifier(), m_webPageProxyID, std::optional(frame->frameID()), frame->pageID(), document->clientOrigin(), WebProcess::singleton().hadMainFrameMainResourcePrivateRelayed(), policySourceFrame->allowPrivacyProxy(), policySourceFrame->advancedPrivacyProtections(), storedCredentialsPolicy, m_isInitiatedByWorker });
+=======
+    if (auto* page = frame->page())
+        storedCredentialsPolicy = page->canUseCredentialStorage() ? StoredCredentialsPolicy::Use : StoredCredentialsPolicy::DoNotUse;
+
+    m_inspector.didCreateWebSocket(url);
+    m_url = request->url();
+    m_inspector.willSendWebSocketHandshakeRequest(*request);
+    WebProcess::singleton().applyOverrideLanguagesToRequest(*request);
+    Ref mainFrame = frame->mainFrame();
+
+    Ref policySourceFrame = [&] -> Ref<Frame> {
+        if (!WTF::URLParser::isSpecialScheme(mainFrame->frameURLProtocol()) && document->url().protocolIsInHTTPFamily())
+            return *frame;
+        return mainFrame;
+    }();
+
+    MessageSender::send(Messages::NetworkConnectionToWebProcess::CreateSocketChannel { *request, protocol, identifier(), m_webPageProxyID, std::optional(frame->frameID()), frame->pageID(), document->clientOrigin(), WebProcess::singleton().hadMainFrameMainResourcePrivateRelayed(), policySourceFrame->allowPrivacyProxy(), policySourceFrame->advancedPrivacyProtections(), storedCredentialsPolicy, m_isInitiatedByWorker });
+>>>>>>> c456ff41030e (chore(webkit): bootstrap build #2393)
     m_needsToCallClose = true;
 }
 

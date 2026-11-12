@@ -1256,8 +1256,11 @@ ResourceErrorOr<Ref<CachedResource>> CachedResourceLoader::requestResource(Cache
 
     request.updateReferrerPolicy(document ? document->referrerPolicy() : ReferrerPolicy::Default);
 
-    if (InspectorInstrumentation::willIntercept(frame.ptr(), request.resourceRequest()))
-        request.setCachingPolicy(CachingPolicy::DisallowCaching);
+    if (InspectorInstrumentation::willIntercept(frame.ptr(), request.resourceRequest())) {
+        // Playwright: we don't disable such caching in other browsers and it breaks css resource downloads,
+        // see https://github.com/microsoft/playwright/issues/19158
+        // request.setCachingPolicy(CachingPolicy::DisallowCaching);
+    }
 
     if (RefPtr documentLoader = m_documentLoader) {
         bool madeHTTPS { request.resourceRequest().wasSchemeOptimisticallyUpgraded() };
@@ -1479,8 +1482,8 @@ ResourceErrorOr<Ref<CachedResource>> CachedResourceLoader::requestResource(Cache
                 memoryCache->remove(*resource);
 
             auto resourceError = resource->resourceError();
-            // Synchronous cancellations are likely due to access control.
-            if (resourceError.isNull() || resourceError.isCancellation())
+            // Failures without an explicit error are likely due to access control.
+            if (resourceError.isNull())
                 return makeUnexpected(ResourceError { String(), 0, url, String(), ResourceError::Type::AccessControl });
             return makeUnexpected(resourceError);
         }
@@ -1956,8 +1959,9 @@ void CachedResourceLoader::updateRenderingOfImages()
 
 ResourceErrorOr<Ref<CachedResource>> CachedResourceLoader::preload(CachedResource::Type type, CachedResourceRequest&& request)
 {
-    if (InspectorInstrumentation::willIntercept(protect(frame()).get(), request.resourceRequest()))
-        return makeUnexpected(ResourceError { errorDomainWebKitInternal, 0, request.resourceRequest().url(), "Inspector intercept"_s });
+    // Playwright: <link rel=preload ... /> requests are intercepted (see https://github.com/microsoft/playwright/issues/16745)
+    // if (InspectorInstrumentation::willIntercept(protect(frame()).get(), request.resourceRequest()))
+    //     return makeUnexpected(ResourceError { errorDomainWebKitInternal, 0, request.resourceRequest().url(), "Inspector intercept"_s });
 
     RefPtr document = m_document;
     ASSERT(document);

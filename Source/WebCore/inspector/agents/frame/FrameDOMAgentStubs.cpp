@@ -74,4 +74,37 @@ Inspector::CommandResult<void> FrameDOMAgent::focus(int)
     return makeUnexpected("Not supported for frame targets"_s);
 }
 
+<<<<<<< HEAD
+||||||| parent of c456ff41030e (chore(webkit): bootstrap build #2393)
+Inspector::CommandResult<Ref<Inspector::Protocol::DOM::MediaStats>> FrameDOMAgent::getMediaStats(int)
+{
+    return makeUnexpected("Not supported for frame targets"_s);
+}
+
+=======
+Inspector::CommandResult<Ref<Inspector::Protocol::DOM::MediaStats>> FrameDOMAgent::getMediaStats(int)
+{
+    return makeUnexpected("Not supported for frame targets"_s);
+}
+
+Inspector::CommandResultOf<String, String> FrameDOMAgent::describeNode(const String&)
+{
+    return makeUnexpected("Not supported for frame targets"_s);
+}
+
+Inspector::CommandResult<void> FrameDOMAgent::scrollIntoViewIfNeeded(const String&, RefPtr<JSON::Object>&&)
+{
+    return makeUnexpected("Not supported for frame targets"_s);
+}
+
+Inspector::CommandResult<Ref<JSON::ArrayOf<Inspector::Protocol::DOM::Quad>>> FrameDOMAgent::getContentQuads(const String&)
+{
+    return makeUnexpected("Not supported for frame targets"_s);
+}
+
+void FrameDOMAgent::setInputFiles(const String&, Ref<JSON::Array>&&, Ref<Inspector::DOMBackendDispatcherHandler::SetInputFilesCallback>&&)
+{
+}
+
+>>>>>>> c456ff41030e (chore(webkit): bootstrap build #2393)
 } // namespace WebCore
