@@ -1726,15 +1726,13 @@ DMFWebsitePolicyMonitor *NetworkSessionCocoa::deviceManagementPolicyMonitor()
 #endif
 }
 
-<<<<<<< HEAD
 bool NetworkSessionCocoa::allowsLegacyCookieAccessFromFileURL(const WebCore::ResourceRequest& request)
 {
     if (linkedOnOrAfterSDKWithBehavior(SDKAlignedBehavior::ForbidCookieUseFromFileURLs))
         return false;
     return request.firstPartyForCookies().protocolIsFile();
 }
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-=======
+
 #if HAVE(CFNETWORK_HOSTOVERRIDE)
 // Playwright: NWLoader never routes loopback destinations through a proxy. Overriding the
 // connection endpoint with a non-loopback TEST-NET-1 address makes the proxy apply again; the
@@ -1787,7 +1785,6 @@ RetainPtr<nw_endpoint_t> NetworkSessionCocoa::loopbackProxyHostOverrideForURL(co
     return adoptNS(nw_endpoint_create_host_with_numeric_port("192.0.2.1", url.port().value_or(0)));
 }
 #endif // HAVE(CFNETWORK_HOSTOVERRIDE)
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
 
 RefPtr<WebSocketTask> NetworkSessionCocoa::createWebSocketTask(WebPageProxyIdentifier webPageProxyID, std::optional<WebCore::FrameIdentifier> frameID, std::optional<WebCore::PageIdentifier> pageID, NetworkSocketChannel& channel, const WebCore::ResourceRequest& originalRequest, const String& protocol, const WebCore::ClientOrigin& clientOrigin, bool hadMainFrameMainResourcePrivateRelayed, bool allowPrivacyProxy, OptionSet<WebCore::AdvancedPrivacyProtections> advancedPrivacyProtections, WebCore::StoredCredentialsPolicy storedCredentialsPolicy, WebCore::IsInitiatedByWorker isInitiatedByWorker)
 {
