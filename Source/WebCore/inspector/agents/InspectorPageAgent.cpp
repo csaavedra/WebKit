@@ -1169,16 +1169,12 @@ Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotNode(Insp
     return encodeDataURL(WTF::move(snapshot), "image/png"_s);
 }
 
-<<<<<<< HEAD
-void InspectorPageAgent::snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem coordinateSystem, Ref<SnapshotRectCallback>&& callback)
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem coordinateSystem)
-=======
-Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem coordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Inspector::Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality)
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
+void InspectorPageAgent::snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem coordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Inspector::Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality, Ref<SnapshotRectCallback>&& callback)
 {
-    if (quality && (*quality < 0 || *quality > 100))
-        return makeUnexpected("Quality must be between 0 and 100"_s);
+    if (quality && (*quality < 0 || *quality > 100)) {
+        callback->sendFailure("Quality must be between 0 and 100"_s);
+        return;
+    }
 
     // Snapshots are requested in CSS (Page) or view (Viewport) pixels, whether or not the page scale is delegated.
     SnapshotOptions options { { SnapshotFlags::IgnoreScaleDelegation }, PixelFormat::BGRA8, ColorSpace::SRGB() };
@@ -1195,19 +1191,10 @@ Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotRect(int 
     }
     RefPtr snapshot = snapshotFrameRect(*localMainFrame, rectangle, WTF::move(options));
 
-<<<<<<< HEAD
     if (!snapshot) {
         callback->sendFailure("Could not capture snapshot"_s);
         return;
     }
-    callback->sendSuccess(encodeDataURL(WTF::move(snapshot), "image/png"_s));
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-    if (!snapshot)
-        return makeUnexpected("Could not capture snapshot"_s);
-    return encodeDataURL(WTF::move(snapshot), "image/png"_s);
-=======
-    if (!snapshot)
-        return makeUnexpected("Could not capture snapshot"_s);
 
     String mimeType;
     std::optional<double> encodingQuality;
@@ -1225,8 +1212,7 @@ Inspector::Protocol::ErrorStringOr<String> InspectorPageAgent::snapshotRect(int 
         encodingQuality = quality.value_or(100) / 100.0;
         break;
     }
-    return encodeDataURL(WTF::move(snapshot), mimeType, encodingQuality);
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
+    callback->sendSuccess(encodeDataURL(WTF::move(snapshot), mimeType, encodingQuality));
 }
 
 Inspector::Protocol::ErrorStringOr<void> InspectorPageAgent::setForcedColors(std::optional<Inspector::Protocol::Page::ForcedColors>&& forcedColors)

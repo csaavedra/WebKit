@@ -108,13 +108,7 @@ public:
     Inspector::Protocol::ErrorStringOr<void> setTimeZone(const String&);
     Inspector::Protocol::ErrorStringOr<void> setTouchEmulationEnabled(bool);
     Inspector::Protocol::ErrorStringOr<String> snapshotNode(Inspector::Protocol::DOM::NodeId);
-<<<<<<< HEAD
-    void snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem, Ref<SnapshotRectCallback>&&);
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-    Inspector::Protocol::ErrorStringOr<String> snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem);
-=======
-    Inspector::Protocol::ErrorStringOr<String> snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Inspector::Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality);
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
+    void snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Inspector::Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality, Ref<SnapshotRectCallback>&&);
 #if ENABLE(WEB_ARCHIVE) && USE(CF)
     void archive(Ref<ArchiveCallback>&&);
 #endif

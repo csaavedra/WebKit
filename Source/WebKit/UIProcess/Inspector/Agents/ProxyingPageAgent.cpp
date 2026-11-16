@@ -862,27 +862,45 @@ CommandResult<String> ProxyingPageAgent::snapshotNode(Protocol::DOM::NodeId)
     return makeUnexpected("Not yet implemented under Site Isolation"_s);
 }
 
-<<<<<<< HEAD
 // WebPageProxy::takeSnapshot() draws the frames of every process (remote snapshotting), so cross-origin
 // iframes are included. Only the UI process receives the image, not a WebContent process.
-void ProxyingPageAgent::snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem coordinateSystem, Ref<SnapshotRectCallback>&& callback)
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-CommandResult<String> ProxyingPageAgent::snapshotRect(int, int, int, int, Protocol::Page::CoordinateSystem)
-=======
-CommandResult<String> ProxyingPageAgent::snapshotRect(int, int, int, int, Protocol::Page::CoordinateSystem, std::optional<bool>&&, std::optional<Protocol::Page::ImageFormat>&&, std::optional<int>&&)
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
+void ProxyingPageAgent::snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem coordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality, Ref<SnapshotRectCallback>&& callback)
 {
 #if PLATFORM(COCOA)
+    if (quality && (*quality < 0 || *quality > 100)) {
+        callback->sendFailure("Quality must be between 0 and 100"_s);
+        return;
+    }
+
     SnapshotOptions options;
     if (coordinateSystem == Protocol::Page::CoordinateSystem::Viewport)
         options.add(SnapshotOption::InViewCoordinates);
+    if (omitDeviceScaleFactor.value_or(false))
+        options.add(SnapshotOption::ExcludeDeviceScaleFactor);
 
-    protect(m_inspectedPage.get())->takeSnapshot({ x, y, width, height }, { }, options, [callback = WTF::move(callback)](CGImageRef image) {
+    String mimeType;
+    std::optional<double> encodingQuality;
+    switch (format.value_or(Protocol::Page::ImageFormat::Png)) {
+    case Protocol::Page::ImageFormat::Png:
+        mimeType = "image/png"_s;
+        break;
+    case Protocol::Page::ImageFormat::Jpeg:
+        mimeType = "image/jpeg"_s;
+        encodingQuality = quality.value_or(80) / 100.0;
+        break;
+    case Protocol::Page::ImageFormat::Webp:
+        mimeType = "image/webp"_s;
+        // A quality of 1.0 (100) selects lossless WebP; default to it when omitted.
+        encodingQuality = quality.value_or(100) / 100.0;
+        break;
+    }
+
+    protect(m_inspectedPage.get())->takeSnapshot({ x, y, width, height }, { }, options, [callback = WTF::move(callback), mimeType = WTF::move(mimeType), encodingQuality](CGImageRef image) {
         if (!image) {
             callback->sendFailure("Could not capture snapshot"_s);
             return;
         }
-        callback->sendSuccess(encodeDataURL(image, "image/png"_s));
+        callback->sendSuccess(encodeDataURL(image, mimeType, encodingQuality));
     });
 #else
     UNUSED_PARAM(x);
@@ -890,6 +908,9 @@ CommandResult<String> ProxyingPageAgent::snapshotRect(int, int, int, int, Protoc
     UNUSED_PARAM(width);
     UNUSED_PARAM(height);
     UNUSED_PARAM(coordinateSystem);
+    UNUSED_PARAM(omitDeviceScaleFactor);
+    UNUSED_PARAM(format);
+    UNUSED_PARAM(quality);
     callback->sendFailure("Not yet implemented under Site Isolation"_s);
 #endif
 }

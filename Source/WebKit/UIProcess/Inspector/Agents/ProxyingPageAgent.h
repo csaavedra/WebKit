@@ -117,13 +117,7 @@ public:
     CommandResult<void> crash() final;
     CommandResult<void> updateScrollingState() final;
     CommandResult<String> snapshotNode(Protocol::DOM::NodeId) final;
-<<<<<<< HEAD
-    void snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem, Ref<SnapshotRectCallback>&&) final;
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-    CommandResult<String> snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem) final;
-=======
-    CommandResult<String> snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Protocol::Page::ImageFormat>&&, std::optional<int>&& quality) final;
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
+    void snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Protocol::Page::ImageFormat>&&, std::optional<int>&& quality, Ref<SnapshotRectCallback>&&) final;
 #if ENABLE(WEB_ARCHIVE) && USE(CF)
     void archive(Ref<ArchiveCallback>&&) final;
 #endif
