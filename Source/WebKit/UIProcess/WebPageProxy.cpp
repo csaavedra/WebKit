@@ -3606,11 +3606,6 @@ RefPtr<WebAutomationSession> WebPageProxy::activeAutomationSession() const
     return m_configuration->processPool().automationSession();
 }
 
-<<<<<<< HEAD
-void WebPageProxy::sendMessageToInspectorFrontend(IPC::Connection& connection, const String& targetId, const String& message)
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-void WebPageProxy::sendMessageToInspectorFrontend(const String& targetId, const String& message)
-=======
 void WebPageProxy::setAuthCredentialsForAutomation(Vector<std::pair<WebCore::Credential, std::optional<URL>>>&& credentials, std::optional<WebCore::Credential>&& proxyCredential)
 {
     m_credentialsForAutomation = WTF::move(credentials);
@@ -3656,8 +3651,7 @@ void WebPageProxy::logToStderr(const String& str)
     SAFE_FPRINTF(stderr, "RENDERER: %s\n", str.utf8());
 }
 
-void WebPageProxy::sendMessageToInspectorFrontend(const String& targetId, const String& message)
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
+void WebPageProxy::sendMessageToInspectorFrontend(IPC::Connection& connection, const String& targetId, const String& message)
 {
     MESSAGE_CHECK_BASE(!targetId.isNull(), connection);
     m_inspectorController->sendMessageToInspectorFrontend(targetId, message);
