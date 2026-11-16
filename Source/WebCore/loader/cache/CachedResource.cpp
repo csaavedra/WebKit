@@ -203,6 +203,7 @@ void CachedResource::load(CachedResourceLoader& cachedResourceLoader)
                 CACHEDRESOURCE_RELEASE_LOG_WITH_FRAME("load: Failed security check -- active loader is stopping", frame.get());
             else
                 break;
+            setResourceError(FrameLoader::cancelledError(m_resourceRequest));
             failBeforeStarting();
             return;
         }

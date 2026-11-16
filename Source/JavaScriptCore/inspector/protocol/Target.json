@@ -10,9 +10,17 @@
             "properties": [
                 { "name": "targetId", "type": "string", "description": "Unique identifier for the target." },
                 { "name": "type", "type": "string", "enum": ["page", "frame", "service-worker", "worker"] },
+<<<<<<< HEAD
                 { "name": "isProvisional", "type": "boolean", "optional": true, "description": "Whether this is a provisional page or frame target." },
                 { "name": "isPaused", "type": "boolean", "optional": true, "description": "Whether the target is paused on start and has to be explicitely resumed by inspector." },
                 { "name": "processIdentifier", "type": "string", "optional": true, "description": "Opaque identifier, assigned by the UI process, of the process that runs this target. Not an OS process ID. Targets with the same value run in the same process. Absent when the backend does not know the process." }
+||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
+                { "name": "isProvisional", "type": "boolean", "optional": true, "description": "Whether this is a provisional page target." },
+                { "name": "isPaused", "type": "boolean", "optional": true, "description": "Whether the target is paused on start and has to be explicitely resumed by inspector." }
+=======
+                { "name": "isProvisional", "type": "boolean", "optional": true, "description": "True value indicates that this is a provisional page target i.e. Such target may be created when current page starts cross-origin navigation. Eventually each provisional target is either committed and swaps with the current target or gets destroyed, e.g. in case of load request failure." },
+                { "name": "isPaused", "type": "boolean", "optional": true, "description": "Whether the target is paused on start and has to be explicitely resumed by inspector." }
+>>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
             ]
         },
         {
@@ -44,6 +52,13 @@
                 { "name": "targetId", "type": "string" },
                 { "name": "message", "type": "string", "description": "JSON Inspector Protocol message (command) to be dispatched on the backend." }
             ]
+        },
+        {
+            "name": "activate",
+            "description": "Reveals the target on screen.",
+            "parameters": [
+                { "name": "targetId", "type": "string" }
+            ]
         }
     ],
     "events": [
@@ -56,7 +71,8 @@
         {
             "name": "targetDestroyed",
             "parameters": [
-                { "name": "targetId", "type": "string" }
+                { "name": "targetId", "type": "string" },
+                { "name": "crashed", "type": "boolean" }
             ]
         },
         {

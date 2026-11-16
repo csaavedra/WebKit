@@ -198,6 +198,7 @@ auto WebSocketChannel::createConnectParameters(Document& document, const URL& ur
 
     WebSocketChannelInspector::didCreateWebSocket(document, progressIdentifier, url);
     WebSocketChannelInspector::willSendWebSocketHandshakeRequest(document, progressIdentifier, *request);
+    WebProcess::singleton().applyOverrideLanguagesToRequest(*request);
 
     bool didUpgradeURL = request->url() != url;
     return ConnectParameters {

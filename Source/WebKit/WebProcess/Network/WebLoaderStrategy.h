@@ -26,6 +26,7 @@
 #pragma once
 
 #include "NetworkResourceLoadIdentifier.h"
+#include "NetworkResourceLoadParameters.h"
 #include "WebResourceLoader.h"
 #include <WebCore/LoaderStrategy.h>
 #include <WebCore/ResourceError.h>
@@ -101,6 +102,9 @@ public:
     bool isOnLine() const final;
     void addOnlineStateChangeListener(Function<void(bool)>&&) final;
     void setOnLineState(bool);
+    bool setEmulateOfflineState(bool) final;
+
+    bool fillParametersForNetworkProcessLoad(WebCore::ResourceLoader&, const WebCore::ResourceRequest&, const WebResourceLoader::TrackingParameters&, bool shouldClearReferrerOnHTTPSToHTTPRedirect, Seconds maximumBufferingTime, NetworkResourceLoadParameters&);
 
     void setExistingNetworkResourceLoadIdentifierToResume(std::optional<NetworkResourceLoadIdentifier> existingNetworkResourceLoadIdentifierToResume) { m_existingNetworkResourceLoadIdentifierToResume = existingNetworkResourceLoadIdentifierToResume; }
 
