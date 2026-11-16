@@ -35,12 +35,8 @@ messages -> WebPageProxy {
     RunJavaScriptConfirm(WebCore::FrameIdentifier frameID, struct WebKit::FrameInfoData frameInfo, String message) -> (bool result) Synchronous
     RunJavaScriptPrompt(WebCore::FrameIdentifier frameID, struct WebKit::FrameInfoData frameInfo, String message, String defaultValue) -> (String result) Synchronous
     MouseDidMoveOverElement(struct WebKit::WebHitTestResultData hitTestResultData, OptionSet<WebKit::WebEventModifier> modifiers)
-<<<<<<< HEAD
     [EnabledBy=SiteIsolationEnabled] DispatchFakeMouseMoveEventInRemoteFrame(WebCore::FrameIdentifier frameID, WebCore::DoublePoint eventPoint, WebCore::DoublePoint globalPoint)
-||||||| parent of aef89d5a67df (chore(webkit): bootstrap build #2394)
-=======
     LogToStderr(String text)
->>>>>>> aef89d5a67df (chore(webkit): bootstrap build #2394)
 
     SetCursor(WebCore::Cursor cursor)
     SetCursorHiddenUntilMouseMoves(bool hiddenUntilMouseMoves)
