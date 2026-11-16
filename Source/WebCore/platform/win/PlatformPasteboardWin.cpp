@@ -212,7 +212,7 @@ public:
 
 private:
     // This is intentionally process wide: one browser shares one clipboard across all of its contexts and pages.
-    UncheckedKeyHashMap<String, String> m_pasteboard;
+    HashMap<String, String> m_pasteboard;
     std::optional<PasteboardCustomData> m_customData;
     int64_t m_changeCount { 0 };
 };

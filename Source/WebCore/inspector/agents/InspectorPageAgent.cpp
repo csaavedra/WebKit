@@ -121,8 +121,8 @@ using namespace Inspector;
 
 WTF_MAKE_TZONE_ALLOCATED_IMPL(InspectorPageAgent);
 
-static UncheckedKeyHashMap<String, Ref<DOMWrapperWorld>>& createdUserWorlds() {
-    static NeverDestroyed<UncheckedKeyHashMap<String, Ref<DOMWrapperWorld>>> nameToWorld;
+static HashMap<String, Ref<DOMWrapperWorld>>& createdUserWorlds() {
+    static NeverDestroyed<HashMap<String, Ref<DOMWrapperWorld>>> nameToWorld;
     return nameToWorld;
 }
 

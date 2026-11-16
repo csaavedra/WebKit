@@ -221,7 +221,7 @@ private:
     bool m_didCreateLazyAgents { false };
     std::unique_ptr<DebuggerPauseCoordinator> m_debuggerPauseCoordinator;
     bool m_isMainFrameNavigating { false };
-    UncheckedKeyHashMap<WebCore::NavigationIdentifier, NavigationHandler> m_pendingNavigations;
+    HashMap<WebCore::NavigationIdentifier, NavigationHandler> m_pendingNavigations;
 
     static WebPageInspectorControllerObserver* s_observer;
 };

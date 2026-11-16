@@ -77,7 +77,7 @@ private:
     Ref<Inspector::EmulationBackendDispatcher> m_backendDispatcher;
     WeakRef<WebPageProxy> m_page;
     Vector<Function<void()>> m_commandsToRunWhenShown;
-    UncheckedKeyHashMap<String, HashSet<String>> m_permissions;
+    HashMap<String, HashSet<String>> m_permissions;
 };
 
 } // namespace WebKit

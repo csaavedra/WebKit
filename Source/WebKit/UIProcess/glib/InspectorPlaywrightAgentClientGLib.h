@@ -54,7 +54,7 @@ public:
 private:
     WebKitWebContext* findContext(WTF::String& error, PAL::SessionID);
 
-    UncheckedKeyHashMap<PAL::SessionID, GRefPtr<WebKitWebContext>> m_idToContext;
+    HashMap<PAL::SessionID, GRefPtr<WebKitWebContext>> m_idToContext;
     WebCore::SoupNetworkProxySettings m_proxySettings;
 };
 
