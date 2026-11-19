@@ -1303,15 +1303,11 @@ JS_BINDING_IDLS := \
     $(WebCore)/dom/SubscriberCallback.idl \
     $(WebCore)/dom/SubscriptionObserver.idl \
     $(WebCore)/dom/SubscriptionObserverCallback.idl \
-<<<<<<< HEAD
     $(WebCore)/dom/TaskPriority.idl \
-||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
-=======
     $(WebCore)/dom/Document+Touch.idl \
     $(WebCore)/dom/Touch.idl \
     $(WebCore)/dom/TouchEvent.idl \
     $(WebCore)/dom/TouchList.idl \
->>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
     $(WebCore)/dom/Text.idl \
     $(WebCore)/dom/TextDecoder.idl \
     $(WebCore)/dom/TextDecoderStream.idl \
