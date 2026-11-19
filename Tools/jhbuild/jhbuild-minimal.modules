@@ -204,7 +204,9 @@
             repo="github.com"
             tag="3.6.6"
             version="3.6.6"
-            checkoutdir="libsoup-${version}"/>
+            checkoutdir="libsoup-${version}">
+      <patch file="libsoup-preserve-filename-spaces.patch" strip="1"/>
+    </branch>
   </meson>
 
   <autotools id="libpsl" autogenargs="--enable-runtime=libicu --enable-builtin=libicu">

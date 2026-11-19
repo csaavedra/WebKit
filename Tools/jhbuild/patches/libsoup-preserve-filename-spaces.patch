@@ -1,0 +1,25 @@
+From db09564e563d4418e93055960568afa172cdf444 Mon Sep 17 00:00:00 2001
+From: Carlos Garcia Campos <cgarcia@igalia.com>
+Date: Tue, 17 Feb 2026 12:37:02 +0100
+Subject: [PATCH] Allow non-trailing/leading spaces in filename of content
+ disposition header value
+
+Upstream: https://github.com/GNOME/libsoup/commit/db09564e563d4418e93055960568afa172cdf444
+Test changes omitted.
+---
+ libsoup/soup-message-headers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libsoup/soup-message-headers.c b/libsoup/soup-message-headers.c
+index 1c855784..ca7719db 100644
+--- a/libsoup/soup-message-headers.c
++++ b/libsoup/soup-message-headers.c
+@@ -1613,7 +1613,7 @@ sanitize_filename (const char *value)
+ 
+         /* Replace all other invalid characters with '_' */
+         for (c = (guchar*)filename; *c; c++) {
+-                if (strchr ("\"~*/:<>?\\|\r\n", *c) || g_ascii_isspace (*c) || g_ascii_iscntrl (*c))
++                if (strchr ("\"~*/:<>?\\|\r\n", *c) || g_ascii_iscntrl (*c))
+                         *c = '_';
+         }
+ 

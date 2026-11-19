@@ -55,8 +55,10 @@ public:
     Protocol::ErrorStringOr<void> setPauseOnStart(bool) final;
     Protocol::ErrorStringOr<void> resume(const String& targetId) final;
     Protocol::ErrorStringOr<void> sendMessageToTarget(const String& targetId, const String& message) final;
+    Protocol::ErrorStringOr<void> activate(const String& targetId) override;
 
     // Target lifecycle.
+    void targetCrashed(InspectorTarget&);
     void targetCreated(InspectorTarget&);
     void targetDestroyed(InspectorTarget&);
     void didCommitProvisionalTarget(const String& oldTargetID, const String& committedTargetID);
@@ -65,6 +67,9 @@ public:
 
     // Target messages.
     void sendMessageFromTargetToFrontend(const String& targetId, const String& message);
+
+    bool shouldPauseOnStart() const { return m_shouldPauseOnStart; }
+    bool isConnected() { return m_isConnected; }
 
 private:
     // FrontendChannel

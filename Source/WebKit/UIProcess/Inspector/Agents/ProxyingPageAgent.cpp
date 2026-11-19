@@ -144,12 +144,14 @@ void ProxyingPageAgent::frameNavigated(IPC::Connection& connection, FrameIdentif
 
 void ProxyingPageAgent::domContentEventFired(double timestamp)
 {
-    m_frontendDispatcher->domContentEventFired(timestamp);
+    // FIXME: <https://webkit.org/b/308895> plumb FrameIdentifier through the IPC message.
+    m_frontendDispatcher->domContentEventFired(timestamp, { });
 }
 
 void ProxyingPageAgent::loadEventFired(double timestamp)
 {
-    m_frontendDispatcher->loadEventFired(timestamp);
+    // FIXME: <https://webkit.org/b/308895> plumb FrameIdentifier through the IPC message.
+    m_frontendDispatcher->loadEventFired(timestamp, { });
 }
 
 void ProxyingPageAgent::frameDetached(FrameIdentifier)
@@ -789,14 +791,85 @@ CommandResult<void> ProxyingPageAgent::setShowPaintRects(bool show)
     return { };
 }
 
+CommandResult<void> ProxyingPageAgent::goBack()
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::goForward()
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::overridePlatform(const String&)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::setForcedColors(std::optional<Protocol::Page::ForcedColors>&&)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::setTimeZone(const String&)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::setTouchEmulationEnabled(bool)
+{
+    return { };
+}
+
 CommandResult<void> ProxyingPageAgent::setEmulatedMedia(const String&)
 {
     return { };
 }
 
+<<<<<<< HEAD
 #if PLATFORM(COCOA)
 // The committed frame of this page that a frame target's identifier names.
 static RefPtr<WebFrameProxy> frameForFrameTarget(WebFrameProxy& mainFrame, const String& targetId)
+||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
+CommandResult<String> ProxyingPageAgent::snapshotNode(Protocol::DOM::NodeId)
+=======
+CommandResult<void> ProxyingPageAgent::insertText(const String&)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::setInterceptFileChooserDialog(bool)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::setDefaultBackgroundColorOverride(RefPtr<JSON::Object>&&)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::createUserWorld(const String&)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::setBypassCSP(bool)
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::crash()
+{
+    return { };
+}
+
+CommandResult<void> ProxyingPageAgent::updateScrollingState()
+{
+    return { };
+}
+
+CommandResult<String> ProxyingPageAgent::snapshotNode(Protocol::DOM::NodeId)
+>>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
 {
     for (RefPtr frame = &mainFrame; frame; frame = frame->traverseNext(&mainFrame)) {
         if (FrameInspectorTarget::toTargetID(frame->frameID(), frame->process().coreProcessIdentifier()) == targetId)
@@ -885,19 +958,43 @@ void ProxyingPageAgent::snapshotNode(Protocol::DOM::NodeId nodeId, const String&
 
 // WebPageProxy::takeSnapshot() draws the frames of every process (remote snapshotting), so cross-origin
 // iframes are included. Only the UI process receives the image, not a WebContent process.
-void ProxyingPageAgent::snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem coordinateSystem, Ref<SnapshotRectCallback>&& callback)
+void ProxyingPageAgent::snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem coordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality, Ref<SnapshotRectCallback>&& callback)
 {
 #if PLATFORM(COCOA)
+    if (quality && (*quality < 0 || *quality > 100)) {
+        callback->sendFailure("Quality must be between 0 and 100"_s);
+        return;
+    }
+
     SnapshotOptions options;
     if (coordinateSystem == Protocol::Page::CoordinateSystem::Viewport)
         options.add(SnapshotOption::InViewCoordinates);
+    if (omitDeviceScaleFactor.value_or(false))
+        options.add(SnapshotOption::ExcludeDeviceScaleFactor);
 
-    protect(m_inspectedPage.get())->takeSnapshot({ x, y, width, height }, { }, options, [callback = WTF::move(callback)](CGImageRef image) {
+    String mimeType;
+    std::optional<double> encodingQuality;
+    switch (format.value_or(Protocol::Page::ImageFormat::Png)) {
+    case Protocol::Page::ImageFormat::Png:
+        mimeType = "image/png"_s;
+        break;
+    case Protocol::Page::ImageFormat::Jpeg:
+        mimeType = "image/jpeg"_s;
+        encodingQuality = quality.value_or(80) / 100.0;
+        break;
+    case Protocol::Page::ImageFormat::Webp:
+        mimeType = "image/webp"_s;
+        // A quality of 1.0 (100) selects lossless WebP; default to it when omitted.
+        encodingQuality = quality.value_or(100) / 100.0;
+        break;
+    }
+
+    protect(m_inspectedPage.get())->takeSnapshot({ x, y, width, height }, { }, options, [callback = WTF::move(callback), mimeType = WTF::move(mimeType), encodingQuality](CGImageRef image) {
         if (!image) {
             callback->sendFailure("Could not capture snapshot"_s);
             return;
         }
-        callback->sendSuccess(encodeDataURL(image, "image/png"_s));
+        callback->sendSuccess(encodeDataURL(image, mimeType, encodingQuality));
     });
 #else
     UNUSED_PARAM(x);
@@ -905,6 +1002,9 @@ void ProxyingPageAgent::snapshotRect(int x, int y, int width, int height, Protoc
     UNUSED_PARAM(width);
     UNUSED_PARAM(height);
     UNUSED_PARAM(coordinateSystem);
+    UNUSED_PARAM(omitDeviceScaleFactor);
+    UNUSED_PARAM(format);
+    UNUSED_PARAM(quality);
     callback->sendFailure("Not yet implemented under Site Isolation"_s);
 #endif
 }
@@ -922,12 +1022,10 @@ void ProxyingPageAgent::archive(Ref<ArchiveCallback>&& callback)
 }
 #endif
 
-#if !PLATFORM(COCOA)
 CommandResult<void> ProxyingPageAgent::setScreenSizeOverride(std::optional<int>&&, std::optional<int>&&)
 {
     return { };
 }
-#endif
 
 } // namespace Inspector
 

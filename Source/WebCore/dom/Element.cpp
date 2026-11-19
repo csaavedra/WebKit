@@ -522,8 +522,8 @@ static ShouldIgnoreMouseEvent dispatchPointerEventIfNeeded(Element& element, con
         }
 #endif
 
-        // FIXME: <https://webkit.org/b/314881> This early-return is using synthetic click type
-        // and input source to approximate "pointer events for this interaction have already been
+        // FIXME: <https://webkit.org/b/314881> This early-return is using platform event tags
+        // to approximate "pointer events for this interaction have already been
         // dispatched upstream by other compat paths."
         // That state should live in PointerCaptureController, not be inferred from event tags.
         // Migrating there would make this short circuit unnecessary.

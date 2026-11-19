@@ -28,10 +28,12 @@
 #include "InspectorTargetProxy.h"
 #include "ProvisionalPageProxy.h"
 #include "UIProcess/WebFrameProxy.h"
+#include "ProcessTerminationReason.h"
 #include <JavaScriptCore/InspectorAgentRegistry.h>
 #include <JavaScriptCore/InspectorTargetAgent.h>
 #include <WebCore/DebuggerPauseSessionIdentifier.h>
 #include <WebCore/FrameIdentifier.h>
+#include <WebCore/NavigationIdentifier.h>
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/ProcessIdentifier.h>
 #include <wtf/CheckedRef.h>
@@ -40,6 +42,14 @@
 #include <wtf/Noncopyable.h>
 #include <wtf/TZoneMalloc.h>
 #include <wtf/text/WTFString.h>
+#include <wtf/URL.h>
+
+#if USE(SKIA)
+WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_BEGIN
+#include <skia/core/SkData.h>
+#include <skia/core/SkImage.h>
+WTF_IGNORE_WARNINGS_IN_THIRD_PARTY_CODE_END
+#endif
 
 namespace Inspector {
 class BackendDispatcher;
@@ -47,6 +57,18 @@ class FrontendChannel;
 class FrontendRouter;
 class ProxyingNetworkAgent;
 class ProxyingPageAgent;
+class InspectorTarget;
+}
+
+namespace WebCore {
+class ResourceError;
+class ResourceRequest;
+enum class PolicyAction : uint8_t;
+struct WindowFeatures;
+}
+
+namespace PAL {
+class SessionID;
 }
 
 namespace WebKit {
@@ -58,6 +80,22 @@ class ProvisionalPageProxy;
 enum class ProvisionalLoadIsReplaced : bool;
 struct WebPageAgentContext;
 
+class InspectorScreencastAgent;
+class WebFrameProxy;
+class WebPageInspectorEmulationAgent;
+class WebPageInspectorInputAgent;
+
+class WebPageInspectorControllerObserver {
+public:
+    virtual void didCreateInspectorController(WebPageProxy&) = 0;
+    virtual void willDestroyInspectorController(WebPageProxy&) = 0;
+    virtual void didFailProvisionalLoad(WebPageProxy&, WebCore::NavigationIdentifier, const String& error) = 0;
+    virtual void willCreateNewPage(WebPageProxy&, const WebCore::WindowFeatures&, const URL&) = 0;
+
+protected:
+    virtual ~WebPageInspectorControllerObserver() = default;
+};
+
 class WebPageInspectorController {
     WTF_MAKE_TZONE_ALLOCATED(WebPageInspectorController);
     WTF_MAKE_NONCOPYABLE(WebPageInspectorController);
@@ -66,7 +104,21 @@ public:
     ~WebPageInspectorController();
 
     void init();
+    void didInitializeWebPage();
+
+    static void setObserver(WebPageInspectorControllerObserver*);
+    static WebPageInspectorControllerObserver* observer();
+
     void pageClosed();
+    bool pageCrashed(ProcessTerminationReason);
+
+    void willCreateNewPage(const WebCore::WindowFeatures&, const URL&);
+
+    void didShowPage();
+
+    void didProcessAllPendingKeyboardEvents();
+    void didProcessAllPendingMouseEvents();
+    void didProcessAllPendingWheelEvents();
 
     bool hasLocalFrontend() const;
     bool hasFrontends() const;
@@ -90,8 +142,25 @@ public:
 #if ENABLE(REMOTE_INSPECTOR)
     void setIndicating(bool);
 #endif
+#if USE(SKIA)
+    void didPaint(sk_sp<SkImage>&&);
+#endif
+    bool screencastActive() const;
+    using NavigationHandler = Function<void(const String&, Markable<WebCore::NavigationIdentifier>)>;
+    void navigate(WebCore::ResourceRequest&&, WebFrameProxy*, NavigationHandler&&);
+    void didReceivePolicyDecision(WebCore::PolicyAction action, std::optional<WebCore::NavigationIdentifier> navigationID);
+
+    void didDestroyNavigation(WebCore::NavigationIdentifier navigationID);
+
+    void didFailProvisionalLoadForFrame(WebCore::NavigationIdentifier navigationID, const WebCore::ResourceError& error);
 
     void sendMessageToInspectorFrontend(const String& targetId, const String& message);
+
+    void setPauseOnStart(bool);
+
+    bool shouldPauseLoadRequest() const;
+    bool shouldPauseInInspectorWhenShown() const;
+    void setContinueLoadingCallback(WTF::Function<void()>&&);
 
     bool shouldPauseLoadingForPage(const ProvisionalPageProxy&) const;
     void setContinueLoadingCallbackForPage(const ProvisionalPageProxy&, WTF::Function<void()>&&);
@@ -148,6 +217,10 @@ private:
     CheckedPtr<Inspector::InspectorTargetAgent> m_targetAgent;
     HashMap<String, std::unique_ptr<InspectorTargetProxy>> m_targets;
 
+    WebPageInspectorEmulationAgent* m_emulationAgent { nullptr };
+    WebPageInspectorInputAgent* m_inputAgent { nullptr };
+    InspectorScreencastAgent* m_screecastAgent { nullptr };
+
     CheckedPtr<InspectorBrowserAgent> m_enabledBrowserAgent;
     const RefPtr<Inspector::ProxyingNetworkAgent> m_networkAgent;
     const RefPtr<Inspector::ProxyingPageAgent> m_pageAgent;
@@ -155,12 +228,19 @@ private:
     bool m_didCreateLazyAgents { false };
     std::unique_ptr<DebuggerPauseCoordinator> m_debuggerPauseCoordinator;
     bool m_isMainFrameNavigating { false };
+<<<<<<< HEAD
 
     bool m_isTimelineRecording { false };
 #if PLATFORM(COCOA)
     uint64_t m_timelineScreenshotID { 0 };
 #endif
     CompletionHandler<void()> m_timelineScreenshotCompletionHandler;
+||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
+=======
+    HashMap<WebCore::NavigationIdentifier, NavigationHandler> m_pendingNavigations;
+
+    static WebPageInspectorControllerObserver* s_observer;
+>>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
 };
 
 } // namespace WebKit
