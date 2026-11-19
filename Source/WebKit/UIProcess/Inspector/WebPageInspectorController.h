@@ -228,19 +228,15 @@ private:
     bool m_didCreateLazyAgents { false };
     std::unique_ptr<DebuggerPauseCoordinator> m_debuggerPauseCoordinator;
     bool m_isMainFrameNavigating { false };
-<<<<<<< HEAD
 
     bool m_isTimelineRecording { false };
 #if PLATFORM(COCOA)
     uint64_t m_timelineScreenshotID { 0 };
 #endif
     CompletionHandler<void()> m_timelineScreenshotCompletionHandler;
-||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
-=======
     HashMap<WebCore::NavigationIdentifier, NavigationHandler> m_pendingNavigations;
 
     static WebPageInspectorControllerObserver* s_observer;
->>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
 };
 
 } // namespace WebKit
