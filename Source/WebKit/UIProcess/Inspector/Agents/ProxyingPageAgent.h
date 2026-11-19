@@ -109,13 +109,6 @@ public:
     CommandResult<void> setTimeZone(const String&) final;
     CommandResult<void> setTouchEmulationEnabled(bool) final;
     CommandResult<void> setEmulatedMedia(const String&) final;
-<<<<<<< HEAD
-    void snapshotNode(Protocol::DOM::NodeId, const String& targetId, Ref<SnapshotNodeCallback>&&) final;
-    void snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem, Ref<SnapshotRectCallback>&&) final;
-||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
-    CommandResult<String> snapshotNode(Protocol::DOM::NodeId) final;
-    void snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem, Ref<SnapshotRectCallback>&&) final;
-=======
     CommandResult<void> insertText(const String&) final;
     CommandResult<void> setInterceptFileChooserDialog(bool) final;
     CommandResult<void> setDefaultBackgroundColorOverride(RefPtr<JSON::Object>&&) final;
@@ -123,9 +116,8 @@ public:
     CommandResult<void> setBypassCSP(bool) final;
     CommandResult<void> crash() final;
     CommandResult<void> updateScrollingState() final;
-    CommandResult<String> snapshotNode(Protocol::DOM::NodeId) final;
+    void snapshotNode(Protocol::DOM::NodeId, const String& targetId, Ref<SnapshotNodeCallback>&&) final;
     void snapshotRect(int x, int y, int width, int height, Protocol::Page::CoordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Protocol::Page::ImageFormat>&&, std::optional<int>&& quality, Ref<SnapshotRectCallback>&&) final;
->>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
 #if ENABLE(WEB_ARCHIVE) && USE(CF)
     void archive(Ref<ArchiveCallback>&&) final;
 #endif

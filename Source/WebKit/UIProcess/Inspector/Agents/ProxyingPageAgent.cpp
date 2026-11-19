@@ -826,13 +826,6 @@ CommandResult<void> ProxyingPageAgent::setEmulatedMedia(const String&)
     return { };
 }
 
-<<<<<<< HEAD
-#if PLATFORM(COCOA)
-// The committed frame of this page that a frame target's identifier names.
-static RefPtr<WebFrameProxy> frameForFrameTarget(WebFrameProxy& mainFrame, const String& targetId)
-||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
-CommandResult<String> ProxyingPageAgent::snapshotNode(Protocol::DOM::NodeId)
-=======
 CommandResult<void> ProxyingPageAgent::insertText(const String&)
 {
     return { };
@@ -868,8 +861,9 @@ CommandResult<void> ProxyingPageAgent::updateScrollingState()
     return { };
 }
 
-CommandResult<String> ProxyingPageAgent::snapshotNode(Protocol::DOM::NodeId)
->>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
+#if PLATFORM(COCOA)
+// The committed frame of this page that a frame target's identifier names.
+static RefPtr<WebFrameProxy> frameForFrameTarget(WebFrameProxy& mainFrame, const String& targetId)
 {
     for (RefPtr frame = &mainFrame; frame; frame = frame->traverseNext(&mainFrame)) {
         if (FrameInspectorTarget::toTargetID(frame->frameID(), frame->process().coreProcessIdentifier()) == targetId)

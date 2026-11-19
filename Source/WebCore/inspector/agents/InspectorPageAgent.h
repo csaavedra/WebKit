@@ -104,19 +104,11 @@ public:
 #endif
     Inspector::Protocol::ErrorStringOr<void> setShowPaintRects(bool);
     Inspector::Protocol::ErrorStringOr<void> setEmulatedMedia(const String&);
-<<<<<<< HEAD
-    void snapshotNode(Inspector::Protocol::DOM::NodeId, const String& targetId, Ref<SnapshotNodeCallback>&&);
-    void snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem, Ref<SnapshotRectCallback>&&);
-||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
-    Inspector::Protocol::ErrorStringOr<String> snapshotNode(Inspector::Protocol::DOM::NodeId);
-    void snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem, Ref<SnapshotRectCallback>&&);
-=======
     Inspector::Protocol::ErrorStringOr<void> setForcedColors(std::optional<Inspector::Protocol::Page::ForcedColors>&&);
     Inspector::Protocol::ErrorStringOr<void> setTimeZone(const String&);
     Inspector::Protocol::ErrorStringOr<void> setTouchEmulationEnabled(bool);
-    Inspector::Protocol::ErrorStringOr<String> snapshotNode(Inspector::Protocol::DOM::NodeId);
+    void snapshotNode(Inspector::Protocol::DOM::NodeId, const String& targetId, Ref<SnapshotNodeCallback>&&);
     void snapshotRect(int x, int y, int width, int height, Inspector::Protocol::Page::CoordinateSystem, std::optional<bool>&& omitDeviceScaleFactor, std::optional<Inspector::Protocol::Page::ImageFormat>&& format, std::optional<int>&& quality, Ref<SnapshotRectCallback>&&);
->>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
 #if ENABLE(WEB_ARCHIVE) && USE(CF)
     void archive(Ref<ArchiveCallback>&&);
 #endif
