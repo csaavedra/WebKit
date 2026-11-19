@@ -13687,17 +13687,11 @@ void WebPageProxy::askClientToClose()
     if (isClosed())
         return;
 
-<<<<<<< HEAD
-    WEBPAGEPROXY_RELEASE_LOG(Process, "askClientToClose:");
-||||||| parent of 302e7fa21f3b (chore(webkit): bootstrap build #2396)
-    WEBPAGEPROXY_RELEASE_LOG(Process, "closePage:");
-=======
 #if ENABLE(CONTEXT_MENUS)
     if (RefPtr activeContextMenu = m_activeContextMenu)
         activeContextMenu->cancelTracking();
 #endif
-    WEBPAGEPROXY_RELEASE_LOG(Process, "closePage:");
->>>>>>> 302e7fa21f3b (chore(webkit): bootstrap build #2396)
+    WEBPAGEPROXY_RELEASE_LOG(Process, "askClientToClose:");
     if (RefPtr pageClient = this->pageClient())
         pageClient->clearAllEditCommands();
 

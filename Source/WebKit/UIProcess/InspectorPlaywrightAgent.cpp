@@ -442,11 +442,11 @@ void InspectorPlaywrightAgent::didCreateInspectorController(WebPageProxy& page)
     if (auto* browserContextDeletion = m_browserContextDeletions.get(browserContextID)) {
         browserContextDeletion->didCreatePage();
         // We are called from the WebPageProxy constructor, before the UI client that
-        // closePage() goes through has been attached to the page, so close it on the
+        // askClientToClose() goes through has been attached to the page, so close it on the
         // next run loop iteration instead.
         RunLoop::mainSingleton().dispatch([weakPage = WeakPtr { page }] {
             if (RefPtr page = weakPage.get())
-                page->closePage();
+                page->askClientToClose();
         });
     }
 }
@@ -603,7 +603,7 @@ void InspectorPlaywrightAgent::closeImpl(Function<void(String)>&& callback)
             pages.append(WTF::move(page));
     }
     for (Ref page : pages)
-        page->closePage();
+        page->askClientToClose();
 
     if (!m_defaultContext) {
         m_client->closeBrowser();
@@ -661,7 +661,7 @@ void InspectorPlaywrightAgent::deleteContext(const String& browserContextID, Ref
     else {
         m_browserContextDeletions.set(browserContextID, makeUnique<BrowserContextDeletion>(WTF::move(contextHolder), numberOfPages, WTF::move(callback)));
         browserContext->pages.forEach([](auto& page) {
-            page.closePage();
+            page.askClientToClose();
         });
     }
     m_client->deleteBrowserContext(errorString, sessionID);
@@ -838,7 +838,7 @@ Inspector::Protocol::ErrorStringOr<void> InspectorPlaywrightAgent::closePage(con
     if (runBeforeUnload && *runBeforeUnload)
         pageProxyChannel->page().tryClose();
     else
-        pageProxyChannel->page().closePage();
+        pageProxyChannel->page().askClientToClose();
     return { };
 }
 
