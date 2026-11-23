@@ -798,6 +798,12 @@ CommandResult<void> ProxyingNetworkAgent::interceptRequestWithError(const Protoc
     return resolveInterception(requestId, NetworkInterceptionPhase::BeforeRequestSent, WTF::move(resolution));
 }
 
+CommandResult<void> ProxyingNetworkAgent::setEmulateOfflineState(bool)
+{
+    // FIXME: Forward to all WebContent processes.
+    return { };
+}
+
 #if ENABLE(INSPECTOR_NETWORK_THROTTLING)
 
 CommandResult<void> ProxyingNetworkAgent::setEmulatedConditions(std::optional<int>&& bandwidth, std::optional<int>&& latency)

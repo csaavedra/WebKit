@@ -40,6 +40,7 @@
 #include "HTMLNames.h"
 #include "Icon.h"
 #include "InputTypeNames.h"
+#include "InspectorInstrumentation.h"
 #include "LocalDOMWindow.h"
 #include "LocalFrame.h"
 #include "LocalFrameView.h"
@@ -161,6 +162,11 @@ void FileInputType::handleDOMActivateEvent(Event& event)
     ASSERT(element());
 
     if (element()->isDisabledFormControl())
+        return;
+
+    bool intercept = false;
+    InspectorInstrumentation::runOpenPanel(element()->document().frame(), element(), &intercept);
+    if (intercept)
         return;
 
     RefPtr window = element()->document().window();

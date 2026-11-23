@@ -400,6 +400,7 @@ private:
     bool ownsBlobURL(const URL&) const;
 
     void setCaptureExtraNetworkLoadMetricsEnabled(bool);
+    void setEmulateOfflineState(bool offline, CompletionHandler<void(bool, bool)>&&);
 
     void createSocketChannel(const WebCore::ResourceRequest&, const String& protocol, WebCore::WebSocketIdentifier, WebPageProxyIdentifier, std::optional<WebCore::FrameIdentifier>, std::optional<WebCore::PageIdentifier>, IPC::Untrusted<WebCore::ClientOrigin>&&, bool hadMainFrameMainResourcePrivateRelayed, bool allowPrivacyProxy, OptionSet<WebCore::AdvancedPrivacyProtections>, WebCore::StoredCredentialsPolicy, WebCore::IsInitiatedByWorker);
     void queryLocalNetworkAccessPermission(std::optional<WebPageProxyIdentifier>, IPC::Untrusted<WebCore::ClientOrigin>&&, WebCore::IPAddressSpace, CompletionHandler<void(std::optional<WebCore::PermissionState>)>&&);
@@ -455,6 +456,8 @@ private:
 #endif
 
     void clearPageSpecificData(WebCore::PageIdentifier);
+
+    void setCookieFromResponse(const URL& firstParty, const WebCore::SameSiteInfo&, const URL& url, const String& setCookieValue);
 
     void removeStorageAccessForFrame(WebCore::FrameIdentifier, WebPageProxyIdentifier);
 
