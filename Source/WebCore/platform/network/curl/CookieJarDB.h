@@ -74,19 +74,13 @@ public:
     WEBCORE_EXPORT ~CookieJarDB();
 
 private:
-<<<<<<< HEAD
     enum class DatabaseError : uint8_t {
         Unavailable,
         Corrupt,
         InvalidSchema
     };
 
-    CookieAcceptPolicy m_acceptPolicy { CookieAcceptPolicy::Always };
-||||||| parent of be94275f0448 (chore(webkit): bootstrap build #2399)
-    CookieAcceptPolicy m_acceptPolicy { CookieAcceptPolicy::Always };
-=======
     CookieAcceptPolicy m_acceptPolicy { CookieAcceptPolicy::OnlyFromMainDocumentDomain };
->>>>>>> be94275f0448 (chore(webkit): bootstrap build #2399)
     String m_databasePath;
 
     bool m_detectedDatabaseCorruption { false };
